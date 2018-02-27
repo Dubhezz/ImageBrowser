@@ -15,6 +15,14 @@
 		46B1B9152045609C0088B1A9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 46B1B9142045609C0088B1A9 /* main.m */; };
 		46B1B91F2045609C0088B1A9 /* ImageBrowserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 46B1B91E2045609C0088B1A9 /* ImageBrowserTests.m */; };
 		46B1B92A2045609C0088B1A9 /* ImageBrowserUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 46B1B9292045609C0088B1A9 /* ImageBrowserUITests.m */; };
+		46B1B949204564CF0088B1A9 /* DTImageBrowserProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 46B1B93A204564CC0088B1A9 /* DTImageBrowserProgressView.m */; };
+		46B1B94A204564CF0088B1A9 /* DTImageBrowserLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 46B1B93C204564CC0088B1A9 /* DTImageBrowserLayout.m */; };
+		46B1B94C204564CF0088B1A9 /* DTImageBrowserAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 46B1B93F204564CC0088B1A9 /* DTImageBrowserAnimator.m */; };
+		46B1B94D204564CF0088B1A9 /* DTZoomAnimationCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = 46B1B942204564CD0088B1A9 /* DTZoomAnimationCoordinator.m */; };
+		46B1B94E204564CF0088B1A9 /* DTLivePhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 46B1B944204564CD0088B1A9 /* DTLivePhotoCell.m */; };
+		46B1B94F204564CF0088B1A9 /* DTImageBrowserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 46B1B945204564CE0088B1A9 /* DTImageBrowserCell.m */; };
+		46B1B950204564CF0088B1A9 /* DTImageBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 46B1B947204564CE0088B1A9 /* DTImageBrowser.m */; };
+		46B1B9542045651B0088B1A9 /* DTShadowLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 46B1B9532045651B0088B1A9 /* DTShadowLayer.m */; };
 		EFC1DB58FABA80A665EBC428 /* libPods-ImageBrowser.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EC678FC8308A72F71E5A897 /* libPods-ImageBrowser.a */; };
 /* End PBXBuildFile section */
 
@@ -53,6 +61,24 @@
 		46B1B9252045609C0088B1A9 /* ImageBrowserUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImageBrowserUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		46B1B9292045609C0088B1A9 /* ImageBrowserUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageBrowserUITests.m; sourceTree = "<group>"; };
 		46B1B92B2045609C0088B1A9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		46B1B939204564CB0088B1A9 /* DTImageBrowserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTImageBrowserCell.h; sourceTree = "<group>"; };
+		46B1B93A204564CC0088B1A9 /* DTImageBrowserProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTImageBrowserProgressView.m; sourceTree = "<group>"; };
+		46B1B93B204564CC0088B1A9 /* DTImageBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTImageBrowser.h; sourceTree = "<group>"; };
+		46B1B93C204564CC0088B1A9 /* DTImageBrowserLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTImageBrowserLayout.m; sourceTree = "<group>"; };
+		46B1B93E204564CC0088B1A9 /* DTZoomAnimationCoordinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTZoomAnimationCoordinator.h; sourceTree = "<group>"; };
+		46B1B93F204564CC0088B1A9 /* DTImageBrowserAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTImageBrowserAnimator.m; sourceTree = "<group>"; };
+		46B1B940204564CC0088B1A9 /* DTImageBrowserAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTImageBrowserAnimator.h; sourceTree = "<group>"; };
+		46B1B941204564CD0088B1A9 /* DTImageBrowserCellProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTImageBrowserCellProtocol.h; sourceTree = "<group>"; };
+		46B1B942204564CD0088B1A9 /* DTZoomAnimationCoordinator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTZoomAnimationCoordinator.m; sourceTree = "<group>"; };
+		46B1B943204564CD0088B1A9 /* DTImageBrowserProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTImageBrowserProgressView.h; sourceTree = "<group>"; };
+		46B1B944204564CD0088B1A9 /* DTLivePhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTLivePhotoCell.m; sourceTree = "<group>"; };
+		46B1B945204564CE0088B1A9 /* DTImageBrowserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTImageBrowserCell.m; sourceTree = "<group>"; };
+		46B1B946204564CE0088B1A9 /* DTLivePhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTLivePhotoCell.h; sourceTree = "<group>"; };
+		46B1B947204564CE0088B1A9 /* DTImageBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTImageBrowser.m; sourceTree = "<group>"; };
+		46B1B948204564CF0088B1A9 /* DTImageBrowserLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTImageBrowserLayout.h; sourceTree = "<group>"; };
+		46B1B9522045651B0088B1A9 /* DTShadowLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTShadowLayer.h; sourceTree = "<group>"; };
+		46B1B9532045651B0088B1A9 /* DTShadowLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTShadowLayer.m; sourceTree = "<group>"; };
+		46B1B955204569C90088B1A9 /* Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
 		5F551B4EFB85D124436E9F1F /* Pods-ImageBrowser.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImageBrowser.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ImageBrowser/Pods-ImageBrowser.debug.xcconfig"; sourceTree = "<group>"; };
 		6EC678FC8308A72F71E5A897 /* libPods-ImageBrowser.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ImageBrowser.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -86,6 +112,7 @@
 		46B1B8F92045609C0088B1A9 = {
 			isa = PBXGroup;
 			children = (
+				46B1B938204563DE0088B1A9 /* ImageBrowserUtility */,
 				46B1B9042045609C0088B1A9 /* ImageBrowser */,
 				46B1B91D2045609C0088B1A9 /* ImageBrowserTests */,
 				46B1B9282045609C0088B1A9 /* ImageBrowserUITests */,
@@ -117,6 +144,7 @@
 				46B1B9102045609C0088B1A9 /* LaunchScreen.storyboard */,
 				46B1B9132045609C0088B1A9 /* Info.plist */,
 				46B1B9142045609C0088B1A9 /* main.m */,
+				46B1B955204569C90088B1A9 /* Prefix.pch */,
 			);
 			path = ImageBrowser;
 			sourceTree = "<group>";
@@ -137,6 +165,38 @@
 				46B1B92B2045609C0088B1A9 /* Info.plist */,
 			);
 			path = ImageBrowserUITests;
+			sourceTree = "<group>";
+		};
+		46B1B938204563DE0088B1A9 /* ImageBrowserUtility */ = {
+			isa = PBXGroup;
+			children = (
+				46B1B9512045650C0088B1A9 /* UIView */,
+				46B1B93B204564CC0088B1A9 /* DTImageBrowser.h */,
+				46B1B947204564CE0088B1A9 /* DTImageBrowser.m */,
+				46B1B940204564CC0088B1A9 /* DTImageBrowserAnimator.h */,
+				46B1B93F204564CC0088B1A9 /* DTImageBrowserAnimator.m */,
+				46B1B939204564CB0088B1A9 /* DTImageBrowserCell.h */,
+				46B1B945204564CE0088B1A9 /* DTImageBrowserCell.m */,
+				46B1B941204564CD0088B1A9 /* DTImageBrowserCellProtocol.h */,
+				46B1B948204564CF0088B1A9 /* DTImageBrowserLayout.h */,
+				46B1B93C204564CC0088B1A9 /* DTImageBrowserLayout.m */,
+				46B1B943204564CD0088B1A9 /* DTImageBrowserProgressView.h */,
+				46B1B93A204564CC0088B1A9 /* DTImageBrowserProgressView.m */,
+				46B1B946204564CE0088B1A9 /* DTLivePhotoCell.h */,
+				46B1B944204564CD0088B1A9 /* DTLivePhotoCell.m */,
+				46B1B93E204564CC0088B1A9 /* DTZoomAnimationCoordinator.h */,
+				46B1B942204564CD0088B1A9 /* DTZoomAnimationCoordinator.m */,
+			);
+			path = ImageBrowserUtility;
+			sourceTree = "<group>";
+		};
+		46B1B9512045650C0088B1A9 /* UIView */ = {
+			isa = PBXGroup;
+			children = (
+				46B1B9522045651B0088B1A9 /* DTShadowLayer.h */,
+				46B1B9532045651B0088B1A9 /* DTShadowLayer.m */,
+			);
+			path = UIView;
 			sourceTree = "<group>";
 		};
 		622B6BB702D6F67A36F2DAA9 /* Frameworks */ = {
@@ -343,8 +403,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46B1B950204564CF0088B1A9 /* DTImageBrowser.m in Sources */,
+				46B1B94A204564CF0088B1A9 /* DTImageBrowserLayout.m in Sources */,
+				46B1B949204564CF0088B1A9 /* DTImageBrowserProgressView.m in Sources */,
+				46B1B9542045651B0088B1A9 /* DTShadowLayer.m in Sources */,
 				46B1B90A2045609C0088B1A9 /* ViewController.m in Sources */,
+				46B1B94C204564CF0088B1A9 /* DTImageBrowserAnimator.m in Sources */,
 				46B1B9152045609C0088B1A9 /* main.m in Sources */,
+				46B1B94D204564CF0088B1A9 /* DTZoomAnimationCoordinator.m in Sources */,
+				46B1B94E204564CF0088B1A9 /* DTLivePhotoCell.m in Sources */,
+				46B1B94F204564CF0088B1A9 /* DTImageBrowserCell.m in Sources */,
 				46B1B9072045609C0088B1A9 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -511,6 +579,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = N3S63W353W;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/ImageBrowser/Prefix.pch";
 				INFOPLIST_FILE = ImageBrowser/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -527,6 +597,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = N3S63W353W;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/ImageBrowser/Prefix.pch";
 				INFOPLIST_FILE = ImageBrowser/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
