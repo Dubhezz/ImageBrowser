@@ -15,6 +15,7 @@
 		46B1B9152045609C0088B1A9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 46B1B9142045609C0088B1A9 /* main.m */; };
 		46B1B91F2045609C0088B1A9 /* ImageBrowserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 46B1B91E2045609C0088B1A9 /* ImageBrowserTests.m */; };
 		46B1B92A2045609C0088B1A9 /* ImageBrowserUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 46B1B9292045609C0088B1A9 /* ImageBrowserUITests.m */; };
+		EFC1DB58FABA80A665EBC428 /* libPods-ImageBrowser.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EC678FC8308A72F71E5A897 /* libPods-ImageBrowser.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		128E3715FB89F1C268A53897 /* Pods-ImageBrowser.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImageBrowser.release.xcconfig"; path = "Pods/Target Support Files/Pods-ImageBrowser/Pods-ImageBrowser.release.xcconfig"; sourceTree = "<group>"; };
 		46B1B9022045609C0088B1A9 /* ImageBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		46B1B9052045609C0088B1A9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		46B1B9062045609C0088B1A9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -51,6 +53,8 @@
 		46B1B9252045609C0088B1A9 /* ImageBrowserUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImageBrowserUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		46B1B9292045609C0088B1A9 /* ImageBrowserUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageBrowserUITests.m; sourceTree = "<group>"; };
 		46B1B92B2045609C0088B1A9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5F551B4EFB85D124436E9F1F /* Pods-ImageBrowser.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImageBrowser.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ImageBrowser/Pods-ImageBrowser.debug.xcconfig"; sourceTree = "<group>"; };
+		6EC678FC8308A72F71E5A897 /* libPods-ImageBrowser.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ImageBrowser.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +62,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EFC1DB58FABA80A665EBC428 /* libPods-ImageBrowser.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,6 +90,8 @@
 				46B1B91D2045609C0088B1A9 /* ImageBrowserTests */,
 				46B1B9282045609C0088B1A9 /* ImageBrowserUITests */,
 				46B1B9032045609C0088B1A9 /* Products */,
+				E38C2148B06D930883AF8D2B /* Pods */,
+				622B6BB702D6F67A36F2DAA9 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -132,6 +139,23 @@
 			path = ImageBrowserUITests;
 			sourceTree = "<group>";
 		};
+		622B6BB702D6F67A36F2DAA9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6EC678FC8308A72F71E5A897 /* libPods-ImageBrowser.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E38C2148B06D930883AF8D2B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5F551B4EFB85D124436E9F1F /* Pods-ImageBrowser.debug.xcconfig */,
+				128E3715FB89F1C268A53897 /* Pods-ImageBrowser.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -139,9 +163,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 46B1B92E2045609C0088B1A9 /* Build configuration list for PBXNativeTarget "ImageBrowser" */;
 			buildPhases = (
+				98160FBF662677B2C08CAE35 /* [CP] Check Pods Manifest.lock */,
 				46B1B8FE2045609C0088B1A9 /* Sources */,
 				46B1B8FF2045609C0088B1A9 /* Frameworks */,
 				46B1B9002045609C0088B1A9 /* Resources */,
+				AAA4958AA139EFFA3C848288 /* [CP] Embed Pods Frameworks */,
+				41423550464C5E8B12FAE6E0 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -259,6 +286,57 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		41423550464C5E8B12FAE6E0 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ImageBrowser/Pods-ImageBrowser-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		98160FBF662677B2C08CAE35 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ImageBrowser-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AAA4958AA139EFFA3C848288 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ImageBrowser/Pods-ImageBrowser-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		46B1B8FE2045609C0088B1A9 /* Sources */ = {
@@ -428,6 +506,7 @@
 		};
 		46B1B92F2045609C0088B1A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5F551B4EFB85D124436E9F1F /* Pods-ImageBrowser.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -443,6 +522,7 @@
 		};
 		46B1B9302045609C0088B1A9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 128E3715FB89F1C268A53897 /* Pods-ImageBrowser.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
