@@ -21,7 +21,7 @@
 - (void)updateCurrentHiddenView:(UIView *)view {
     self.currentHiddenView.hidden = NO;
     self.currentHiddenView = view;
-    view.hidden = YES;
+//    view.hidden = YES; //view hidden后在stackView不显示，布局会错
 }
 
 - (void)presentationTransitionWillBegin {
@@ -33,7 +33,7 @@
     [containerView addSubview:self.maskView];
     self.maskView.frame = containerView.bounds;
     self.maskView.alpha = 0;
-    self.currentHiddenView.hidden = YES;
+//    self.currentHiddenView.hidden = YES; //view hidden后在stackView不显示，布局会错
     __weak typeof(self) weakSelf = self;
     [[self.presentedViewController transitionCoordinator] animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
         weakSelf.maskView.alpha = 1;

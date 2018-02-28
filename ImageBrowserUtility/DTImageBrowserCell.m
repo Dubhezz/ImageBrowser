@@ -68,7 +68,9 @@
 #pragma -mark 设置图片
 
 - (void)setImageWithImage:(UIImage *)image highQualityImageURL:(NSURL *)imageURL orFilePath:(NSString *)path withFinishSend:(BOOL)isSend {
-
+    self.image = image;
+    self.imageView.image = image;
+    [self cellLayout];
 }
 
 #pragma -mark layout

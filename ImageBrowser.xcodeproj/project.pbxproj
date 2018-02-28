@@ -23,6 +23,17 @@
 		46B1B94F204564CF0088B1A9 /* DTImageBrowserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 46B1B945204564CE0088B1A9 /* DTImageBrowserCell.m */; };
 		46B1B950204564CF0088B1A9 /* DTImageBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 46B1B947204564CE0088B1A9 /* DTImageBrowser.m */; };
 		46B1B9542045651B0088B1A9 /* DTShadowLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 46B1B9532045651B0088B1A9 /* DTShadowLayer.m */; };
+		46B1B95A204666330088B1A9 /* 1000.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 46B1B959204666330088B1A9 /* 1000.jpg */; };
+		46B1B964204666C30088B1A9 /* 1008.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 46B1B95B204666C10088B1A9 /* 1008.jpg */; };
+		46B1B965204666C30088B1A9 /* 1003.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 46B1B95C204666C10088B1A9 /* 1003.jpg */; };
+		46B1B966204666C30088B1A9 /* 1007.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 46B1B95D204666C10088B1A9 /* 1007.jpg */; };
+		46B1B967204666C30088B1A9 /* 1002.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 46B1B95E204666C20088B1A9 /* 1002.jpg */; };
+		46B1B968204666C30088B1A9 /* 1009.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 46B1B95F204666C20088B1A9 /* 1009.jpg */; };
+		46B1B969204666C30088B1A9 /* 1001.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 46B1B960204666C20088B1A9 /* 1001.jpg */; };
+		46B1B96A204666C30088B1A9 /* 1004.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 46B1B961204666C30088B1A9 /* 1004.jpg */; };
+		46B1B96B204666C30088B1A9 /* 1006.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 46B1B962204666C30088B1A9 /* 1006.jpg */; };
+		46B1B96C204666C30088B1A9 /* 1005.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 46B1B963204666C30088B1A9 /* 1005.jpg */; };
+		46B1B96E20468C840088B1A9 /* CustomProperty.png in Resources */ = {isa = PBXBuildFile; fileRef = 46B1B96D20468C830088B1A9 /* CustomProperty.png */; };
 		EFC1DB58FABA80A665EBC428 /* libPods-ImageBrowser.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EC678FC8308A72F71E5A897 /* libPods-ImageBrowser.a */; };
 /* End PBXBuildFile section */
 
@@ -79,6 +90,17 @@
 		46B1B9522045651B0088B1A9 /* DTShadowLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DTShadowLayer.h; sourceTree = "<group>"; };
 		46B1B9532045651B0088B1A9 /* DTShadowLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTShadowLayer.m; sourceTree = "<group>"; };
 		46B1B955204569C90088B1A9 /* Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
+		46B1B959204666330088B1A9 /* 1000.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1000.jpg; sourceTree = "<group>"; };
+		46B1B95B204666C10088B1A9 /* 1008.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1008.jpg; sourceTree = "<group>"; };
+		46B1B95C204666C10088B1A9 /* 1003.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1003.jpg; sourceTree = "<group>"; };
+		46B1B95D204666C10088B1A9 /* 1007.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1007.jpg; sourceTree = "<group>"; };
+		46B1B95E204666C20088B1A9 /* 1002.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1002.jpg; sourceTree = "<group>"; };
+		46B1B95F204666C20088B1A9 /* 1009.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1009.jpg; sourceTree = "<group>"; };
+		46B1B960204666C20088B1A9 /* 1001.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1001.jpg; sourceTree = "<group>"; };
+		46B1B961204666C30088B1A9 /* 1004.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1004.jpg; sourceTree = "<group>"; };
+		46B1B962204666C30088B1A9 /* 1006.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1006.jpg; sourceTree = "<group>"; };
+		46B1B963204666C30088B1A9 /* 1005.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1005.jpg; sourceTree = "<group>"; };
+		46B1B96D20468C830088B1A9 /* CustomProperty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CustomProperty.png; sourceTree = "<group>"; };
 		5F551B4EFB85D124436E9F1F /* Pods-ImageBrowser.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImageBrowser.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ImageBrowser/Pods-ImageBrowser.debug.xcconfig"; sourceTree = "<group>"; };
 		6EC678FC8308A72F71E5A897 /* libPods-ImageBrowser.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ImageBrowser.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -145,6 +167,17 @@
 				46B1B9132045609C0088B1A9 /* Info.plist */,
 				46B1B9142045609C0088B1A9 /* main.m */,
 				46B1B955204569C90088B1A9 /* Prefix.pch */,
+				46B1B96D20468C830088B1A9 /* CustomProperty.png */,
+				46B1B959204666330088B1A9 /* 1000.jpg */,
+				46B1B960204666C20088B1A9 /* 1001.jpg */,
+				46B1B95E204666C20088B1A9 /* 1002.jpg */,
+				46B1B95C204666C10088B1A9 /* 1003.jpg */,
+				46B1B961204666C30088B1A9 /* 1004.jpg */,
+				46B1B963204666C30088B1A9 /* 1005.jpg */,
+				46B1B962204666C30088B1A9 /* 1006.jpg */,
+				46B1B95D204666C10088B1A9 /* 1007.jpg */,
+				46B1B95B204666C10088B1A9 /* 1008.jpg */,
+				46B1B95F204666C20088B1A9 /* 1009.jpg */,
 			);
 			path = ImageBrowser;
 			sourceTree = "<group>";
@@ -325,9 +358,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46B1B95A204666330088B1A9 /* 1000.jpg in Resources */,
 				46B1B9122045609C0088B1A9 /* LaunchScreen.storyboard in Resources */,
+				46B1B96B204666C30088B1A9 /* 1006.jpg in Resources */,
+				46B1B968204666C30088B1A9 /* 1009.jpg in Resources */,
+				46B1B967204666C30088B1A9 /* 1002.jpg in Resources */,
+				46B1B964204666C30088B1A9 /* 1008.jpg in Resources */,
+				46B1B966204666C30088B1A9 /* 1007.jpg in Resources */,
 				46B1B90F2045609C0088B1A9 /* Assets.xcassets in Resources */,
+				46B1B969204666C30088B1A9 /* 1001.jpg in Resources */,
+				46B1B96E20468C840088B1A9 /* CustomProperty.png in Resources */,
+				46B1B96A204666C30088B1A9 /* 1004.jpg in Resources */,
 				46B1B90D2045609C0088B1A9 /* Main.storyboard in Resources */,
+				46B1B96C204666C30088B1A9 /* 1005.jpg in Resources */,
+				46B1B965204666C30088B1A9 /* 1003.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -578,7 +622,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = N3S63W353W;
+				DEVELOPMENT_TEAM = QY42B6MUPR;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/ImageBrowser/Prefix.pch";
 				INFOPLIST_FILE = ImageBrowser/Info.plist;
@@ -596,7 +640,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = N3S63W353W;
+				DEVELOPMENT_TEAM = QY42B6MUPR;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/ImageBrowser/Prefix.pch";
 				INFOPLIST_FILE = ImageBrowser/Info.plist;

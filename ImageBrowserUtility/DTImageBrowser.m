@@ -181,7 +181,7 @@
 @implementation DTImageBrowser
 
 - (void)dealloc {
-    NSLog(@"fdsfds");
+    NSLog(@"--DTImageBrowser 释放--");
 }
 
 - (void)setCurrentIndex:(NSInteger)currentIndex {

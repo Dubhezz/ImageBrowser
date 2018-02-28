@@ -3,6 +3,7 @@ target 'ImageBrowser' do
     pod 'AFNetworking'
     pod 'Masonry'
     pod 'SDWebImage'
+    pod 'Reveal-iOS-SDK', :configurations => ['Debug']
 end
 
 

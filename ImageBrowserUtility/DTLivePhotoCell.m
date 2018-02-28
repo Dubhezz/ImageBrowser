@@ -304,8 +304,9 @@
 
 - (NSString *)fileNameWithVideoURLString:(NSString *)videoURLString {
     return nil;
+}
 
-- (void)loadLivePhotoWithVideoFilePath:(NSString *)videoPath withImage:(UIImage *)image videoURLString:(NSString *)videoURLString{
+- (void)loadLivePhotoWithVideoFilePath:(NSString *)videoPath withImage:(UIImage *)image videoURLString:(NSString *)videoURLString {
     
 
 }
