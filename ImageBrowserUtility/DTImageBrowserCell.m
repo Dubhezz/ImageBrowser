@@ -15,7 +15,7 @@
 #define SLIDE_DOWN_COLSE_IMAGEBROWSER 0
 #endif
 
-@interface DTImageBrowserCell () <UIScrollViewDelegate, UIGestureRecognizerDelegate>
+@interface DTImageBrowserCell () <UIScrollViewDelegate, UIGestureRecognizerDelegate, DTImageViewDelegate>
 
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) DTImageBrowserProgressView *progressView;
@@ -41,7 +41,8 @@
 //        _scrollView.showsVerticalScrollIndicator = NO;
 //        _scrollView.showsHorizontalScrollIndicator =NO;
         
-        _imageView = [[UIImageView alloc] init];
+        _imageView = [[DTImageView alloc] init];
+        _imageView.delegate = self;
         [_scrollView addSubview:_imageView];
         _imageView.clipsToBounds = YES;
         
@@ -71,6 +72,10 @@
     self.image = image;
     self.imageView.image = image;
     [self cellLayout];
+    if (imageURL) {
+        self.progressView.hidden = NO;
+        [self.imageView loadImageWithImageURL:imageURL];
+    }
 }
 
 #pragma -mark layout
@@ -269,6 +274,25 @@
         _progressView.hidden = YES;
     }
     return _progressView;
+}
+
+#pragma -mark DTImageViewDelegate
+- (void)DTImageViewImageLoading:(DTImageView *)imageView progress:(CGFloat)progress {
+    self.progressView.hidden = NO;
+    NSLog(@"下载进度---- %f",progress);
+    [self.progressView setProgress:fabs(progress)];
+}
+
+- (void)DTImageViewImageDidLoad:(UIImage *)image progress:(CGFloat)progress {
+    self.progressView.hidden = YES;
+    self.image = image;
+    if (image.images.count > 1) {
+        self.imageView.image = image.images.firstObject;
+        self.imageView.animationImages = image.images;
+    } else {
+        self.imageView.image = image;
+    }
+    [self cellLayout];
 }
 
 @end

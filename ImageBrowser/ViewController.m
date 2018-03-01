@@ -9,12 +9,15 @@
 #import "ViewController.h"
 #import <Masonry.h>
 #import "DTImageBrowser.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
-@interface DTImageView : UIImageView
 
-@property (nonatomic, copy) void (^imageViewDidTapBlock)(NSUInteger index);
-@property (nonatomic, assign) NSUInteger index;
-@end
+//@interface DTImageView : UIImageView
+//@property (nonatomic, weak) id<DTImageViewDelegate> delegate;
+//@property (nonatomic, copy) void (^imageViewDidTapBlock)(NSUInteger index);
+//@property (nonatomic, assign) NSUInteger index;
+//@property (nonatomic, strong) NSString *imageURLString;
+//@end
 
 @implementation DTImageView
 
@@ -29,6 +32,23 @@
         [self addGestureRecognizer:tap];
     }
     return self;
+}
+
+- (void)loadImageWithImageURL:(NSURL *)URL {
+    SDWebImageManager *manager = [SDWebImageManager sharedManager];
+    [manager loadImageWithURL:URL options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            if ([self.delegate respondsToSelector:@selector(DTImageViewImageLoading:progress:)]) {
+                [self.delegate DTImageViewImageLoading:self progress:receivedSize/(CGFloat)expectedSize];
+            }
+        });
+    } completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
+        if (image) {
+            if ([self.delegate respondsToSelector:@selector(DTImageViewImageDidLoad:progress:)]) {
+                [self.delegate DTImageViewImageDidLoad:image progress:1];
+            }
+        }
+    }];
 }
 
 - (void)imageViewDidTap:(UITapGestureRecognizer *)tap {
@@ -54,6 +74,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    UIButton *clearCacheButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [clearCacheButton setTitle:@"清除缓存" forState:UIControlStateNormal];
+    [clearCacheButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [clearCacheButton addTarget:self action:@selector(clearCacheButtonDidTap:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:clearCacheButton];
+    [clearCacheButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view).offset(30);
+        make.top.equalTo(self.view).offset(50);
+        make.width.mas_equalTo(80);
+        make.height.mas_equalTo(30);
+    }];
     
     DTImageView *imageView0 = [[DTImageView alloc] initWithImage:[UIImage imageNamed:@"1000.jpg"] index:0];
     DTImageView *imageView1 = [[DTImageView alloc] initWithImage:[UIImage imageNamed:@"1001.jpg"] index:1];
@@ -149,7 +180,57 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)clearCacheButtonDidTap:(UIButton *)sender {
+    [[SDImageCache sharedImageCache] clearDiskOnCompletion:^{
+        NSLog(@"缓存已清除");
+    }];
+}
+
 #pragma -mark DTImageBrowserDelegate
+- (NSURL *)imageBrowser:(DTImageBrowser *)imageBrowser highQualityUrlStringForIndex:(NSInteger)index {
+    //780db7d6gy1fl5tz89n1cj21jk2bck6q
+    //780db7d6gy1fl5tzaxe5xj21kw2dcqv6
+    //780db7d6gy1fl5tz9ugvej21kw2awb29
+    //780db7d6gy1fl5tz9rbadj21kw28l7wh
+    //780db7d6gy1fl5tz8c0ywj21jj1wzhdt
+    //780db7d6gy1fl5tzab608j21kw2aqqv5
+    //780db7d6gy1fl5u0bha26j21jf26ue82
+    //780db7d6gy1fl5u0a8mguj21kw2dhb29
+    //780db7d6gy1fl5u09mt0yj219t1tuh7n
+    
+    //d2f2e96egy1fnkiabq09fj20b40b4gmt
+    //d2f2e96egy1fnkiabmppnj20b40b474q
+    //d2f2e96egy1fnkiabooh6j20b40b4wfs
+    //d2f2e96egy1fnkiabpgvaj20b40b4myl
+    //d2f2e96egy1fnkiabpi0fj20b40b4dh8
+    //d2f2e96egy1fnkiabqxrkj20b40b4wfd
+    //d2f2e96egy1fnkiabrirjj20b40b4ta1
+    //d2f2e96egy1fnkiabmvigj20b40b4aag
+    //d2f2e96egy1fnkiabtfv1j20b40b4abh
+    
+    //https://wx3.sinaimg.cn/woriginal/6a162bf9ly1fori4rxrr2g20c80c8wui.gif
+    //https://wx1.sinaimg.cn/woriginal/6a162bf9ly1fori4sl5f8g20c80c8js8.gif
+    //https://wx4.sinaimg.cn/woriginal/6a162bf9ly1fori53ym5eg20c80c8b16.gif
+    //https://wx4.sinaimg.cn/woriginal/6a162bf9ly1fori5557o8g20dw09qb29.gif
+    //https://wx1.sinaimg.cn/woriginal/6a162bf9ly1fori4wbzp0g20c80c8u10.gif
+    //https://wx3.sinaimg.cn/woriginal/6a162bf9ly1fori4xslchg20c80b4hdt.gif
+    //https://wx2.sinaimg.cn/woriginal/6a162bf9ly1fori4ycvfxg20b40b443v.gif
+    //https://wx1.sinaimg.cn/woriginal/6a162bf9ly1fori501q68g20c80c8b2b.gif
+    //https://wx4.sinaimg.cn/woriginal/6a162bf9ly1fori51620dg20c80c8qoz.gif
+    
+    NSArray <NSURL*>*imageURLs = @[[NSURL URLWithString:@"https://wx3.sinaimg.cn/large/6a162bf9ly1fori4rxrr2g20c80c8wui.gif"],
+                                   [NSURL URLWithString:@"https://wx1.sinaimg.cn/large/6a162bf9ly1fori4sl5f8g20c80c8js8.gif"],
+                                   [NSURL URLWithString:@"https://wx4.sinaimg.cn/large/6a162bf9ly1fori53ym5eg20c80c8b16.gif"],
+                                   [NSURL URLWithString:@"https://wx4.sinaimg.cn/large/6a162bf9ly1fori5557o8g20dw09qb29.gif"],
+                                   [NSURL URLWithString:@"https://wx1.sinaimg.cn/large/6a162bf9ly1fori4wbzp0g20c80c8u10.gif"],
+                                   [NSURL URLWithString:@"https://wx3.sinaimg.cn/large/6a162bf9ly1fori4xslchg20c80b4hdt.gif"],
+                                   [NSURL URLWithString:@"https://wx2.sinaimg.cn/large/6a162bf9ly1fori4ycvfxg20b40b443v.gif"],
+                                   [NSURL URLWithString:@"https://wx1.sinaimg.cn/large/6a162bf9ly1fori501q68g20c80c8b2b.gif"],
+                                   [NSURL URLWithString:@"https://wx4.sinaimg.cn/large/6a162bf9ly1fori51620dg20c80c8qoz.gif"]
+                                   ];
+    return imageURLs[index];
+}
+
 - (NSInteger)numberOfPicturesInImageBrowser:(DTImageBrowser *)imageBrowser {
     return self.imageViews.count;
 }
