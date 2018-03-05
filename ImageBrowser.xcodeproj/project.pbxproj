@@ -203,6 +203,7 @@
 		46B1B938204563DE0088B1A9 /* ImageBrowserUtility */ = {
 			isa = PBXGroup;
 			children = (
+				46B1B971204D41510088B1A9 /* ImageView */,
 				46B1B9512045650C0088B1A9 /* UIView */,
 				46B1B93B204564CC0088B1A9 /* DTImageBrowser.h */,
 				46B1B947204564CE0088B1A9 /* DTImageBrowser.m */,
@@ -230,6 +231,13 @@
 				46B1B9532045651B0088B1A9 /* DTShadowLayer.m */,
 			);
 			path = UIView;
+			sourceTree = "<group>";
+		};
+		46B1B971204D41510088B1A9 /* ImageView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ImageView;
 			sourceTree = "<group>";
 		};
 		622B6BB702D6F67A36F2DAA9 /* Frameworks */ = {
