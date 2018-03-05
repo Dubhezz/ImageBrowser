@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "DTImageBrowserCellProtocol.h"
 #import "ViewController.h"
+#import "DTImageView.h"
 
 @interface DTImageBrowserCell : UICollectionViewCell <DTImageBrowserCellProtocol>
 

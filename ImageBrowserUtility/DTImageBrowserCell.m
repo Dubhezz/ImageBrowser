@@ -41,7 +41,7 @@
 //        _scrollView.showsVerticalScrollIndicator = NO;
 //        _scrollView.showsHorizontalScrollIndicator =NO;
         
-        _imageView = [[DTImageView alloc] init];
+        _imageView = [[DTImageView alloc] initWithFrame:self.bounds];
         _imageView.delegate = self;
         [_scrollView addSubview:_imageView];
         _imageView.clipsToBounds = YES;
@@ -70,11 +70,11 @@
 
 - (void)setImageWithImage:(UIImage *)image highQualityImageURL:(NSURL *)imageURL orFilePath:(NSString *)path withFinishSend:(BOOL)isSend {
     self.image = image;
-    self.imageView.image = image;
+    self.imageView.placeholderImage = image;
     [self cellLayout];
     if (imageURL) {
         self.progressView.hidden = NO;
-        [self.imageView loadImageWithImageURL:imageURL];
+        [self.imageView setImageURL:imageURL];
     }
 }
 
@@ -88,7 +88,7 @@
 }
 
 - (CGSize)fetchFitSizeInScreen {
-    UIImage *image = _imageView.image;
+    UIImage *image = _imageView.placeholderImage;
     if (!image) {
         return CGSizeZero;
     }
@@ -117,7 +117,7 @@
 
 - (void)didLongPressAction:(UILongPressGestureRecognizer *)longPress {
     if (longPress.state == UIGestureRecognizerStateBegan && [self.imageBrowserCellDelegate respondsToSelector:@selector(imageBrowserCellLongPressInCell:image:imageData:)]) {
-        [self.imageBrowserCellDelegate imageBrowserCellLongPressInCell:self image:_imageView.image imageData:nil];
+        [self.imageBrowserCellDelegate imageBrowserCellLongPressInCell:self image:_imageView.placeholderImage imageData:nil];
     }
 }
 
@@ -208,14 +208,14 @@
         [self.imageBrowserCellDelegate imageBrowserCellDidPanInCell:self scale:1.0];
     }
     
-    CGSize size = [self fetchFitSizeInScreen];
-    BOOL needResetSize = (_imageView.bounds.size.width < size.width || _imageView.bounds.size.height < size.height);
+//    CGSize size = [self fetchFitSizeInScreen];
+//    BOOL needResetSize = (_imageView.bounds.size.width < size.width || _imageView.bounds.size.height < size.height);
     __weak typeof(self) weakSelf = self;
     [UIView animateWithDuration:0.25 animations:^{
-        weakSelf.imageView.center = [self fetchCenterOfContentSize];
-        if (needResetSize) {
-            weakSelf.imageView.bounds = CGRectMake(0, 0, CGRectGetWidth([self fetchFitFrameInScreen]), CGRectGetHeight([self fetchFitFrameInScreen]));
-        }
+//        weakSelf.imageView.center = [self fetchCenterOfContentSize];
+//        if (needResetSize) {
+//            weakSelf.imageView.bounds = CGRectMake(0, 0, CGRectGetWidth([self fetchFitFrameInScreen]), CGRectGetHeight([self fetchFitFrameInScreen]));
+//        }
     }];
 }
 
@@ -277,7 +277,7 @@
 }
 
 #pragma -mark DTImageViewDelegate
-- (void)DTImageViewImageLoading:(DTImageView *)imageView progress:(CGFloat)progress {
+- (void)DTImageViewImageLoading:(DTSmallImageView *)imageView progress:(CGFloat)progress {
     self.progressView.hidden = NO;
     NSLog(@"下载进度---- %f",progress);
     [self.progressView setProgress:fabs(progress)];
@@ -287,10 +287,10 @@
     self.progressView.hidden = YES;
     self.image = image;
     if (image.images.count > 1) {
-        self.imageView.image = image.images.firstObject;
-        self.imageView.animationImages = image.images;
+//        self.imageView.image = image.images.firstObject;
+//        self.imageView.animationImages = image.images;
     } else {
-        self.imageView.image = image;
+//        self.imageView.image = image;
     }
     [self cellLayout];
 }

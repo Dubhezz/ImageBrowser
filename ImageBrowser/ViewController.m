@@ -19,7 +19,7 @@
 //@property (nonatomic, strong) NSString *imageURLString;
 //@end
 
-@implementation DTImageView
+@implementation DTSmallImageView
 
 - (instancetype)initWithImage:(UIImage *)image index:(NSUInteger)index {
     self = [super initWithImage:image];
@@ -34,22 +34,22 @@
     return self;
 }
 
-- (void)loadImageWithImageURL:(NSURL *)URL {
-    SDWebImageManager *manager = [SDWebImageManager sharedManager];
-    [manager loadImageWithURL:URL options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            if ([self.delegate respondsToSelector:@selector(DTImageViewImageLoading:progress:)]) {
-                [self.delegate DTImageViewImageLoading:self progress:receivedSize/(CGFloat)expectedSize];
-            }
-        });
-    } completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
-        if (image) {
-            if ([self.delegate respondsToSelector:@selector(DTImageViewImageDidLoad:progress:)]) {
-                [self.delegate DTImageViewImageDidLoad:image progress:1];
-            }
-        }
-    }];
-}
+//- (void)loadImageWithImageURL:(NSURL *)URL {
+//    SDWebImageManager *manager = [SDWebImageManager sharedManager];
+//    [manager loadImageWithURL:URL options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
+//        dispatch_sync(dispatch_get_main_queue(), ^{
+//            if ([self.delegate respondsToSelector:@selector(DTImageViewImageLoading:progress:)]) {
+//                [self.delegate DTImageViewImageLoading:self progress:receivedSize/(CGFloat)expectedSize];
+//            }
+//        });
+//    } completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
+//        if (image) {
+//            if ([self.delegate respondsToSelector:@selector(DTImageViewImageDidLoad:progress:)]) {
+//                [self.delegate DTImageViewImageDidLoad:image progress:1];
+//            }
+//        }
+//    }];
+//}
 
 - (void)imageViewDidTap:(UITapGestureRecognizer *)tap {
     if (self.imageViewDidTapBlock) {
@@ -66,7 +66,7 @@
 
 @property (nonatomic, strong) UIStackView *contentStackView;
 @property (nonatomic, strong) NSArray <UIImage *>* placeholderImages;
-@property (nonatomic, strong) NSArray <DTImageView *>*imageViews;
+@property (nonatomic, strong) NSArray <DTSmallImageView *>*imageViews;
 @end
 
 @implementation ViewController
@@ -86,17 +86,17 @@
         make.height.mas_equalTo(30);
     }];
     
-    DTImageView *imageView0 = [[DTImageView alloc] initWithImage:[UIImage imageNamed:@"1000.jpg"] index:0];
-    DTImageView *imageView1 = [[DTImageView alloc] initWithImage:[UIImage imageNamed:@"1001.jpg"] index:1];
-    DTImageView *imageView2 = [[DTImageView alloc] initWithImage:[UIImage imageNamed:@"1002.jpg"] index:2];
-    DTImageView *imageView3 = [[DTImageView alloc] initWithImage:[UIImage imageNamed:@"1003.jpg"] index:3];
-    DTImageView *imageView4 = [[DTImageView alloc] initWithImage:[UIImage imageNamed:@"1004.jpg"] index:4];
-    DTImageView *imageView5 = [[DTImageView alloc] initWithImage:[UIImage imageNamed:@"1009.jpg"] index:5];
-    DTImageView *imageView6 = [[DTImageView alloc] initWithImage:[UIImage imageNamed:@"1006.jpg"] index:6];
-    DTImageView *imageView7 = [[DTImageView alloc] initWithImage:[UIImage imageNamed:@"1007.jpg"] index:7];
-    DTImageView *imageView8 = [[DTImageView alloc] initWithImage:[UIImage imageNamed:@"1008.jpg"] index:8];
+    DTSmallImageView *imageView0 = [[DTSmallImageView alloc] initWithImage:[UIImage imageNamed:@"1000.jpg"] index:0];
+    DTSmallImageView *imageView1 = [[DTSmallImageView alloc] initWithImage:[UIImage imageNamed:@"1001.jpg"] index:1];
+    DTSmallImageView *imageView2 = [[DTSmallImageView alloc] initWithImage:[UIImage imageNamed:@"1002.jpg"] index:2];
+    DTSmallImageView *imageView3 = [[DTSmallImageView alloc] initWithImage:[UIImage imageNamed:@"1003.jpg"] index:3];
+    DTSmallImageView *imageView4 = [[DTSmallImageView alloc] initWithImage:[UIImage imageNamed:@"1004.jpg"] index:4];
+    DTSmallImageView *imageView5 = [[DTSmallImageView alloc] initWithImage:[UIImage imageNamed:@"1009.jpg"] index:5];
+    DTSmallImageView *imageView6 = [[DTSmallImageView alloc] initWithImage:[UIImage imageNamed:@"1006.jpg"] index:6];
+    DTSmallImageView *imageView7 = [[DTSmallImageView alloc] initWithImage:[UIImage imageNamed:@"1007.jpg"] index:7];
+    DTSmallImageView *imageView8 = [[DTSmallImageView alloc] initWithImage:[UIImage imageNamed:@"1008.jpg"] index:8];
     
-    NSArray <DTImageView *>*imageViews = @[
+    NSArray <DTSmallImageView *>*imageViews = @[
                                            imageView0,
                                            imageView1,
                                            imageView2,
@@ -122,7 +122,7 @@
                                              ];
     self.placeholderImages = placeholderImages;
     
-    for (DTImageView *imageView in imageViews) {
+    for (DTSmallImageView *imageView in imageViews) {
         [imageView setImageViewDidTapBlock:^(NSUInteger index) {
             [self imageViewDidTapWithIndex:index];
         }];

@@ -259,7 +259,7 @@
     UICollectionViewCell *cell = [_collectionView cellForItemAtIndexPath:indexPath];
     if ([cell isKindOfClass:[DTImageBrowserCell class]]) {
         self.presentationAnimator.endView = [(DTImageBrowserCell *)cell imageView];
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:[(DTImageBrowserCell *)cell imageView].image];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:[(DTImageBrowserCell *)cell imageView].presentationImage];
         imageView.contentMode = UIViewContentModeScaleAspectFill;
         imageView.clipsToBounds = YES;
         self.presentationAnimator.zoomView = imageView;
@@ -437,7 +437,7 @@
     UICollectionViewCell *cell = [self.collectionView visibleCells].firstObject;
 
     if ([cell isKindOfClass:[DTImageBrowserCell class]]) {
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:[(DTImageBrowserCell *)cell imageView].image];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:[(DTImageBrowserCell *)cell imageView].presentationImage];
         imageView.contentMode = UIViewContentModeScaleAspectFill;
         imageView.clipsToBounds = YES;
         DTImageBrowserAnimator *animator = [[DTImageBrowserAnimator alloc] initWithStartView:[(DTImageBrowserCell *)cell imageView] endView:self.relatedView zoomView:imageView];
