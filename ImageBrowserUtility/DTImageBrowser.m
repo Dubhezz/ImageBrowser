@@ -182,6 +182,12 @@
 
 - (void)dealloc {
     NSLog(@"--DTImageBrowser 释放--");
+    self.collectionView = nil;
+    self.animatorCoordinator = nil;
+    self.relatedView = nil;
+    self.presentingVC = nil;
+    self.presentationAnimator = nil;
+    NSLog(@"da");
 }
 
 - (void)setCurrentIndex:(NSInteger)currentIndex {
@@ -259,7 +265,8 @@
     UICollectionViewCell *cell = [_collectionView cellForItemAtIndexPath:indexPath];
     if ([cell isKindOfClass:[DTImageBrowserCell class]]) {
         self.presentationAnimator.endView = [(DTImageBrowserCell *)cell imageView];
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:[(DTImageBrowserCell *)cell imageView].presentationImage];
+//缩放时的view
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:[(DTImageBrowserCell *)cell imageView].placeholderImage];
         imageView.contentMode = UIViewContentModeScaleAspectFill;
         imageView.clipsToBounds = YES;
         self.presentationAnimator.zoomView = imageView;
@@ -332,8 +339,8 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    
-    UIImage *image = [self.imageBrowserDelegate imageBrowser:self thumbnailImageForIndex:indexPath.item];
+    UIImageView *imageView = [self.imageBrowserDelegate imageBrowser:self thumbnailImageViewForIndex:indexPath.item];
+    UIImage *image = imageView.image;//[self.imageBrowserDelegate imageBrowser:self thumbnailImageForIndex:indexPath.item];
     
     DTImageBrowserCellType cellType = [self imageCellTypeForIndexPath:indexPath];
     if (cellType == DTImageBrowserCellTypeOfStaticPic) {
@@ -437,7 +444,7 @@
     UICollectionViewCell *cell = [self.collectionView visibleCells].firstObject;
 
     if ([cell isKindOfClass:[DTImageBrowserCell class]]) {
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:[(DTImageBrowserCell *)cell imageView].presentationImage];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:[(DTImageBrowserCell *)cell imageView].placeholderImage];
         imageView.contentMode = UIViewContentModeScaleAspectFill;
         imageView.clipsToBounds = YES;
         DTImageBrowserAnimator *animator = [[DTImageBrowserAnimator alloc] initWithStartView:[(DTImageBrowserCell *)cell imageView] endView:self.relatedView zoomView:imageView];

@@ -32,6 +32,11 @@
 
 @implementation DTImageBrowserCell
 
+- (void)dealloc {
+    [[self.imageView timer] invalidate];
+    NSLog(@"cell 释放");
+}
+
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         _scrollView = [[UIScrollView alloc] init];
@@ -144,7 +149,7 @@
     switch (pan.state) {
         case UIGestureRecognizerStateBegan:
             
-            self.beginFrame = _imageView.frame;
+            self.beginFrame = CGRectIsEmpty(_imageView.frame) ? CGRectMake((ScreenWidth - 30) / 2, (ScreenHeight - 30) / 2, 30, 30) : _imageView.frame;
             self.beginTouch = [pan locationInView:_scrollView];
             break;
             
@@ -208,14 +213,14 @@
         [self.imageBrowserCellDelegate imageBrowserCellDidPanInCell:self scale:1.0];
     }
     
-//    CGSize size = [self fetchFitSizeInScreen];
-//    BOOL needResetSize = (_imageView.bounds.size.width < size.width || _imageView.bounds.size.height < size.height);
+    CGSize size = [self fetchFitSizeInScreen];
+    BOOL needResetSize = (_imageView.bounds.size.width < size.width || _imageView.bounds.size.height < size.height);
     __weak typeof(self) weakSelf = self;
     [UIView animateWithDuration:0.25 animations:^{
-//        weakSelf.imageView.center = [self fetchCenterOfContentSize];
-//        if (needResetSize) {
-//            weakSelf.imageView.bounds = CGRectMake(0, 0, CGRectGetWidth([self fetchFitFrameInScreen]), CGRectGetHeight([self fetchFitFrameInScreen]));
-//        }
+        weakSelf.imageView.center = [self fetchCenterOfContentSize];
+        if (needResetSize) {
+            weakSelf.imageView.bounds = CGRectMake(0, 0, CGRectGetWidth([self fetchFitFrameInScreen]), CGRectGetHeight([self fetchFitFrameInScreen]));
+        }
     }];
 }
 
@@ -277,7 +282,7 @@
 }
 
 #pragma -mark DTImageViewDelegate
-- (void)DTImageViewImageLoading:(DTSmallImageView *)imageView progress:(CGFloat)progress {
+- (void)DTImageViewImageLoading:(DTImageView *)imageView progress:(CGFloat)progress {
     self.progressView.hidden = NO;
     NSLog(@"下载进度---- %f",progress);
     [self.progressView setProgress:fabs(progress)];

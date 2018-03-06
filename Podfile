@@ -6,6 +6,7 @@ target 'ImageBrowser' do
     pod 'SDWebImage/WebP'
     pod 'SDWebImage/GIF'
     pod 'Reveal-iOS-SDK', :configurations => ['Debug']
+    pod 'OOMDetector'
 end
 
 

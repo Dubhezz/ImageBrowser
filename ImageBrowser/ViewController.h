@@ -8,15 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DTSmallImageView : UIImageView
-
-@property (nonatomic, copy) void (^imageViewDidTapBlock)(NSUInteger index);
-@property (nonatomic, assign) NSUInteger index;
-@property (nonatomic, strong) NSURL *imageURL;
-- (void)loadImageWithImageURL:(NSURL *)URL;
-
-@end
-
 @interface ViewController : UIViewController
 
 

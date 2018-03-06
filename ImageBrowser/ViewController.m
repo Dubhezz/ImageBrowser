@@ -10,14 +10,17 @@
 #import <Masonry.h>
 #import "DTImageBrowser.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "AppDelegate.h"
+#import <OOMDetector/OOMDetector.h>
 
+@interface DTSmallImageView : UIImageView
 
-//@interface DTImageView : UIImageView
-//@property (nonatomic, weak) id<DTImageViewDelegate> delegate;
-//@property (nonatomic, copy) void (^imageViewDidTapBlock)(NSUInteger index);
-//@property (nonatomic, assign) NSUInteger index;
-//@property (nonatomic, strong) NSString *imageURLString;
-//@end
+@property (nonatomic, copy) void (^imageViewDidTapBlock)(NSUInteger index);
+@property (nonatomic, assign) NSUInteger index;
+@property (nonatomic, strong) NSURL *imageURL;
+- (void)loadImageWithImageURL:(NSURL *)URL;
+
+@end
 
 @implementation DTSmallImageView
 
@@ -34,22 +37,23 @@
     return self;
 }
 
-//- (void)loadImageWithImageURL:(NSURL *)URL {
-//    SDWebImageManager *manager = [SDWebImageManager sharedManager];
-//    [manager loadImageWithURL:URL options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
-//        dispatch_sync(dispatch_get_main_queue(), ^{
+- (void)loadImageWithImageURL:(NSURL *)URL {
+    SDWebImageManager *manager = [SDWebImageManager sharedManager];
+    [manager loadImageWithURL:URL options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
 //            if ([self.delegate respondsToSelector:@selector(DTImageViewImageLoading:progress:)]) {
 //                [self.delegate DTImageViewImageLoading:self progress:receivedSize/(CGFloat)expectedSize];
 //            }
-//        });
-//    } completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
-//        if (image) {
+        });
+    } completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
+        if (image) {
+            self.image = image;
 //            if ([self.delegate respondsToSelector:@selector(DTImageViewImageDidLoad:progress:)]) {
 //                [self.delegate DTImageViewImageDidLoad:image progress:1];
 //            }
-//        }
-//    }];
-//}
+        }
+    }];
+}
 
 - (void)imageViewDidTap:(UITapGestureRecognizer *)tap {
     if (self.imageViewDidTapBlock) {
@@ -67,6 +71,9 @@
 @property (nonatomic, strong) UIStackView *contentStackView;
 @property (nonatomic, strong) NSArray <UIImage *>* placeholderImages;
 @property (nonatomic, strong) NSArray <DTSmallImageView *>*imageViews;
+
+@property (nonatomic, strong) UIActivityIndicatorView *indicator;
+
 @end
 
 @implementation ViewController
@@ -86,6 +93,18 @@
         make.height.mas_equalTo(30);
     }];
     
+    UIButton *checkLeakeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [checkLeakeButton setTitle:@"检查是否有内存泄漏" forState:UIControlStateNormal];
+    [checkLeakeButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [checkLeakeButton addTarget:self action:@selector(checkLeake:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:checkLeakeButton];
+    [checkLeakeButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view).offset(30);
+        make.top.equalTo(self.view).offset(90);
+        make.width.mas_equalTo(150);
+        make.height.mas_equalTo(30);
+    }];
+    
     DTSmallImageView *imageView0 = [[DTSmallImageView alloc] initWithImage:[UIImage imageNamed:@"1000.jpg"] index:0];
     DTSmallImageView *imageView1 = [[DTSmallImageView alloc] initWithImage:[UIImage imageNamed:@"1001.jpg"] index:1];
     DTSmallImageView *imageView2 = [[DTSmallImageView alloc] initWithImage:[UIImage imageNamed:@"1002.jpg"] index:2];
@@ -95,6 +114,35 @@
     DTSmallImageView *imageView6 = [[DTSmallImageView alloc] initWithImage:[UIImage imageNamed:@"1006.jpg"] index:6];
     DTSmallImageView *imageView7 = [[DTSmallImageView alloc] initWithImage:[UIImage imageNamed:@"1007.jpg"] index:7];
     DTSmallImageView *imageView8 = [[DTSmallImageView alloc] initWithImage:[UIImage imageNamed:@"1008.jpg"] index:8];
+//    NSArray <NSURL *>*imageURLs = @[[NSURL URLWithString:@"https://wx3.sinaimg.cn/or480/.jpg"],
+//                                    [NSURL URLWithString:@"https://wx1.sinaimg.cn/or480/780db7d6gy1fl5tz89n1cj21jk2bck6q.jpg"],
+//                                    [NSURL URLWithString:@"https://wx4.sinaimg.cn/or480/780db7d6gy1fl5tzaxe5xj21kw2dcqv6.jpg"],
+//                                    [NSURL URLWithString:@"https://wx4.sinaimg.cn/or480/780db7d6gy1fl5tz9ugvej21kw2awb29.jpg"],
+//                                    [NSURL URLWithString:@"https://wx1.sinaimg.cn/or480/780db7d6gy1fl5tz9rbadj21kw28l7wh.jpg"],
+//                                    [NSURL URLWithString:@"https://wx3.sinaimg.cn/or480/780db7d6gy1fl5tz8c0ywj21jj1wzhdt.jpg"],
+//                                    [NSURL URLWithString:@"https://wx2.sinaimg.cn/or480/780db7d6gy1fl5tzab608j21kw2aqqv5.jpg"],
+//                                    [NSURL URLWithString:@"https://wx1.sinaimg.cn/or480/780db7d6gy1fl5u0bha26j21jf26ue82.jpg"],
+//                                    [NSURL URLWithString:@"https://wx4.sinaimg.cn/or480/780db7d6gy1fl5u0a8mguj21kw2dhb29.jpg"]];
+    NSArray <NSURL*>*imageURLs = @[[NSURL URLWithString:@"https://wx3.sinaimg.cn/or480/6a162bf9ly1fori4rxrr2g20c80c8wui.gif"],
+                                   [NSURL URLWithString:@"https://wx1.sinaimg.cn/or480/6a162bf9ly1fori4sl5f8g20c80c8js8.gif"],
+                                   [NSURL URLWithString:@"https://wx4.sinaimg.cn/or480/6a162bf9ly1fori53ym5eg20c80c8b16.gif"],
+                                   [NSURL URLWithString:@"https://wx4.sinaimg.cn/or480/6a162bf9ly1fori5557o8g20dw09qb29.gif"],
+                                   [NSURL URLWithString:@"https://wx1.sinaimg.cn/or480/6a162bf9ly1fori4wbzp0g20c80c8u10.gif"],
+                                   [NSURL URLWithString:@"https://wx3.sinaimg.cn/or480/6a162bf9ly1fori4xslchg20c80b4hdt.gif"],
+                                   [NSURL URLWithString:@"https://wx2.sinaimg.cn/or480/6a162bf9ly1fori4ycvfxg20b40b443v.gif"],
+                                   [NSURL URLWithString:@"https://wx1.sinaimg.cn/or480/6a162bf9ly1fori501q68g20c80c8b2b.gif"],
+                                   [NSURL URLWithString:@"https://wx4.sinaimg.cn/or480/6a162bf9ly1fori51620dg20c80c8qoz.gif"]
+                                   ];
+    [imageView0 sd_setImageWithURL:imageURLs[0]];
+    [imageView1 sd_setImageWithURL:imageURLs[1]];
+    [imageView2 sd_setImageWithURL:imageURLs[2]];
+    [imageView3 sd_setImageWithURL:imageURLs[3]];
+    [imageView4 sd_setImageWithURL:imageURLs[4]];
+    [imageView5 sd_setImageWithURL:imageURLs[5]];
+    [imageView6 sd_setImageWithURL:imageURLs[6]];
+    [imageView7 sd_setImageWithURL:imageURLs[7]];
+    [imageView8 sd_setImageWithURL:imageURLs[8]];
+    
     
     NSArray <DTSmallImageView *>*imageViews = @[
                                            imageView0,
@@ -186,6 +234,7 @@
     }];
 }
 
+
 #pragma -mark DTImageBrowserDelegate
 - (NSURL *)imageBrowser:(DTImageBrowser *)imageBrowser highQualityUrlStringForIndex:(NSInteger)index {
     //780db7d6gy1fl5tz89n1cj21jk2bck6q
@@ -196,7 +245,7 @@
     //780db7d6gy1fl5tzab608j21kw2aqqv5
     //780db7d6gy1fl5u0bha26j21jf26ue82
     //780db7d6gy1fl5u0a8mguj21kw2dhb29
-    //780db7d6gy1fl5u09mt0yj219t1tuh7n
+    //780db7d6gy1fl5u09mt0yj219t1tuh7n780db7d6gy1fl5u09mt0yj219t1tuh7n
     
     //d2f2e96egy1fnkiabq09fj20b40b4gmt
     //d2f2e96egy1fnkiabmppnj20b40b474q
@@ -207,6 +256,16 @@
     //d2f2e96egy1fnkiabrirjj20b40b4ta1
     //d2f2e96egy1fnkiabmvigj20b40b4aag
     //d2f2e96egy1fnkiabtfv1j20b40b4abh
+    
+    //@"https://wx3.sinaimg.cn/large/6a162bf9ly1fori4rxrr2g20c80c8wui.gif"
+    //@"https://wx1.sinaimg.cn/large/6a162bf9ly1fori4sl5f8g20c80c8js8.gif"
+    //@"https://wx4.sinaimg.cn/large/6a162bf9ly1fori53ym5eg20c80c8b16.gif"
+    //@"https://wx4.sinaimg.cn/large/6a162bf9ly1fori5557o8g20dw09qb29.gif"
+    //@"https://wx1.sinaimg.cn/large/6a162bf9ly1fori4wbzp0g20c80c8u10.gif"
+    //@"https://wx3.sinaimg.cn/large/6a162bf9ly1fori4xslchg20c80b4hdt.gif"
+    //@"https://wx2.sinaimg.cn/large/6a162bf9ly1fori4ycvfxg20b40b443v.gif"
+    //@"https://wx1.sinaimg.cn/large/6a162bf9ly1fori501q68g20c80c8b2b.gif"
+    //@"https://wx4.sinaimg.cn/large/6a162bf9ly1fori51620dg20c80c8qoz.gif"
     
     //https://wx3.sinaimg.cn/woriginal/6a162bf9ly1fori4rxrr2g20c80c8wui.gif
     //https://wx1.sinaimg.cn/woriginal/6a162bf9ly1fori4sl5f8g20c80c8js8.gif
@@ -235,10 +294,10 @@
     return self.imageViews.count;
 }
 
-- (UIImage *)imageBrowser:(DTImageBrowser *)imageBrowser thumbnailImageForIndex:(NSInteger)index {
-
-    return self.placeholderImages[index];
-}
+//- (UIImage *)imageBrowser:(DTImageBrowser *)imageBrowser thumbnailImageForIndex:(NSInteger)index {
+//
+//    return self.placeholderImages[index];
+//}
 
 - (UIView *)imageBrowser:(DTImageBrowser *)imageBrowser thumbnailImageViewForIndex:(NSInteger)index {
     return self.imageViews[index];
@@ -247,6 +306,45 @@
 - (DTImageBrowserCellType)imageBrowser:(DTImageBrowser *)imageBrowser imageBrowserCellTypeForIndex:(NSInteger)index {
     return DTImageBrowserCellTypeOfStaticPic;
 }
+
+
+- (void)checkLeake:(UIButton *)sender {
+    if (![[OOMDetector getInstance].currentLeakChecker isStackLogging]) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"你尚未开启内存泄漏监控" message:@"如需开启内存泄漏监控，请使用OOMDetector类提供的相关api进行设置。" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *action = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+        [alert addAction:action];
+        [self presentViewController:alert animated:YES completion:nil];
+        return;
+    }
+    [self showIndicator:YES];
+    [[OOMDetector getInstance] executeLeakCheck:^(NSString *leakStack, size_t total_num){
+        NSLog(@"--------------------------------%zu--------------------------------------------",total_num);
+        
+        NSLog(leakStack);
+        
+        NSLog(@"----------------------------------------------------------------------------");
+        [self showIndicator:NO];
+    }];
+}
+
+- (void)showIndicator:(BOOL)yn
+{
+    if (!self.indicator) {
+        UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+        indicator.color = [UIColor lightGrayColor];
+        self.indicator = indicator;
+        self.indicator.center = CGPointMake([UIScreen mainScreen].bounds.size.width * 0.5, [UIScreen mainScreen].bounds.size.height * 0.5);
+    }
+    self.indicator.hidden = !yn;
+    if (yn) {
+        [[UIApplication sharedApplication].keyWindow addSubview:self.indicator];
+        [self.indicator startAnimating];
+    } else {
+        [self.indicator stopAnimating];
+        [self.indicator removeFromSuperview];
+    }
+}
+
 
 
 @end

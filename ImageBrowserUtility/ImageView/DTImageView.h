@@ -25,6 +25,8 @@
 @property (nonatomic, strong) UIImage *placeholderImage;
 @property (nonatomic, strong, readonly) UIImage *presentationImage;
 @property (nonatomic, strong) NSURL *imageURL;
+@property (nonatomic, strong, readonly) NSTimer *timer;
+
 
 - (void)loadImageWithImageURL:(NSURL *)URL;
 
