@@ -37,6 +37,12 @@
     NSLog(@"cell 释放");
 }
 
+- (void)prepareForReuse {
+//    self.imageView.isAnimating = NO;
+//    self.imageView.imageView.animationImages = nil;
+//    self.imageView.imageView.image = nil;
+}
+
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         _scrollView = [[UIScrollView alloc] init];

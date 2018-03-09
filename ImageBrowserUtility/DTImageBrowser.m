@@ -324,6 +324,7 @@
 - (void)currentPageIndexWithIndex:(NSInteger)inidex {
     self.currentIndex = inidex;
     _imageBrowserToolView.pageControl.currentPage = self.currentIndex;
+    //
 }
 
 
@@ -384,6 +385,19 @@
     [_imageBrowserToolView setStatusDescritionViewHandler:^(id sender){
         NSLog(@"xiangqing");
     }];
+    NSLog(@"开始显示");
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(nonnull UICollectionViewCell *)cell forItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    NSLog(@"显示完成");
+    collectionView.visibleCells;
+    DTImageBrowserCellType cellType = [self imageCellTypeForIndexPath:indexPath];
+    if (cellType == DTImageBrowserCellTypeOfGif) {
+        
+    } else {
+        
+    }
+    
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {

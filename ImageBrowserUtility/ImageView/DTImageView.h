@@ -27,6 +27,12 @@
 @property (nonatomic, strong) NSURL *imageURL;
 @property (nonatomic, strong, readonly) NSTimer *timer;
 
+@property (nonatomic, assign) NSTimeInterval frameDuration;         //duration between two frames
+@property (nonatomic, assign) NSUInteger animationRepeatCount;      //0 is infinity
+@property (nonatomic, assign) BOOL isAnimating;                     //indicate animation is playing or not
+@property (nonatomic, assign) BOOL shouldAutoPlay;                  //auto play after load mutiple images
+@property (nonatomic, assign) NSUInteger frameIndex; 
+@property (nonatomic, strong) NSData *gifData;
 
 - (void)loadImageWithImageURL:(NSURL *)URL;
 
