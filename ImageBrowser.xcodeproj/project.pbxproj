@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4625EC532056BA9D0090F9E4 /* SDWebImageCoderHelper+GIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 4625EC522056BA9D0090F9E4 /* SDWebImageCoderHelper+GIF.m */; };
+		4625EC592056C1BD0090F9E4 /* UIImage+KeyFrames.m in Sources */ = {isa = PBXBuildFile; fileRef = 4625EC582056C1BD0090F9E4 /* UIImage+KeyFrames.m */; };
+		4625EC5C2056D66E0090F9E4 /* DTImage1.m in Sources */ = {isa = PBXBuildFile; fileRef = 4625EC5B2056D66E0090F9E4 /* DTImage1.m */; };
 		46B1B9072045609C0088B1A9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 46B1B9062045609C0088B1A9 /* AppDelegate.m */; };
 		46B1B90A2045609C0088B1A9 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46B1B9092045609C0088B1A9 /* ViewController.m */; };
 		46B1B90D2045609C0088B1A9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46B1B90B2045609C0088B1A9 /* Main.storyboard */; };
@@ -60,6 +63,12 @@
 
 /* Begin PBXFileReference section */
 		128E3715FB89F1C268A53897 /* Pods-ImageBrowser.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImageBrowser.release.xcconfig"; path = "Pods/Target Support Files/Pods-ImageBrowser/Pods-ImageBrowser.release.xcconfig"; sourceTree = "<group>"; };
+		4625EC512056BA9D0090F9E4 /* SDWebImageCoderHelper+GIF.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SDWebImageCoderHelper+GIF.h"; sourceTree = "<group>"; };
+		4625EC522056BA9D0090F9E4 /* SDWebImageCoderHelper+GIF.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "SDWebImageCoderHelper+GIF.m"; sourceTree = "<group>"; };
+		4625EC572056C1BD0090F9E4 /* UIImage+KeyFrames.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+KeyFrames.h"; sourceTree = "<group>"; };
+		4625EC582056C1BD0090F9E4 /* UIImage+KeyFrames.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+KeyFrames.m"; sourceTree = "<group>"; };
+		4625EC5A2056D66E0090F9E4 /* DTImage1.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DTImage1.h; sourceTree = "<group>"; };
+		4625EC5B2056D66E0090F9E4 /* DTImage1.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DTImage1.m; sourceTree = "<group>"; };
 		46B1B9022045609C0088B1A9 /* ImageBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		46B1B9052045609C0088B1A9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		46B1B9062045609C0088B1A9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -143,9 +152,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4625EC4D2056B7200090F9E4 /* Cagetory */ = {
+			isa = PBXGroup;
+			children = (
+				4625EC512056BA9D0090F9E4 /* SDWebImageCoderHelper+GIF.h */,
+				4625EC522056BA9D0090F9E4 /* SDWebImageCoderHelper+GIF.m */,
+				4625EC572056C1BD0090F9E4 /* UIImage+KeyFrames.h */,
+				4625EC582056C1BD0090F9E4 /* UIImage+KeyFrames.m */,
+			);
+			path = Cagetory;
+			sourceTree = "<group>";
+		};
 		46B1B8F92045609C0088B1A9 = {
 			isa = PBXGroup;
 			children = (
+				4625EC4D2056B7200090F9E4 /* Cagetory */,
 				46B1B938204563DE0088B1A9 /* ImageBrowserUtility */,
 				46B1B9042045609C0088B1A9 /* ImageBrowser */,
 				46B1B91D2045609C0088B1A9 /* ImageBrowserTests */,
@@ -254,6 +275,8 @@
 				46B1B976204D4E590088B1A9 /* DTImageView.m */,
 				46B1B993204FB1FF0088B1A9 /* DTImage.h */,
 				46B1B994204FB1FF0088B1A9 /* DTImage.m */,
+				4625EC5A2056D66E0090F9E4 /* DTImage1.h */,
+				4625EC5B2056D66E0090F9E4 /* DTImage1.m */,
 				46B1B990204FB1E90088B1A9 /* DTAnimatedImageView.h */,
 				46B1B991204FB1E90088B1A9 /* DTAnimatedImageView.m */,
 			);
@@ -489,7 +512,10 @@
 				46B1B9152045609C0088B1A9 /* main.m in Sources */,
 				46B1B94D204564CF0088B1A9 /* DTZoomAnimationCoordinator.m in Sources */,
 				46B1B94E204564CF0088B1A9 /* DTLivePhotoCell.m in Sources */,
+				4625EC5C2056D66E0090F9E4 /* DTImage1.m in Sources */,
+				4625EC592056C1BD0090F9E4 /* UIImage+KeyFrames.m in Sources */,
 				46B1B94F204564CF0088B1A9 /* DTImageBrowserCell.m in Sources */,
+				4625EC532056BA9D0090F9E4 /* SDWebImageCoderHelper+GIF.m in Sources */,
 				46B1B992204FB1E90088B1A9 /* DTAnimatedImageView.m in Sources */,
 				46B1B977204D4E590088B1A9 /* DTImageView.m in Sources */,
 				46B1B9072045609C0088B1A9 /* AppDelegate.m in Sources */,
@@ -657,7 +683,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = QY42B6MUPR;
+				DEVELOPMENT_TEAM = 3U3XKPF3QC;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/ImageBrowser/Prefix.pch";
 				INFOPLIST_FILE = ImageBrowser/Info.plist;
@@ -708,7 +734,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = QY42B6MUPR;
+				DEVELOPMENT_TEAM = 3U3XKPF3QC;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/ImageBrowser/Prefix.pch";
 				INFOPLIST_FILE = ImageBrowser/Info.plist;

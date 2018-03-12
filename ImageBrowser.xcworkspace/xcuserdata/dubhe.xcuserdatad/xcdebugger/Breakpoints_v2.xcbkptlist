@@ -40,17 +40,27 @@
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ImageBrowserUtility/ImageView/DTImage.m"
-            timestampString = "542113780.158175"
+            scope = "0"
+            stopOnStyle = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cagetory/UIImage+KeyFrames.m"
+            timestampString = "542562846.340766"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "227"
-            endingLineNumber = "227"
+            startingLineNumber = "82"
+            endingLineNumber = "82"
             landmarkName = "-getFrameWithIndex:"
             landmarkType = "7">
          </BreakpointContent>
@@ -58,32 +68,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ImageBrowserUtility/ImageView/DTImage.m"
-            timestampString = "542113780.1582479"
+            filePath = "Cagetory/UIImage+KeyFrames.m"
+            timestampString = "542562846.341303"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "232"
-            endingLineNumber = "232"
+            startingLineNumber = "62"
+            endingLineNumber = "62"
             landmarkName = "-getFrameWithIndex:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Pods/SDWebImage/SDWebImage/SDWebImageGIFCoder.m"
-            timestampString = "542112704.659693"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "34"
-            endingLineNumber = "34"
-            landmarkName = "-decodedImageWithData:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -94,11 +88,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ImageBrowserUtility/ImageView/DTImageView.m"
-            timestampString = "542190904.614584"
+            timestampString = "542562846.341446"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "131"
-            endingLineNumber = "131"
+            startingLineNumber = "164"
+            endingLineNumber = "164"
             landmarkName = "-setImageURL:"
             landmarkType = "7">
          </BreakpointContent>

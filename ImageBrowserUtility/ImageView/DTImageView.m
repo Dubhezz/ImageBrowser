@@ -13,6 +13,8 @@
 #import <SDWebImage/NSData+ImageContentType.h>
 #import <SDWebImage/SDWebImageGIFCoder.h>
 #import "DTImage.h"
+#import "UIImage+KeyFrames.h"
+#import "DTImage1.h"
 
 @interface DTImageView()
 
@@ -20,7 +22,7 @@
 @property (nonatomic, strong) NSTimer *timer;
 @property (nonatomic, assign) NSUInteger animationIndex;
 
-@property (nonatomic, strong) DTImage *animatedImage;
+@property (nonatomic, strong) DTImage1 *animatedImage;
 
 @end
 
@@ -97,22 +99,59 @@
     if (![[[SDWebImageCodersManager sharedInstance] coders] containsObject:[SDWebImageGIFCoder sharedCoder]]) {
         [[SDWebImageCodersManager sharedInstance] addCoder:[SDWebImageGIFCoder sharedCoder]];
     }
-    [manager loadImageWithURL:imageURL options:SDWebImageHighPriority progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
+    [manager loadImageWithURL:imageURL options:SDWebImageQueryDataWhenInMemory progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
         dispatch_sync(dispatch_get_main_queue(), ^{
             if ([weakSlef.delegate respondsToSelector:@selector(DTImageViewImageLoading:progress:)] && [imageURL.absoluteString isEqualToString:targetURL.absoluteString]) {
                 [weakSlef.delegate DTImageViewImageLoading:weakSlef progress:receivedSize/(CGFloat)expectedSize];
             }
         });
     } completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
+//        if (image.images.count > 1) {
+//            weakSlef.presentationImage = image;
+//            NSMutableArray *tempImages = [NSMutableArray arrayWithCapacity:weakSlef.presentationImage.images.count];
+//            for (UIImage *frame in image.images) {
+//                [tempImages addObject:[NSNull null]];
+//            }
+//            NSUInteger num = MIN(10, image.images.count);
+//            for (NSUInteger i = 0; i< num; i++) {
+//                UIImage *frame = image.images[i];
+//                if (frame != NULL) {
+//                    [tempImages replaceObjectAtIndex:i withObject:frame];
+//                } else {
+//                    [tempImages replaceObjectAtIndex:i withObject:[NSNull null]];
+//                }
+//            }
+//            weakSlef.presentationImage.tempImages = tempImages;
+//
+//            [weakSlef internalSetImage:image];
+//            if ([weakSlef.delegate respondsToSelector:@selector(DTImageViewImageDidLoad:progress:)]) {
+//                [weakSlef.delegate DTImageViewImageDidLoad:image.images[0] progress:1];
+//            }
+//            if (data) {
+//                weakSlef.gifData = data;
+//            } else {
+//                dispatch_async(dispatch_queue_create("GIFEncoder_Queue", DISPATCH_QUEUE_CONCURRENT), ^{
+//                    NSData *data = [[SDWebImageGIFCoder sharedCoder] encodedDataWithImage:image format:SDImageFormatGIF];
+//                    weakSlef.gifData = data;
+//                });
+//            }
+//        } else {
+//            weakSlef.presentationImage = image;
+//            [weakSlef internalSetImage:image];
+//            if ([weakSlef.delegate respondsToSelector:@selector(DTImageViewImageDidLoad:progress:)]) {
+//                [weakSlef.delegate DTImageViewImageDidLoad:image.images[0] progress:1];
+//            }
+//        }
+        
         if ([NSData sd_imageFormatForImageData:data] == SDImageFormatGIF) {
 #warning 此处直接加载动图会造成内存暴增
-            DTImage *dtImage = [[DTImage alloc] initWithData:data];
+            DTImage1 *dtImage = [[DTImage1 alloc] initWithData:data];
             weakSlef.animatedImage = dtImage;
             
-            UIImage *image = [[SDWebImageGIFCoder sharedCoder] decodedImageWithData:data];
-            NSString *key = [manager cacheKeyForURL:imageURL];
+//            UIImage *image = [[SDWebImageGIFCoder sharedCoder] decodedImageWithData:data];
+//            NSString *key = [manager cacheKeyForURL:imageURL];
 //            weakSlef.imageView.image = image.images[0];
-//            weakSlef.presentationImage = image;
+            weakSlef.presentationImage = dtImage;
 //            [weakSlef layoutImageView];
              [weakSlef internalSetImage:image];
             self.gifData = data;
@@ -186,7 +225,7 @@
     self.animationIndex = 0;
     if (image.images.count > 1) {
         self.imageView.image = image.images.firstObject;
-        self.imageView.animationImages = image.images;
+//        self.imageView.animationImages = image.images;
     } else {
         self.imageView.image = image;
         self.isAnimating = false;
@@ -231,7 +270,8 @@
     {
         return;
     }
-    NSTimeInterval frameDuration = (self.animatedImage.totalDuration / self.animatedImage.images.count) > 0 ? (self.animatedImage.totalDuration / self.animatedImage.images.count) : (1 / 30.0); //self.presentationImage.duration / (self.presentationImage.images.count > 0 ? (CGFloat)(self.presentationImage.images.count) : 1);
+//    NSTimeInterval frameDuration = (self.animatedImage.totalDuration / self.animatedImage.images.count) > 0 ? (self.animatedImage.totalDuration / self.animatedImage.images.count) : (1 / 30.0);
+    NSTimeInterval frameDuration = self.presentationImage.duration / (self.presentationImage.images.count > 0 ? (CGFloat)(self.presentationImage.images.count) : 1);
     
     if (frameDuration <= 0)
     {
@@ -264,11 +304,16 @@
     {
         self.frameIndex = self.animatedImage.images.count - 1;
     }
+    
     UIImage *image = [self.animatedImage getFrameWithIndex:self.frameIndex];
     if ([image isKindOfClass:[UIImage class]]) {
         self.imageView.image = image;
     }
+    
+//    self.imageView.image = [self.presentationImage getFrameWithIndex:self.frameIndex];
+    
 //    self.imageView.image = self.presentationImage.images[self.frameIndex]; //这样会造成内存暴增
 }
+
 
 @end
