@@ -120,6 +120,7 @@
                 [weakSlef.delegate DTImageViewImageDidLoad:image.images[0] progress:1];
             }
 //            [[manager imageCache] storeImage:image forKey:key completion:nil];
+            //view
         } else if (image) {
             if ([imageURL.absoluteString hasSuffix:@".gif"]) {
                 dispatch_async(dispatch_queue_create("GIFEncoder_Queue", DISPATCH_QUEUE_CONCURRENT), ^{
