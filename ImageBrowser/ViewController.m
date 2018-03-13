@@ -114,25 +114,25 @@
     DTSmallImageView *imageView6 = [[DTSmallImageView alloc] initWithImage:[UIImage imageNamed:@"1006.jpg"] index:6];
     DTSmallImageView *imageView7 = [[DTSmallImageView alloc] initWithImage:[UIImage imageNamed:@"1007.jpg"] index:7];
     DTSmallImageView *imageView8 = [[DTSmallImageView alloc] initWithImage:[UIImage imageNamed:@"1008.jpg"] index:8];
-//    NSArray <NSURL *>*imageURLs = @[[NSURL URLWithString:@"https://wx3.sinaimg.cn/or480/.jpg"],
-//                                    [NSURL URLWithString:@"https://wx1.sinaimg.cn/or480/780db7d6gy1fl5tz89n1cj21jk2bck6q.jpg"],
-//                                    [NSURL URLWithString:@"https://wx4.sinaimg.cn/or480/780db7d6gy1fl5tzaxe5xj21kw2dcqv6.jpg"],
-//                                    [NSURL URLWithString:@"https://wx4.sinaimg.cn/or480/780db7d6gy1fl5tz9ugvej21kw2awb29.jpg"],
-//                                    [NSURL URLWithString:@"https://wx1.sinaimg.cn/or480/780db7d6gy1fl5tz9rbadj21kw28l7wh.jpg"],
-//                                    [NSURL URLWithString:@"https://wx3.sinaimg.cn/or480/780db7d6gy1fl5tz8c0ywj21jj1wzhdt.jpg"],
-//                                    [NSURL URLWithString:@"https://wx2.sinaimg.cn/or480/780db7d6gy1fl5tzab608j21kw2aqqv5.jpg"],
-//                                    [NSURL URLWithString:@"https://wx1.sinaimg.cn/or480/780db7d6gy1fl5u0bha26j21jf26ue82.jpg"],
-//                                    [NSURL URLWithString:@"https://wx4.sinaimg.cn/or480/780db7d6gy1fl5u0a8mguj21kw2dhb29.jpg"]];
-    NSArray <NSURL*>*imageURLs = @[[NSURL URLWithString:@"https://wx3.sinaimg.cn/or480/6a162bf9ly1fori4rxrr2g20c80c8wui.gif"],
-                                   [NSURL URLWithString:@"https://wx1.sinaimg.cn/or480/6a162bf9ly1fori4sl5f8g20c80c8js8.gif"],
-                                   [NSURL URLWithString:@"https://wx4.sinaimg.cn/or480/6a162bf9ly1fori53ym5eg20c80c8b16.gif"],
-                                   [NSURL URLWithString:@"https://wx4.sinaimg.cn/or480/6a162bf9ly1fori5557o8g20dw09qb29.gif"],
-                                   [NSURL URLWithString:@"https://wx1.sinaimg.cn/or480/6a162bf9ly1fori4wbzp0g20c80c8u10.gif"],
-                                   [NSURL URLWithString:@"https://wx3.sinaimg.cn/or480/6a162bf9ly1fori4xslchg20c80b4hdt.gif"],
-                                   [NSURL URLWithString:@"https://wx2.sinaimg.cn/or480/6a162bf9ly1fori4ycvfxg20b40b443v.gif"],
-                                   [NSURL URLWithString:@"https://wx1.sinaimg.cn/or480/6a162bf9ly1fori501q68g20c80c8b2b.gif"],
-                                   [NSURL URLWithString:@"https://wx4.sinaimg.cn/or480/6a162bf9ly1fori51620dg20c80c8qoz.gif"]
-                                   ];
+    NSArray <NSURL *>*imageURLs = @[[NSURL URLWithString:@"https://wx3.sinaimg.cn/or480/006agIs1ly1fp4dfwxfr3j30u01hc0xm.jpg"],
+                                    [NSURL URLWithString:@"https://wx1.sinaimg.cn/or480/006agIs1ly1fp4dfw7serj30u01hck1d.jpg"],
+                                    [NSURL URLWithString:@"https://wx4.sinaimg.cn/or480/006agIs1ly1fp4dfx8itlj30u01hcjy4.jpg"],
+                                    [NSURL URLWithString:@"https://wx4.sinaimg.cn/or480/006agIs1ly1fp4dfvvpj8j30u01hcgsr.jpg"],
+                                    [NSURL URLWithString:@"https://wx1.sinaimg.cn/or480/006agIs1ly1fp4dfy0rytj30mi14044g.jpg"],
+                                    [NSURL URLWithString:@"https://wx3.sinaimg.cn/or480/006agIs1ly1fp4dfwlly0j30tz1hc7lt.jpg"],
+                                    [NSURL URLWithString:@"https://wx2.sinaimg.cn/or480/006agIs1ly1fp4dfxhvpcj30hs0vkjvm.jpg"],
+                                    [NSURL URLWithString:@"https://wx1.sinaimg.cn/or480/006agIs1ly1fp4diculgej30eo0nogns.jpg"],
+                                    [NSURL URLWithString:@"https://wx4.sinaimg.cn/or480/006agIs1ly1fp4dfvh7hnj30u01hc0xm.jpg"]];
+//    NSArray <NSURL*>*imageURLs = @[[NSURL URLWithString:@"https://wx3.sinaimg.cn/or480/6a162bf9ly1fori4rxrr2g20c80c8wui.gif"],
+//                                   [NSURL URLWithString:@"https://wx1.sinaimg.cn/or480/6a162bf9ly1fori4sl5f8g20c80c8js8.gif"],
+//                                   [NSURL URLWithString:@"https://wx4.sinaimg.cn/or480/6a162bf9ly1fori53ym5eg20c80c8b16.gif"],
+//                                   [NSURL URLWithString:@"https://wx4.sinaimg.cn/or480/6a162bf9ly1fori5557o8g20dw09qb29.gif"],
+//                                   [NSURL URLWithString:@"https://wx1.sinaimg.cn/or480/6a162bf9ly1fori4wbzp0g20c80c8u10.gif"],
+//                                   [NSURL URLWithString:@"https://wx3.sinaimg.cn/or480/6a162bf9ly1fori4xslchg20c80b4hdt.gif"],
+//                                   [NSURL URLWithString:@"https://wx2.sinaimg.cn/or480/6a162bf9ly1fori4ycvfxg20b40b443v.gif"],
+//                                   [NSURL URLWithString:@"https://wx1.sinaimg.cn/or480/6a162bf9ly1fori501q68g20c80c8b2b.gif"],
+//                                   [NSURL URLWithString:@"https://wx4.sinaimg.cn/or480/6a162bf9ly1fori51620dg20c80c8qoz.gif"]
+//                                   ];
     [imageView0 sd_setImageWithURL:imageURLs[0]];
     [imageView1 sd_setImageWithURL:imageURLs[1]];
     [imageView2 sd_setImageWithURL:imageURLs[2]];
@@ -277,6 +277,27 @@
     //https://wx1.sinaimg.cn/woriginal/6a162bf9ly1fori501q68g20c80c8b2b.gif
     //https://wx4.sinaimg.cn/woriginal/6a162bf9ly1fori51620dg20c80c8qoz.gif
     
+    //livePhoto
+    //cover1  https://wx2.sinaimg.cn/woriginal/006agIs1ly1fp4dfwxfr3j30u01hc0xm.jpg
+    //cover2  https://wx1.sinaimg.cn/woriginal/006agIs1ly1fp4dfw7serj30u01hck1d.jpg
+    //cover3  https://wx4.sinaimg.cn/woriginal/006agIs1ly1fp4dfx8itlj30u01hcjy4.jpg
+    //cover4  https://wx2.sinaimg.cn/woriginal/006agIs1ly1fp4dfvvpj8j30u01hcgsr.jpg
+    //cover5  https://wx1.sinaimg.cn/woriginal/006agIs1ly1fp4dfy0rytj30mi14044g.jpg
+    //cover6  https://wx1.sinaimg.cn/woriginal/006agIs1ly1fp4dfwlly0j30tz1hc7lt.jpg
+    //cover7  https://wx1.sinaimg.cn/woriginal/006agIs1ly1fp4dfxhvpcj30hs0vkjvm.jpg
+    //cover8  https://wx3.sinaimg.cn/woriginal/006agIs1ly1fp4diculgej30eo0nogns.jpg
+    //cover9  https://wx3.sinaimg.cn/woriginal/006agIs1ly1fp4dfvh7hnj30u01hc0xm.jpg
+    
+    //video1  http://video.weibo.com/media/play?livephoto=http%3A%2F%2Fus.sinaimg.cn%2F000TdSzojx07iI15hxVl010f0100t3cT0k01.mov
+    //video2  http://video.weibo.com/media/play?livephoto=http%3A%2F%2Fus.sinaimg.cn%2F000Rk0CHjx07iI15QebC010f01010mDc0k01.mov
+    //video3  http://video.weibo.com/media/play?livephoto=http%3A%2F%2Fus.sinaimg.cn%2F001YlYYGjx07iI1671mT010f0100t2fM0k01.mov
+    //video4  http://video.weibo.com/media/play?livephoto=http%3A%2F%2Fus.sinaimg.cn%2F002xruUBjx07iI16zJFd010f0100YtVd0k01.mov
+    //video5  http://video.weibo.com/media/play?livephoto=http%3A%2F%2Fus.sinaimg.cn%2F003PhNHXjx07iI16RSve010f0100oSMP0k01.mov
+    //video6  http://video.weibo.com/media/play?livephoto=http%3A%2F%2Fus.sinaimg.cn%2F002XPypjjx07iI1717DW010f0100ieHb0k01.mov
+    //video7  http://video.weibo.com/media/play?livephoto=http%3A%2F%2Fus.sinaimg.cn%2F002JcgKMjx07iI14Z848010f0101eurf0k01.mov
+    //video8  http://video.weibo.com/media/play?livephoto=http%3A%2F%2Fus.sinaimg.cn%2F0030Zpahjx07iI17pV4A010f0100zhHR0k01.mov
+    //video9  http://video.weibo.com/media/play?livephoto=http%3A%2F%2Fus.sinaimg.cn%2F001YlYYGjx07iI17FYJh010f0100t2fM0k01.mov
+    
     NSArray <NSURL*>*imageURLs = @[[NSURL URLWithString:@"https://wx3.sinaimg.cn/large/6a162bf9ly1fori4rxrr2g20c80c8wui.gif"],
                                    [NSURL URLWithString:@"https://wx1.sinaimg.cn/large/6a162bf9ly1fori4sl5f8g20c80c8js8.gif"],
                                    [NSURL URLWithString:@"https://wx4.sinaimg.cn/large/6a162bf9ly1fori53ym5eg20c80c8b16.gif"],
@@ -288,6 +309,34 @@
                                    [NSURL URLWithString:@"https://wx4.sinaimg.cn/large/6a162bf9ly1fori51620dg20c80c8qoz.gif"]
                                    ];
     return imageURLs[index];
+}
+
+- (NSString *)imageBrowser:(DTImageBrowser *)imageBrowser imageBrowserCellLivePhotoCoverImagePathForIndex:(NSInteger)index {
+    NSArray <NSString *> *livePhotoCoverImages = @[ @"https://wx2.sinaimg.cn/woriginal/006agIs1ly1fp4dfwxfr3j30u01hc0xm.jpg",
+                                                    @"https://wx1.sinaimg.cn/woriginal/006agIs1ly1fp4dfw7serj30u01hck1d.jpg",
+                                                    @"https://wx4.sinaimg.cn/woriginal/006agIs1ly1fp4dfx8itlj30u01hcjy4.jpg",
+                                                    @"https://wx2.sinaimg.cn/woriginal/006agIs1ly1fp4dfvvpj8j30u01hcgsr.jpg",
+                                                    @"https://wx1.sinaimg.cn/woriginal/006agIs1ly1fp4dfy0rytj30mi14044g.jpg",
+                                                    @"https://wx1.sinaimg.cn/woriginal/006agIs1ly1fp4dfwlly0j30tz1hc7lt.jpg",
+                                                    @"https://wx1.sinaimg.cn/woriginal/006agIs1ly1fp4dfxhvpcj30hs0vkjvm.jpg",
+                                                    @"https://wx3.sinaimg.cn/woriginal/006agIs1ly1fp4diculgej30eo0nogns.jpg",
+                                                    @"https://wx3.sinaimg.cn/woriginal/006agIs1ly1fp4dfvh7hnj30u01hc0xm.jpg"
+                                                    ];
+    return livePhotoCoverImages[index];
+}
+
+- (NSString *)imageBrowser:(DTImageBrowser *)imageBrowser imageBrowserCellLivePhotoVideoPathForIndex:(NSInteger)index {
+    NSArray <NSString *> *videoURLStrings = @[ @"http://video.weibo.com/media/play?livephoto=http%3A%2F%2Fus.sinaimg.cn%2F000TdSzojx07iI15hxVl010f0100t3cT0k01.mov",
+                                              @"http://video.weibo.com/media/play?livephoto=http%3A%2F%2Fus.sinaimg.cn%2F000Rk0CHjx07iI15QebC010f01010mDc0k01.mov",
+                                              @"http://video.weibo.com/media/play?livephoto=http%3A%2F%2Fus.sinaimg.cn%2F001YlYYGjx07iI1671mT010f0100t2fM0k01.mov",
+                                              @"http://video.weibo.com/media/play?livephoto=http%3A%2F%2Fus.sinaimg.cn%2F002xruUBjx07iI16zJFd010f0100YtVd0k01.mov",
+                                              @"http://video.weibo.com/media/play?livephoto=http%3A%2F%2Fus.sinaimg.cn%2F003PhNHXjx07iI16RSve010f0100oSMP0k01.mov",
+                                              @"http://video.weibo.com/media/play?livephoto=http%3A%2F%2Fus.sinaimg.cn%2F002XPypjjx07iI1717DW010f0100ieHb0k01.mov",
+                                              @"http://video.weibo.com/media/play?livephoto=http%3A%2F%2Fus.sinaimg.cn%2F002JcgKMjx07iI14Z848010f0101eurf0k01.mov",
+                                              @"http://video.weibo.com/media/play?livephoto=http%3A%2F%2Fus.sinaimg.cn%2F0030Zpahjx07iI17pV4A010f0100zhHR0k01.mov",
+                                              @"http://video.weibo.com/media/play?livephoto=http%3A%2F%2Fus.sinaimg.cn%2F001YlYYGjx07iI17FYJh010f0100t2fM0k01.mov"
+                                              ];
+    return videoURLStrings[index];
 }
 
 - (NSInteger)numberOfPicturesInImageBrowser:(DTImageBrowser *)imageBrowser {
@@ -304,7 +353,7 @@
 }
 
 - (DTImageBrowserCellType)imageBrowser:(DTImageBrowser *)imageBrowser imageBrowserCellTypeForIndex:(NSInteger)index {
-    return DTImageBrowserCellTypeOfStaticPic;
+    return DTImageBrowserCellTypeOfLivePhoto;
 }
 
 

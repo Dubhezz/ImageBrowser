@@ -71,20 +71,21 @@
     self.image = image;
     [self cellLayout];
     self.livePhotoView.frame = [self fetchFitFrameInScreen];
-    if (!isSend) {
-        NSArray *urlArray = @[
-                              [NSURL fileURLWithPath:videoFilePath],
-                              [NSURL fileURLWithPath:imagePath]
-                              ];
-        [PHLivePhoto requestLivePhotoWithResourceFileURLs:urlArray placeholderImage:image targetSize:[self fetchFitSizeInScreen] contentMode:PHImageContentModeAspectFit resultHandler:^(PHLivePhoto * _Nullable livePhoto, NSDictionary * _Nonnull info) {
-            [weakSelf cellLayout];
-            weakSelf.livePhotoView.livePhoto = livePhoto;
-            weakSelf.livePhotoView.frame = [weakSelf fetchFitFrameInScreen];
-        }];
-    } else {
-        //先从缓存中获取
-        
-    }
+    
+//    if () {
+//        NSArray *urlArray = @[
+//                              [NSURL fileURLWithPath:videoFilePath],
+//                              [NSURL fileURLWithPath:imagePath]
+//                              ];
+//        [PHLivePhoto requestLivePhotoWithResourceFileURLs:urlArray placeholderImage:image targetSize:[self fetchFitSizeInScreen] contentMode:PHImageContentModeAspectFit resultHandler:^(PHLivePhoto * _Nullable livePhoto, NSDictionary * _Nonnull info) {
+//            [weakSelf cellLayout];
+//            weakSelf.livePhotoView.livePhoto = livePhoto;
+//            weakSelf.livePhotoView.frame = [weakSelf fetchFitFrameInScreen];
+//        }];
+//    } else {
+//        //先从缓存中获取
+//
+//    }
 }
 
 #pragma -mark layout

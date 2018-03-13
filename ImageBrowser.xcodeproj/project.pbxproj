@@ -10,6 +10,7 @@
 		4625EC532056BA9D0090F9E4 /* SDWebImageCoderHelper+GIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 4625EC522056BA9D0090F9E4 /* SDWebImageCoderHelper+GIF.m */; };
 		4625EC592056C1BD0090F9E4 /* UIImage+KeyFrames.m in Sources */ = {isa = PBXBuildFile; fileRef = 4625EC582056C1BD0090F9E4 /* UIImage+KeyFrames.m */; };
 		4625EC5C2056D66E0090F9E4 /* DTImage1.m in Sources */ = {isa = PBXBuildFile; fileRef = 4625EC5B2056D66E0090F9E4 /* DTImage1.m */; };
+		4628C74F2057D29A005769DD /* DTLivePhotoDownLoadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4628C74E2057D29A005769DD /* DTLivePhotoDownLoadManager.m */; };
 		46B1B9072045609C0088B1A9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 46B1B9062045609C0088B1A9 /* AppDelegate.m */; };
 		46B1B90A2045609C0088B1A9 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46B1B9092045609C0088B1A9 /* ViewController.m */; };
 		46B1B90D2045609C0088B1A9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46B1B90B2045609C0088B1A9 /* Main.storyboard */; };
@@ -69,6 +70,8 @@
 		4625EC582056C1BD0090F9E4 /* UIImage+KeyFrames.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+KeyFrames.m"; sourceTree = "<group>"; };
 		4625EC5A2056D66E0090F9E4 /* DTImage1.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DTImage1.h; sourceTree = "<group>"; };
 		4625EC5B2056D66E0090F9E4 /* DTImage1.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DTImage1.m; sourceTree = "<group>"; };
+		4628C74D2057D29A005769DD /* DTLivePhotoDownLoadManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DTLivePhotoDownLoadManager.h; sourceTree = "<group>"; };
+		4628C74E2057D29A005769DD /* DTLivePhotoDownLoadManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DTLivePhotoDownLoadManager.m; sourceTree = "<group>"; };
 		46B1B9022045609C0088B1A9 /* ImageBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		46B1B9052045609C0088B1A9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		46B1B9062045609C0088B1A9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -163,6 +166,15 @@
 			path = Cagetory;
 			sourceTree = "<group>";
 		};
+		4628C74C2057D25A005769DD /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				4628C74D2057D29A005769DD /* DTLivePhotoDownLoadManager.h */,
+				4628C74E2057D29A005769DD /* DTLivePhotoDownLoadManager.m */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
 		46B1B8F92045609C0088B1A9 = {
 			isa = PBXGroup;
 			children = (
@@ -238,6 +250,7 @@
 		46B1B938204563DE0088B1A9 /* ImageBrowserUtility */ = {
 			isa = PBXGroup;
 			children = (
+				4628C74C2057D25A005769DD /* Manager */,
 				46B1B971204D41510088B1A9 /* ImageView */,
 				46B1B9512045650C0088B1A9 /* UIView */,
 				46B1B93B204564CC0088B1A9 /* DTImageBrowser.h */,
@@ -503,6 +516,7 @@
 			files = (
 				46B1B950204564CF0088B1A9 /* DTImageBrowser.m in Sources */,
 				46B1B97A204EA3990088B1A9 /* DTOOMDetectorManager.m in Sources */,
+				4628C74F2057D29A005769DD /* DTLivePhotoDownLoadManager.m in Sources */,
 				46B1B94A204564CF0088B1A9 /* DTImageBrowserLayout.m in Sources */,
 				46B1B949204564CF0088B1A9 /* DTImageBrowserProgressView.m in Sources */,
 				46B1B9542045651B0088B1A9 /* DTShadowLayer.m in Sources */,
