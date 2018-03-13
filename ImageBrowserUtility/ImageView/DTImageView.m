@@ -13,6 +13,7 @@
 #import <SDWebImage/NSData+ImageContentType.h>
 #import <SDWebImage/SDWebImageGIFCoder.h>
 #import "DTImage.h"
+#import <Photos/Photos.h>
 
 @interface DTImageView()
 
@@ -97,8 +98,8 @@
     if (![[[SDWebImageCodersManager sharedInstance] coders] containsObject:[SDWebImageGIFCoder sharedCoder]]) {
         [[SDWebImageCodersManager sharedInstance] addCoder:[SDWebImageGIFCoder sharedCoder]];
     }
-    [manager loadImageWithURL:imageURL options:SDWebImageHighPriority progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+    [manager loadImageWithURL:imageURL options:SDWebImageQueryDataWhenInMemory progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
+        dispatch_async(dispatch_get_main_queue(), ^{
             if ([weakSlef.delegate respondsToSelector:@selector(DTImageViewImageLoading:progress:)] && [imageURL.absoluteString isEqualToString:targetURL.absoluteString]) {
                 [weakSlef.delegate DTImageViewImageLoading:weakSlef progress:receivedSize/(CGFloat)expectedSize];
             }
@@ -108,30 +109,24 @@
 #warning 此处直接加载动图会造成内存暴增
             DTImage *dtImage = [[DTImage alloc] initWithData:data];
             weakSlef.animatedImage = dtImage;
-            
             UIImage *image = [[SDWebImageGIFCoder sharedCoder] decodedImageWithData:data];
-            NSString *key = [manager cacheKeyForURL:imageURL];
-//            weakSlef.imageView.image = image.images[0];
-//            weakSlef.presentationImage = image;
-//            [weakSlef layoutImageView];
              [weakSlef internalSetImage:image];
             self.gifData = data;
             if ([weakSlef.delegate respondsToSelector:@selector(DTImageViewImageDidLoad:progress:)]) {
                 [weakSlef.delegate DTImageViewImageDidLoad:image.images[0] progress:1];
             }
-//            [[manager imageCache] storeImage:image forKey:key completion:nil];
-            //view
         } else if (image) {
             if ([imageURL.absoluteString hasSuffix:@".gif"]) {
+                [weakSlef internalSetImage:image];
+                if ([weakSlef.delegate respondsToSelector:@selector(DTImageViewImageDidLoad:progress:)]) {
+                    [weakSlef.delegate DTImageViewImageDidLoad:image.images[0] progress:1];
+                }
                 dispatch_async(dispatch_queue_create("GIFEncoder_Queue", DISPATCH_QUEUE_CONCURRENT), ^{
-                    NSData *data = [[SDWebImageGIFCoder sharedCoder] encodedDataWithImage:image format:SDImageFormatGIF];
+//                    NSData *data = [[SDWebImageGIFCoder sharedCoder] encodedDataWithImage:image format:SDImageFormatGIF];
+                    NSData *data = UIImageJPEGRepresentation(image, 1);
                     DTImage *dtImage = [[DTImage alloc] initWithData:data];
                     weakSlef.animatedImage = dtImage;
                     self.gifData = data;
-                    [weakSlef internalSetImage:image];
-                    if ([weakSlef.delegate respondsToSelector:@selector(DTImageViewImageDidLoad:progress:)]) {
-                        [weakSlef.delegate DTImageViewImageDidLoad:image.images[0] progress:1];
-                    }
                 });
             } else {
                 [weakSlef internalSetImage:image];
@@ -139,12 +134,6 @@
                     [weakSlef.delegate DTImageViewImageDidLoad:image.images[0] progress:1];
                 }
             }
-//            if (image.images.count <= 1) NSLog(@"GIF 解析有误");
-//            weakSlef.imageView.image = image.images[0];
-//            weakSlef.presentationImage = image;
-//            [weakSlef layoutImageView];
-            ;
-            
         }
     }];
 }
@@ -239,7 +228,7 @@
     }
     self.animationIndex       = 0;
     self.timer = [NSTimer scheduledTimerWithTimeInterval:frameDuration target:self selector:@selector(handleAnimation) userInfo:nil repeats:YES];
-    [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSDefaultRunLoopMode];
+//    [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSDefaultRunLoopMode];
 }
 
 - (void)setFrameDuration:(NSTimeInterval)frameDuration {
@@ -249,7 +238,7 @@
 
 
 - (void)handleAnimation {
-    if (self.presentationImage.images.count == 0)
+    if (self.presentationImage.images.count == 0 || self.animatedImage.images.count == 0)
     {
         return;
     }
@@ -271,4 +260,18 @@
 //    self.imageView.image = self.presentationImage.images[self.frameIndex]; //这样会造成内存暴增
 }
 
+/*
+[[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+    PHAssetChangeRequest *creationRequest = [PHAssetChangeRequest creationRequestForAssetFromImage:image];
+    [[PHAssetCreationRequest creationRequestForAsset] addResourceWithType:PHAssetResourceTypePhoto data:data options:nil];
+   Gif 保存  ios 9.0之后使用 [PHAssetChangeRequest creationRequestForAssetFromImage:image].placeholderForCreatedAsset.localIdentifier;
+            ios 9.0之前使用 [[ALAssetsLibrary alloc] init] writeImageDataToSavedPhotosAlbum:data metadata:nil completionBlock:
+} completionHandler:^(BOOL success, NSError * _Nullable error) {
+    if (error) {
+        
+    } else {
+        NSLog(@"成功");
+    }
+}];
+*/
 @end
