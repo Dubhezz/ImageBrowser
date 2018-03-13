@@ -7,14 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DTImage1.h"
 
 @class DTImageView;
 
 @protocol DTImageViewDelegate <NSObject>
 @optional
 
-- (void)DTImageViewImageLoading:(DTImageView *)imageView progress:(CGFloat)progress;
-- (void)DTImageViewImageDidLoad:(UIImage *)image progress:(CGFloat)progress;
+- (void)DTImageViewImageLoading:(DTImageView *)imageView targetImageURL:(NSURL*)imageURL progress:(CGFloat)progress;
+- (void)DTImageViewImageDidLoadImage:(UIImage *)image animatedImage:(UIImage *)animatedImage imageData:(NSData *)imageData targetImageURL:(NSURL *)imageURL;
 
 @end
 
@@ -23,7 +24,8 @@
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, weak) id<DTImageViewDelegate> delegate;
 @property (nonatomic, strong) UIImage *placeholderImage;
-@property (nonatomic, strong, readonly) UIImage *presentationImage;
+@property (nonatomic, strong) DTImage1 *animatedImage;
+@property (nonatomic, strong) UIImage *presentationImage;
 @property (nonatomic, strong) NSURL *imageURL;
 @property (nonatomic, strong, readonly) NSTimer *timer;
 
@@ -35,5 +37,6 @@
 @property (nonatomic, strong) NSData *gifData;
 
 - (void)loadImageWithImageURL:(NSURL *)URL;
+- (void)internalSetImage:(UIImage *)image;
 
 @end

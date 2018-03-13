@@ -23,7 +23,7 @@
 @property (nonatomic, strong) id downloadIdentifier;
 
 @property (nonatomic, strong) UIImage *image;
-
+@property (nonatomic, strong) NSURL *highQualityImageURL;
 //手势开始结束的位置
 @property (nonatomic, assign) CGRect beginFrame;
 @property (nonatomic, assign) CGPoint beginTouch;
@@ -38,9 +38,9 @@
 }
 
 - (void)prepareForReuse {
-//    self.imageView.isAnimating = NO;
-//    self.imageView.imageView.animationImages = nil;
-//    self.imageView.imageView.image = nil;
+    self.imageView.isAnimating = NO;
+    self.imageView.imageView.animationImages = nil;
+    self.imageView.imageView.image = nil;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -84,6 +84,7 @@
     self.imageView.placeholderImage = image;
     [self cellLayout];
     if (imageURL) {
+        self.highQualityImageURL = imageURL;
         self.progressView.hidden = NO;
         [self.imageView setImageURL:imageURL];
     }
@@ -288,22 +289,30 @@
 }
 
 #pragma -mark DTImageViewDelegate
-- (void)DTImageViewImageLoading:(DTImageView *)imageView progress:(CGFloat)progress {
-    self.progressView.hidden = NO;
-    NSLog(@"下载进度---- %f",progress);
-    [self.progressView setProgress:fabs(progress)];
+- (void)DTImageViewImageLoading:(DTImageView *)imageView targetImageURL:(NSURL *)imageURL progress:(CGFloat)progress {
+    BOOL isCurrentProgress = [self.highQualityImageURL.absoluteString isEqualToString:imageURL.absoluteString];
+    if (isCurrentProgress) {
+        self.progressView.hidden = NO;
+        [self.progressView setProgress:fabs(progress)];
+        NSLog(@"下载进度---- %f",progress);
+    }
 }
 
-- (void)DTImageViewImageDidLoad:(UIImage *)image progress:(CGFloat)progress {
-    self.progressView.hidden = YES;
-    self.image = image;
+- (void)DTImageViewImageDidLoadImage:(UIImage *)image animatedImage:(UIImage *)animatedImage imageData:(NSData *)imageData targetImageURL:(NSURL *)imageURL {
+    if ([self.highQualityImageURL.absoluteString isEqualToString:imageURL.absoluteString]) {
+        self.progressView.hidden = YES;
+        self.imageView.presentationImage = image;
+        self.imageView.animatedImage = animatedImage;
+        [self.imageView internalSetImage:image];
+        self.image = image;
+        [self cellLayout];
+    }
     if (image.images.count > 1) {
 //        self.imageView.image = image.images.firstObject;
 //        self.imageView.animationImages = image.images;
     } else {
 //        self.imageView.image = image;
     }
-    [self cellLayout];
 }
 
 @end
