@@ -12,6 +12,8 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "AppDelegate.h"
 #import <OOMDetector/OOMDetector.h>
+#import "DTNetworkDownloader.h"
+
 
 @interface DTSmallImageView : UIImageView
 
@@ -216,6 +218,9 @@
     }];
     self.contentStackView.backgroundColor = [UIColor redColor];
    
+    [[[DTNetworkDownloader alloc] init] dataWithURLString:@"http://video.weibo.com/media/play?livephoto=http%3A%2F%2Fus.sinaimg.cn%2F000TdSzojx07iI15hxVl010f0100t3cT0k01.mov" completion:^(NSString *URLString, NSData *data, float progress, NSError *error) {
+        NSLog(@"-------------%f---%@-----",progress,@(data.length));
+    }];
 }
 
 - (void)imageViewDidTapWithIndex:(NSUInteger)index {
