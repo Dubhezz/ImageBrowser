@@ -30,7 +30,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ImageBrowserUtility/DTImageBrowserCell.m"
-            timestampString = "542703222.6805151"
+            timestampString = "542113780.158071"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "84"
@@ -40,33 +40,27 @@
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ImageBrowserUtility/ImageView/DTImage.m"
-            timestampString = "542113780.158175"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "227"
-            endingLineNumber = "227"
-            landmarkName = "-getFrameWithIndex:"
-            landmarkType = "7">
+            scope = "0"
+            stopOnStyle = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ImageBrowserUtility/ImageView/DTImage.m"
-            timestampString = "542113780.1582479"
+            filePath = "Cagetory/UIImage+KeyFrames.m"
+            timestampString = "542737185.875267"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "232"
-            endingLineNumber = "232"
+            startingLineNumber = "82"
+            endingLineNumber = "82"
             landmarkName = "-getFrameWithIndex:"
             landmarkType = "7">
          </BreakpointContent>
@@ -77,30 +71,14 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ImageBrowserUtility/ImageView/DTImage.m"
-            timestampString = "542539906.80351"
+            filePath = "Cagetory/UIImage+KeyFrames.m"
+            timestampString = "542737185.87559"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "174"
-            endingLineNumber = "174"
-            landmarkName = "-initWithCGImageSource:scale:"
+            startingLineNumber = "62"
+            endingLineNumber = "62"
+            landmarkName = "-getFrameWithIndex:"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Pods/SDWebImage/SDWebImage/SDWebImageCoderHelper.m"
-            timestampString = "542543703.067847"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "251"
-            endingLineNumber = "251"
-            landmarkName = "gcdArray"
-            landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -110,11 +88,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ImageBrowserUtility/ImageView/DTImageView.m"
-            timestampString = "542703222.681072"
+            timestampString = "542562846.341446"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "189"
-            endingLineNumber = "189"
+            startingLineNumber = "164"
+            endingLineNumber = "164"
             landmarkName = "-setImageURL:"
             landmarkType = "7">
          </BreakpointContent>
@@ -126,12 +104,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ImageBrowser/ViewController.m"
-            timestampString = "542718594.753014"
+            timestampString = "542737185.875679"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "262"
-            endingLineNumber = "262"
-            landmarkName = "-exportWith:"
+            startingLineNumber = "597"
+            endingLineNumber = "597"
+            landmarkName = "-fetchVideoMetadataWithOriginalPath:targetPath:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -142,12 +120,76 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ImageBrowser/ViewController.m"
-            timestampString = "542718594.753471"
+            timestampString = "542737185.876905"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "331"
-            endingLineNumber = "331"
-            landmarkName = "-exportWith:"
+            startingLineNumber = "595"
+            endingLineNumber = "595"
+            landmarkName = "-fetchVideoMetadataWithOriginalPath:targetPath:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ImageBrowser/ViewController.m"
+            timestampString = "542737185.877284"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "622"
+            endingLineNumber = "622"
+            landmarkName = "-fetchVideoMetadataWithOriginalPath:targetPath:"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__64-[ViewController fetchVideoMetadataWithOriginalPath:targetPath:]_block_invoke"
+                  moduleName = "ImageBrowser"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dubhe/Documents/GitRemot/ImageBrowser/ImageBrowser/ViewController.m"
+                  timestampString = "542736374.508621"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "621"
+                  endingLineNumber = "621"
+                  offsetFromSymbolStart = "884">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__64-[ViewController fetchVideoMetadataWithOriginalPath:targetPath:]_block_invoke.544"
+                  moduleName = "ImageBrowser"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dubhe/Documents/GitRemot/ImageBrowser/ImageBrowser/ViewController.m"
+                  timestampString = "542736374.510692"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "621"
+                  endingLineNumber = "621"
+                  offsetFromSymbolStart = "24">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ImageBrowser/ViewController.m"
+            timestampString = "542737185.877522"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "615"
+            endingLineNumber = "615"
+            landmarkName = "-fetchVideoMetadataWithOriginalPath:targetPath:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -158,12 +200,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ImageBrowser/ViewController.m"
-            timestampString = "542718594.753742"
+            timestampString = "542737185.877753"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "317"
-            endingLineNumber = "317"
-            landmarkName = "-exportWith:"
+            startingLineNumber = "600"
+            endingLineNumber = "600"
+            landmarkName = "-fetchVideoMetadataWithOriginalPath:targetPath:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -174,12 +216,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ImageBrowser/ViewController.m"
-            timestampString = "542718594.753996"
+            timestampString = "542737185.8779809"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "301"
-            endingLineNumber = "301"
-            landmarkName = "-exportWith:"
+            startingLineNumber = "626"
+            endingLineNumber = "626"
+            landmarkName = "-fetchVideoMetadataWithOriginalPath:targetPath:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -190,11 +232,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ImageBrowser/ViewController.m"
-            timestampString = "542718594.754244"
+            timestampString = "542737259.484268"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "544"
-            endingLineNumber = "544"
+            startingLineNumber = "635"
+            endingLineNumber = "635"
             landmarkName = "-fetchVideoMetadataWithOriginalPath:targetPath:"
             landmarkType = "7">
          </BreakpointContent>

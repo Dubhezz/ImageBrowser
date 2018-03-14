@@ -575,6 +575,7 @@
         if ([audioReader canAddOutput:audioReaderOutput]) {
             [audioReader addOutput:audioReaderOutput];
         }
+        [audioReader startReading];
     }
     //metadata track
     AVAssetWriterInputMetadataAdaptor *adaptor = [self metadataAdapter];
@@ -586,7 +587,7 @@
     [writer startSessionAtSourceTime:kCMTimeZero];
     //writeMetadata Track
     [adaptor appendTimedMetadataGroup:[[AVTimedMetadataGroup alloc] initWithItems:@[[self metadataForStillImage]] timeRange:CMTimeRangeMake(CMTimeMake(0, 1000), CMTimeMake(200, 3000))]];
-    [input requestMediaDataWhenReadyOnQueue:dispatch_queue_create("assetVideoWriterQueue", @[]) usingBlock:^{
+    [input requestMediaDataWhenReadyOnQueue:dispatch_queue_create("assetVideoWriterQueue", NULL) usingBlock:^{
         while ([input isReadyForMoreMediaData]) {
             if (reader.status == AVAssetReaderStatusReading) {
                 CMSampleBufferRef bufferRef = [output copyNextSampleBuffer];
@@ -597,7 +598,7 @@
                     if (reader.status == AVAssetReaderStatusCompleted && asset.tracks.count > 1) {
                         [audioReader startReading];
                         [writer startSessionAtSourceTime:kCMTimeZero];
-                        dispatch_queue_t media_queue = dispatch_queue_create("assetAudioWriterQueue", @[]);
+                        dispatch_queue_t media_queue = dispatch_queue_create("assetAudioWriterQueue", NULL);
                         [audioWriterInput requestMediaDataWhenReadyOnQueue:media_queue usingBlock:^{
                             while (audioWriterInput.isReadyForMoreMediaData) {
                                 CMSampleBufferRef sampleBuffer2 = [audioReaderOutput copyNextSampleBuffer];
@@ -651,14 +652,31 @@
     return item;
 }
 
+NSString *const kKeySpaceQuickTimeMetadata = @"mdta";
+NSString *const kKeyStillImageTime = @"com.apple.quicktime.still-image-time";
 - (AVAssetWriterInputMetadataAdaptor *)metadataAdapter {
+    
+//    NSString *identifier = [kKeySpaceQuickTimeMetadata stringByAppendingFormat:@"/%@",kKeyStillImageTime];
+//    const NSDictionary *spec = @{(__bridge_transfer  NSString*)kCMMetadataFormatDescriptionMetadataSpecificationKey_Identifier :
+//                                     identifier,
+//                                 (__bridge_transfer  NSString*)kCMMetadataFormatDescriptionMetadataSpecificationKey_DataType :
+//                                     @"com.apple.metadata.datatype.int8"
+//                                 };
+//    CMFormatDescriptionRef desc;
+//    CMMetadataFormatDescriptionCreateWithMetadataSpecifications(kCFAllocatorDefault, kCMMetadataFormatType_Boxed, (__bridge CFArrayRef)@[spec], &desc);
+//    AVAssetWriterInput *input = [AVAssetWriterInput assetWriterInputWithMediaType:AVMediaTypeMetadata outputSettings:nil sourceFormatHint:desc];
+//    CFRelease(desc);
+//    return [AVAssetWriterInputMetadataAdaptor assetWriterInputMetadataAdaptorWithAssetWriterInput:input];
+    
+    NSString *identifier = [kKeySpaceQuickTimeMetadata stringByAppendingFormat:@"/%@",kKeyStillImageTime];
     NSDictionary *spec = @{(id)kCMMetadataFormatDescriptionMetadataSpecificationKey_Identifier :
-                              @"\(kKeySpaceQuickTimeMetadata)/\(kKeyStillImageTime)",
+                              identifier,
                           (id)kCMMetadataFormatDescriptionMetadataSpecificationKey_DataType:
                               @"com.apple.metadata.datatype.int8"   };
-    CMFormatDescriptionRef desc = nil;
+    CMFormatDescriptionRef desc;
     CMMetadataFormatDescriptionCreateWithMetadataSpecifications(kCFAllocatorDefault, kCMMetadataFormatType_Boxed, (__bridge CFArrayRef _Nonnull)(@[spec]), &desc);
     AVAssetWriterInput *input = [AVAssetWriterInput assetWriterInputWithMediaType:AVMediaTypeMetadata outputSettings:nil sourceFormatHint:desc];
+    CFRelease(desc);
     return [AVAssetWriterInputMetadataAdaptor assetWriterInputMetadataAdaptorWithAssetWriterInput:input];
 }
 
@@ -666,7 +684,7 @@
     AVMutableMetadataItem *item = [AVMutableMetadataItem metadataItem];
     item.key = @"com.apple.quicktime.still-image-time";
     item.keySpace = AVMetadataKeySpaceQuickTimeMetadata;
-    item.value = 0;
+    item.value = [NSNumber numberWithInt:0];
     item.dataType = @"com.apple.metadata.datatype.int8";
     return item;
 }
