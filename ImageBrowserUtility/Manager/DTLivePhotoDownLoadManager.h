@@ -12,7 +12,5 @@ typedef void(^DTLivePhotoDownloadCompletionBlock)(NSString * _Nullable imagefile
 
 @interface DTLivePhotoDownLoadManager : NSObject
 
-+ (nullable instancetype)shareManager;
-- (void)downCoverImageWithImageURL:(nullable NSURL *)imageURL videoURL:(nullable NSURL *)videoURL completion:(nullable DTLivePhotoDownloadCompletionBlock)completion;
 
 @end

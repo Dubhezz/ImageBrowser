@@ -7,7 +7,7 @@ target 'ImageBrowser' do
     pod 'SDWebImage/GIF'
     pod 'Reveal-iOS-SDK', :configurations => ['Debug']
     pod 'OOMDetector'
-    pod 'KTVHTTPCache'
+#    pod 'KTVHTTPCache'
 end
 
 

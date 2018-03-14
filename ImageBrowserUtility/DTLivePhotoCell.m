@@ -73,15 +73,17 @@
     self.livePhotoView.frame = [self fetchFitFrameInScreen];
     
 //    if () {
-//        NSArray *urlArray = @[
-//                              [NSURL fileURLWithPath:videoFilePath],
-//                              [NSURL fileURLWithPath:imagePath]
-//                              ];
-//        [PHLivePhoto requestLivePhotoWithResourceFileURLs:urlArray placeholderImage:image targetSize:[self fetchFitSizeInScreen] contentMode:PHImageContentModeAspectFit resultHandler:^(PHLivePhoto * _Nullable livePhoto, NSDictionary * _Nonnull info) {
-//            [weakSelf cellLayout];
-//            weakSelf.livePhotoView.livePhoto = livePhoto;
-//            weakSelf.livePhotoView.frame = [weakSelf fetchFitFrameInScreen];
-//        }];
+    
+        NSArray *urlArray = @[
+                              [NSURL fileURLWithPath:@"/var/mobile/Containers/Data/Application/7362ACD1-DC6E-445E-ACFD-005E7221BFAC/Library/Caches/movs/77bba09cde268cb81ba8df423b07bd89.mov"],
+                              [NSURL fileURLWithPath:@"/var/mobile/Containers/Data/Application/7362ACD1-DC6E-445E-ACFD-005E7221BFAC/Library/Caches/default/com.hackemist.SDWebImageCache.default/c355e7f6487b14ab726f25bba6e9d360.jpg"]
+                              ];
+    
+        [PHLivePhoto requestLivePhotoWithResourceFileURLs:urlArray placeholderImage:image targetSize:[self fetchFitSizeInScreen] contentMode:PHImageContentModeAspectFit resultHandler:^(PHLivePhoto * _Nullable livePhoto, NSDictionary * _Nonnull info) {
+            [weakSelf cellLayout];
+            weakSelf.livePhotoView.livePhoto = livePhoto;
+            weakSelf.livePhotoView.frame = [weakSelf fetchFitFrameInScreen];
+        }];
 //    } else {
 //        //先从缓存中获取
 //
