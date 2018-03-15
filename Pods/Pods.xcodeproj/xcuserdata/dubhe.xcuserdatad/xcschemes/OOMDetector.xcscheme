@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0700"
+   LastUpgradeVersion = "0930"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -13,11 +13,11 @@
             buildForProfiling = "YES"
             buildForArchiving = "YES">
             <BuildableReference
-               BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'BC0D1201E37C274B694B91CA71AD0823'
-               BlueprintName = 'OOMDetector'
-               ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'libOOMDetector.a'>
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "BC0D1201E37C274B694B91CA71AD0823"
+               BlueprintName = "OOMDetector"
+               ReferencedContainer = "container:Pods.xcodeproj"
+               BuildableName = "libOOMDetector.a">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
