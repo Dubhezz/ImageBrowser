@@ -9,12 +9,13 @@
 #import <UIKit/UIKit.h>
 #import <PhotosUI/PHLivePhotoView.h>
 #import "DTImageBrowserCellProtocol.h"
+#import "DTLivePhotoView.h"
 
 @interface DTLivePhotoCell : UICollectionViewCell <DTImageBrowserCellProtocol>
 
 @property (nonatomic, weak) id<DTImageBrowserCellProtocol> imageBrowserCellDelegate;
 
-@property (nonatomic, strong) PHLivePhotoView *livePhotoView;
+@property (nonatomic, strong) DTLivePhotoView *livePhotoView;
 @property (nonatomic, strong, readonly) UIImage *image;
 
 - (void)setLivePhotoWithImage:(UIImage *)image livePhotoVideoURL:(NSURL *)videoURL coverImageURL:(NSURL *)imageURL livePhotoVideoFilePath:(NSString *)videoFilePath coverImageFilePath:(NSString *)imagePath finishSend:(BOOL)isSend;

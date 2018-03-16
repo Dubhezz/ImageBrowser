@@ -8,7 +8,8 @@
 
 #import "DTLivePhotoCell.h"
 #import "DTImageBrowserProgressView.h"
-
+#import <SDWebImage/UIImageView+WebCache.h>
+#import <PhotosUI/PHLivePhotoView.h>
 
 #if 0
 #define SLIDE_DOWN_COLSE_IMAGEBROWSER 1
@@ -28,6 +29,7 @@
 @property (nonatomic, strong) UIImage *image;
 
 @property (nonatomic) PHLivePhotoRequestID requsetID;
+@property (nonatomic, strong) PHLivePhoto *livephoto;
 
 @end
 
@@ -42,7 +44,7 @@
         //        _scrollView.showsVerticalScrollIndicator = NO;
         //        _scrollView.showsHorizontalScrollIndicator =NO;
         
-        _livePhotoView = [[PHLivePhotoView alloc] init];
+        _livePhotoView = [[DTLivePhotoView alloc] initWithFrame:self.bounds];
         [_scrollView addSubview:_livePhotoView];
         _livePhotoView.clipsToBounds = YES;
         
@@ -69,25 +71,12 @@
 - (void)setLivePhotoWithImage:(UIImage *)image livePhotoVideoURL:(NSURL *)videoURL coverImageURL:(NSURL *)imageURL livePhotoVideoFilePath:(NSString *)videoFilePath coverImageFilePath:(NSString *)imagePath finishSend:(BOOL)isSend {
     __weak typeof(self) weakSelf = self;
     self.image = image;
+    self.livePhotoView.placeholderImage = image;
     [self cellLayout];
-    self.livePhotoView.frame = [self fetchFitFrameInScreen];
-    
-//    if () {
-    
-        NSArray *urlArray = @[
-                              [NSURL fileURLWithPath:@"/var/mobile/Containers/Data/Application/7362ACD1-DC6E-445E-ACFD-005E7221BFAC/Library/Caches/movs/77bba09cde268cb81ba8df423b07bd89.mov"],
-                              [NSURL fileURLWithPath:@"/var/mobile/Containers/Data/Application/7362ACD1-DC6E-445E-ACFD-005E7221BFAC/Library/Caches/default/com.hackemist.SDWebImageCache.default/c355e7f6487b14ab726f25bba6e9d360.jpg"]
-                              ];
-    
-        [PHLivePhoto requestLivePhotoWithResourceFileURLs:urlArray placeholderImage:image targetSize:[self fetchFitSizeInScreen] contentMode:PHImageContentModeAspectFit resultHandler:^(PHLivePhoto * _Nullable livePhoto, NSDictionary * _Nonnull info) {
-            [weakSelf cellLayout];
-            weakSelf.livePhotoView.livePhoto = livePhoto;
-            weakSelf.livePhotoView.frame = [weakSelf fetchFitFrameInScreen];
-        }];
-//    } else {
-//        //先从缓存中获取
-//
-//    }
+    [self.livePhotoView loadImageWithVideoURLString:videoFilePath imageURLString:imagePath targetSize:image.size completion:^(PHLivePhoto *livephoto){
+        weakSelf.livephoto = livephoto;
+        [weakSelf cellLayout];
+    }];
 }
 
 #pragma -mark layout
@@ -100,14 +89,23 @@
 }
 
 - (CGSize)fetchFitSizeInScreen {
-    UIImage *image = self.image;//_livePhotoView.image;
-    if (!image) {
+    if (self.image) {
+        UIImage *image = self.image;//_livePhotoView.image;
+        if (!image) {
+            return CGSizeZero;
+        }
+        CGFloat scale = image.size.height / image.size.width;
+        CGFloat width = _scrollView.bounds.size.width;
+        CGFloat height = scale * width;
+        return CGSizeMake(width, height);
+    } else if (self.livephoto) {
+        CGFloat scale = self.livephoto.size.height / self.livephoto.size.width;
+        CGFloat width = _scrollView.bounds.size.width;
+        CGFloat height = scale * width;
+        return CGSizeMake(width, height);
+    } else {
         return CGSizeZero;
     }
-    CGFloat scale = image.size.height / image.size.width;
-    CGFloat width = _scrollView.bounds.size.width;
-    CGFloat height = scale * width;
-    return CGSizeMake(width, height);
 }
 
 - (CGRect)fetchFitFrameInScreen {

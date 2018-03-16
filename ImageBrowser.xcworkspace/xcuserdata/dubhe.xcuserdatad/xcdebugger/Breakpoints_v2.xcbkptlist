@@ -16,31 +16,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ImageBrowser/ViewController.m"
-            timestampString = "542805860.219815"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "282"
-            endingLineNumber = "282"
-            landmarkName = "-exportWith:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ImageBrowserUtility/Manager/DTLivePhotoDownLoadManager.m"
-            timestampString = "542805860.220142"
+            timestampString = "542890571.9714921"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "263"
-            endingLineNumber = "263"
+            startingLineNumber = "321"
+            endingLineNumber = "321"
             landmarkName = "-fetchVideoMetadataWithOriginalPath:targetPath:assetIdentifier:callBack:"
             landmarkType = "7">
          </BreakpointContent>
@@ -48,15 +32,79 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ImageBrowserUtility/Manager/DTLivePhotoDownLoadManager.m"
-            timestampString = "542805860.220809"
+            timestampString = "542890571.9719369"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "259"
-            endingLineNumber = "259"
+            startingLineNumber = "326"
+            endingLineNumber = "326"
+            landmarkName = "-fetchVideoMetadataWithOriginalPath:targetPath:assetIdentifier:callBack:"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__101-[DTLivePhotoDownLoadManager fetchVideoMetadataWithOriginalPath:targetPath:assetIdentifier:callBack:]_block_invoke"
+                  moduleName = "ImageBrowser"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dubhe/Documents/Git/ImageBrowser/ImageBrowserUtility/Manager/DTLivePhotoDownLoadManager.m"
+                  timestampString = "542889467.840843"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "323"
+                  endingLineNumber = "323"
+                  offsetFromSymbolStart = "468">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__101-[DTLivePhotoDownLoadManager fetchVideoMetadataWithOriginalPath:targetPath:assetIdentifier:callBack:]_block_invoke_2"
+                  moduleName = "ImageBrowser"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dubhe/Documents/Git/ImageBrowser/ImageBrowserUtility/Manager/DTLivePhotoDownLoadManager.m"
+                  timestampString = "542889467.843726"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "323"
+                  endingLineNumber = "323"
+                  offsetFromSymbolStart = "16">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ImageBrowserUtility/Manager/DTLivePhotoDownLoadManager.m"
+            timestampString = "542890571.972217"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "310"
+            endingLineNumber = "310"
+            landmarkName = "-fetchVideoMetadataWithOriginalPath:targetPath:assetIdentifier:callBack:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ImageBrowserUtility/Manager/DTLivePhotoDownLoadManager.m"
+            timestampString = "542890571.972773"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "316"
+            endingLineNumber = "316"
             landmarkName = "-fetchVideoMetadataWithOriginalPath:targetPath:assetIdentifier:callBack:"
             landmarkType = "7">
          </BreakpointContent>

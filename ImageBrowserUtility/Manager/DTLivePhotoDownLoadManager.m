@@ -7,7 +7,7 @@
 //
 
 
-// error: Error Domain=NSCocoaErrorDomain Code=-1 "(null)" 可能是图片或者视频处理有问题
+// error: Error Domain=NSCocoaErrorDomain Code=-1 "(null)" 可能是图片或者视频处理有问题 (注意AVMutableMetadataItem dataType的设置 )
 //
 //
 
@@ -18,6 +18,9 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <UIKit/UIKit.h>
 #import <PromiseKit/PromiseKit.h>
+#import <SDWebImage/UIImageView+WebCache.h>
+#import "DTNetworkDownloader.h"
+#import "DTUtil.h"
 
 NSString *const kKeyContentIdentifier =  @"com.apple.quicktime.content.identifier";
 NSString *const kKeySpaceQuickTimeMetadata = @"mdta";
@@ -42,63 +45,110 @@ NSString *const kFigAppleMakerNote_AssetIdentifier = @"17";
     return self;
 }
 
+- (void)downloadeVideoWithVideoURLString:(NSString *)videoURLString imageURLString:(NSString *)imageURLString mergeProgress:(DTDownloadProgressCallBack)mergeProgress callBack:(DTLivePhotoSourcesCallBack)callBack {
+   
+    NSString *path = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject
+                      stringByAppendingPathComponent:@"movs/"];
+    [[NSFileManager defaultManager] createDirectoryAtPath:path
+                              withIntermediateDirectories:true
+                                               attributes:nil
+                                                    error:nil];
+    NSString *identifier = [[NSUUID UUID] UUIDString];
+    NSString *videoTargetPath = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mov",[DTUtil MD5:identifier]]];
+    
+    NSString *imageTargetPath = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.jpg",[DTUtil MD5:identifier]]];
+    
+    if (videoURLString.length == 0 || imageURLString == 0) {
+        return;
+    }
+    PMKPromise *promise1 = [self promiseForDownloadImageWithURLString:imageURLString].then(^(UIImage *image){
+        return [PMKPromise promiseWithValue:image];
+    });
+    PMKPromise *promise2 = [self promiseForDownloadVideoWithString:videoURLString progressCallBack:mergeProgress].then(^(NSString *videoOriginalPath) {
+        return [PMKPromise promiseWithValue:videoOriginalPath];
+    });
+    [PMKPromise when:@[promise1, promise2]].then(^(NSArray *sources) {
+        UIImage *image;
+        NSString *videoOriginalPath;
+        for (id obj in sources) {
+            if ([obj isKindOfClass:[UIImage class]]) {
+                image = (UIImage *)obj;
+            } else if ([obj isKindOfClass:[NSString class]] && [obj hasSuffix:@".mp4"]) {
+                videoOriginalPath = (NSString *)obj;
+            } else {
+                break;
+            }
+        }
+        [self fetchLivePhotoSourceWithOriginalImage:image targetPath:imageTargetPath originalVideoPath:videoOriginalPath targetVideoPath:videoTargetPath assetIdentifier:identifier livePhotoSourcesCallBack:callBack];
+    }).catch(^(NSError *error) {
+        if (callBack) {
+            callBack(nil, nil, error);
+        }
+    });
+    
+    
+}
+
+- (PMKPromise *)promiseForDownloadImageWithURLString:(NSString *)imageURLString {
+    return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+        [self downloadImageWithURLString:imageURLString originalImageCallBack:^(UIImage * _Nullable image, NSError * _Nullable error) {
+            if (error) {
+                reject(error);
+            } else {
+                fulfill(image);
+            }
+        }];
+    }];
+}
+
+- (PMKPromise *)promiseForDownloadVideoWithString:(NSString *)string progressCallBack:(DTDownloadProgressCallBack)progressCallBack {
+    return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+        [self downloadeVideoWithVideoURLString:string progressCallBack:progressCallBack videoOriginalPathCallBack:^(NSString * _Nullable originalVideoPath, NSError * _Nullable error) {
+            if (error) {
+                reject(error);
+            } else {
+                fulfill(originalVideoPath);
+            }
+        }];
+    }];
+}
+
+- (void)downloadImageWithURLString:(NSString *)URLString originalImageCallBack:(DTLivePhotoOfOriginalImageCallBack)imageCallBack {
+    SDWebImageManager *manager = [SDWebImageManager sharedManager];
+    SDWebImageOptions options = SDWebImageQueryDataWhenInMemory;
+    [manager loadImageWithURL:[NSURL URLWithString:URLString] options:options progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            if ([weakSlef.delegate respondsToSelector:@selector(DTImageViewImageLoading:targetImageURL:progress:)] && [imageURL.absoluteString isEqualToString:targetURL.absoluteString]) {
+//                [weakSlef.delegate DTImageViewImageLoading:weakSlef targetImageURL:targetURL progress:receivedSize/(CGFloat)expectedSize];
+//            }
+//        });
+    } completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
+        if (!error && image) {
+            if (imageCallBack) {
+                imageCallBack(image, error);
+            }
+        } else {
+            if (imageCallBack) {
+                imageCallBack(nil, error);
+            }
+        }
+    }];
+}
+
+- (void)downloadeVideoWithVideoURLString:(NSString *)videoURLString  progressCallBack:(DTDownloadProgressCallBack)progressCallBack videoOriginalPathCallBack:(DTLivePhotoOfVideoOriginalPathPathCallBack)videoPathCallBack {
+    [[[DTNetworkDownloader alloc] init] dataWithURLString:videoURLString progress:progressCallBack completion:^(NSURL *fileURL, NSURL *videoURL, NSData *data, NSError *error) {
+        if (!error && fileURL) {
+            if (videoPathCallBack) {
+                videoPathCallBack(fileURL.path, error);
+            } else {
+                videoPathCallBack(nil, error);
+            }
+        }
+    }];
+}
+
 
 - (void)fetchLivePhotoSourceWithOriginalImage:(UIImage *)originalImage targetPath:(NSString *)targetPath originalVideoPath:(NSString *)originalVideoPath targetVideoPath:(NSString *)targetVideoPath assetIdentifier:(NSString *)assetIdentifier livePhotoSourcesCallBack:(DTLivePhotoSourcesCallBack)livePhotoSourcesCallBack {
-//    __block NSError *fetchError = nil;
-//    __block NSString *livePhotoVideoFilePath = nil;
-//    __block NSString *livePhotoImageFilePath = nil;
-    
-//    dispatch_queue_t queue =   dispatch_queue_create("com.conCurrentQueue.queue", DISPATCH_QUEUE_CONCURRENT);
-//    dispatch_group_t group = dispatch_group_create();
-//    dispatch_group_async(group, queue, ^{
-//        [self fetchImageMetadataWithOriginalImage:originalImage targetPath:targetPath assetIdentifier:assetIdentifier callBack:^(NSString * _Nullable imageFilePath, NSError * _Nullable error) {
-//            if (error) {
-//                fetchError = error;
-//            } else {
-//                livePhotoImageFilePath = imageFilePath;
-//            }
-//        }];
-//    });
-//    dispatch_group_sync(group, queue, ^{
-//        [self fetchVideoMetadataWithOriginalPath:originalVideoPath targetPath:targetVideoPath assetIdentifier:assetIdentifier callBack:^(NSString * _Nullable videoFilePath, NSError * _Nullable error) {
-//            if (error) {
-//                fetchError = error;
-//            } else {
-//                livePhotoVideoFilePath = videoFilePath;
-//            }
-//        }];
-//    });
-//    dispatch_group_notify(group, queue, ^{
-//        if (livePhotoSourcesCallBack) {
-//            livePhotoSourcesCallBack(livePhotoVideoFilePath, livePhotoImageFilePath, fetchError);
-//        }
-//    });
-    
-//    dispatch_queue_t queue = dispatch_queue_create("queue", DISPATCH_QUEUE_CONCURRENT);
-//    dispatch_async(queue, ^{
-//        [self fetchImageMetadataWithOriginalImage:originalImage targetPath:targetPath assetIdentifier:assetIdentifier callBack:^(NSString * _Nullable imageFilePath, NSError * _Nullable error) {
-//            if (error) {
-//                fetchError = error;
-//            } else {
-//                livePhotoImageFilePath = imageFilePath;
-//            }
-//        }];
-//    });
-//    dispatch_sync(queue, ^{
-//        [self fetchVideoMetadataWithOriginalPath:originalVideoPath targetPath:targetVideoPath assetIdentifier:assetIdentifier callBack:^(NSString * _Nullable videoFilePath, NSError * _Nullable error) {
-//            if (error) {
-//                fetchError = error;
-//            } else {
-//                livePhotoVideoFilePath = videoFilePath;
-//            }
-//        }];
-//    });
-//    dispatch_barrier_async(queue, ^{
-//        if (livePhotoSourcesCallBack) {
-//            livePhotoSourcesCallBack(livePhotoVideoFilePath, livePhotoImageFilePath, fetchError);
-//        }
-//    });
-   
     PMKPromise *promise1 = [self promiseForFetchVideoMetadataWithOriginalPath:originalVideoPath targetPath:targetVideoPath assetIdentifier:assetIdentifier].then(^(NSString *videoFilePath) {
          return [PMKPromise promiseWithValue:videoFilePath];
     });
@@ -252,14 +302,17 @@ NSString *const kFigAppleMakerNote_AssetIdentifier = @"17";
             CMSampleBufferRef audioBuffer = [audioOutput copyNextSampleBuffer];
             if (videoBuffer) {
                 while (!videoInput.isReadyForMoreMediaData || !audioInput.isReadyForMoreMediaData) {
-                    usleep(1);
+                    usleep(1/ 30.0);
                 }
                 if (audioBuffer) {
-                    BOOL isAppend = [audioInput appendSampleBuffer:audioBuffer];
+                    if (audioInput.isReadyForMoreMediaData) {
+                        BOOL isAppend = [audioInput appendSampleBuffer:audioBuffer];
+                    }
                     CFRelease(audioBuffer);
                 }
-
-                BOOL isAppend = [adaptor.assetWriterInput appendSampleBuffer:videoBuffer];
+                if (videoInput.isReadyForMoreMediaData) {
+                    BOOL isAppend = [adaptor.assetWriterInput appendSampleBuffer:videoBuffer];
+                }
                 CMSampleBufferInvalidate(videoBuffer);
                 CFRelease(videoBuffer);
                 videoBuffer = nil;
@@ -269,132 +322,22 @@ NSString *const kFigAppleMakerNote_AssetIdentifier = @"17";
             }
             // NULL?
         }
-        dispatch_sync(dispatch_get_main_queue(), ^{
+//        dispatch_sync(dispatch_get_main_queue(), ^{
             [writer finishWritingWithCompletionHandler:^{
                 if (callBack) {
                     callBack(writer.outputURL.path,error_two);
                 }
             }];
-        });
+//        });
     });
     
     
     while (writer.status == AVAssetWriterStatusWriting) {
         [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.5]];
     }
-
-//    AVAssetReaderOutput *videoOutput = nil;
-//    AVAssetReaderOutput *audioOutput = nil;
-//    AVAssetWriterInput *videoInput   = nil;
-//    AVAssetWriterInput *audioInput   = nil;
-//    AVURLAsset *asset = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:originalPath]];
-//    AVAssetTrack *videoTrack = [asset tracksWithMediaType:AVMediaTypeVideo].firstObject;
-//    AVAssetTrack *audioTrack = [asset tracksWithMediaType:AVMediaTypeAudio].firstObject;
-//    if (!videoTrack) {
-//        return;
-//    }
-//    NSError *error;
-//    AVAssetReader *reader = [AVAssetReader assetReaderWithAsset:asset error:&error];
-//
-//    videoOutput = [AVAssetReaderTrackOutput assetReaderTrackOutputWithTrack:videoTrack outputSettings:@{(__bridge_transfer  NSString*)kCVPixelBufferPixelFormatTypeKey : [NSNumber numberWithUnsignedInt:kCVPixelFormatType_32BGRA]}];
-//
-//    if ([reader canAddOutput:videoOutput]) {
-//        [reader addOutput:videoOutput];
-//    } else {
-//        NSLog(@"add video output error ---- %@",error);
-//    }
-//
-//    videoInput = [AVAssetWriterInput assetWriterInputWithMediaType:AVMediaTypeVideo outputSettings:@{AVVideoCodecKey: AVVideoCodecH264,
-//                                                                                                     AVVideoWidthKey: [NSNumber numberWithFloat:videoTrack.naturalSize.width],
-//                                                                                                     AVVideoHeightKey: [NSNumber numberWithFloat:videoTrack.naturalSize.height]
-//                                                                                                     }];
-//    videoInput.expectsMediaDataInRealTime = true;
-//    videoInput.transform = videoTrack.preferredTransform;
-//
-//    if (asset.tracks.count > 1) {
-//        audioOutput = [AVAssetReaderTrackOutput assetReaderTrackOutputWithTrack:audioTrack outputSettings:@{AVFormatIDKey :@(kAudioFormatLinearPCM),
-//                                                                                                            AVLinearPCMIsBigEndianKey:@NO,
-//                                                                                                            AVLinearPCMIsFloatKey:@NO,
-//                                                                                                            AVLinearPCMBitDepthKey :@(16)
-//                                                                                                            }];
-//
-//        if ([reader canAddOutput:audioOutput]) {
-//            [reader addOutput:audioOutput];
-//        } else {
-//            NSLog(@"add audio output error ---- %@",error);
-//        }
-//
-//        audioInput = [AVAssetWriterInput assetWriterInputWithMediaType:AVMediaTypeAudio outputSettings:@{AVFormatIDKey: [NSNumber numberWithInt: kAudioFormatMPEG4AAC],
-//                                                                                                         AVNumberOfChannelsKey: [NSNumber numberWithInt:1],
-//                                                                                                         AVSampleRateKey: [NSNumber numberWithFloat: 44100],
-//                                                                                                         AVEncoderBitRateKey: [NSNumber numberWithInt: 128000]
-//                                                                                                         }];
-//        audioInput.expectsMediaDataInRealTime = true;
-//        audioInput.transform = audioTrack.preferredTransform;
-//    }
-//
-//
-//
-//    NSError *writer_error;
-//    AVAssetWriter *writer = [AVAssetWriter assetWriterWithURL:[NSURL fileURLWithPath:targetPath] fileType:AVFileTypeQuickTimeMovie error:&writer_error];
-//    AVAssetWriterInputPixelBufferAdaptor *pixelBufferAdaptor = [AVAssetWriterInputPixelBufferAdaptor assetWriterInputPixelBufferAdaptorWithAssetWriterInput:videoInput sourcePixelBufferAttributes:@{(__bridge_transfer  NSString*)kCVPixelBufferPixelFormatTypeKey :[NSNumber numberWithInt:kCVPixelFormatType_32BGRA]}];
-//    AVAssetWriterInputMetadataAdaptor *metadataAdaptor = [self metadataAdapter];
-//    writer.metadata = @[[self medatataForAssetIdentifier:assetIdentifier]];
-//    [writer addInput:metadataAdaptor.assetWriterInput];
-//    [writer startWriting];
-//    [reader startReading];
-//    [writer startSessionAtSourceTime:kCMTimeZero];
-//
-//    [metadataAdaptor appendTimedMetadataGroup:[[AVTimedMetadataGroup alloc] initWithItems:@[[self metadataForStillImage]] timeRange:CMTimeRangeMake(CMTimeMake(0, 1000), CMTimeMake(200, 3000))]];
-//
-//    dispatch_queue_t videoWriterQueue = dispatch_queue_create("VideoWriterQueue", DISPATCH_QUEUE_SERIAL);
-//    dispatch_async(videoWriterQueue, ^{
-//        while (reader.status == AVAssetReaderStatusReading) {
-//            CMSampleBufferRef videoBuffer = [videoOutput copyNextSampleBuffer];
-//            CMSampleBufferRef audioBuffer = [audioOutput copyNextSampleBuffer];
-//            if (videoBuffer) {
-//                while (!videoInput.isReadyForMoreMediaData || !audioInput.isReadyForMoreMediaData) {
-//                    usleep(1);
-//                }
-//                if (audioBuffer) {
-//                    [audioInput appendSampleBuffer:audioBuffer];
-//                    CFRelease(audioBuffer);
-//                }
-//                [pixelBufferAdaptor.assetWriterInput appendSampleBuffer:videoBuffer];
-//                CMSampleBufferInvalidate(videoBuffer);
-//                CFRelease(videoBuffer);
-//                videoBuffer = nil;
-//            } else {
-//                continue;
-//            }
-//            dispatch_sync(dispatch_get_main_queue(), ^{
-//                [writer finishWritingWithCompletionHandler:^{
-//                    NSLog(@"Finish \n");
-//                    if (callBack) {
-//                        callBack(writer.outputURL.path,writer_error);
-//                    }
-//                }];
-//            });
-//        }
-//    });
-//
-//    while (writer.status == AVAssetWriterStatusWriting) {
-//        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.5]];
-//    }
 }
 
 - (AVAssetWriterInputMetadataAdaptor *)metadataAdapter {
-//    NSString *identifier = [kKeySpaceQuickTimeMetadata stringByAppendingFormat:@"/%@",kKeyStillImageTime];
-//    NSDictionary *spec = @{(id)kCMMetadataFormatDescriptionMetadataSpecificationKey_Identifier :
-//                               identifier,
-//                           (id)kCMMetadataFormatDescriptionMetadataSpecificationKey_DataType:
-//                               @"com.apple.metadata.datatype.int8"};
-//    CMFormatDescriptionRef desc;
-//    CMMetadataFormatDescriptionCreateWithMetadataSpecifications(kCFAllocatorDefault, kCMMetadataFormatType_Boxed, (__bridge CFArrayRef _Nonnull)(@[spec]), &desc);
-//    AVAssetWriterInput *input = [AVAssetWriterInput assetWriterInputWithMediaType:AVMediaTypeMetadata outputSettings:nil sourceFormatHint:desc];
-//    CFRelease(desc);
-//    return [AVAssetWriterInputMetadataAdaptor assetWriterInputMetadataAdaptorWithAssetWriterInput:input];
-    
     NSString *identifier = [kKeySpaceQuickTimeMetadata stringByAppendingFormat:@"/%@",kKeyStillImageTime];
     const NSDictionary *spec = @{(__bridge_transfer NSString*)kCMMetadataFormatDescriptionMetadataSpecificationKey_Identifier :
                                      identifier,
@@ -414,7 +357,7 @@ NSString *const kFigAppleMakerNote_AssetIdentifier = @"17";
     item.key = kKeyContentIdentifier;
     item.keySpace = AVMetadataKeySpaceQuickTimeMetadata;
     item.value = assetIdentifier;
-    item.dataType = @"com.apple.metadata.datatype.int8";
+    item.dataType = @"com.apple.metadata.datatype.UTF-8";
     return item;
 }
 

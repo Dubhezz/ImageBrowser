@@ -1,15 +1,15 @@
 //
-//  NSString+MD5.m
+//  DTUtil.m
 //  ImageBrowser
 //
-//  Created by dubhe on 2018/3/13.
+//  Created by dubhe on 2018/3/16.
 //  Copyright © 2018年 Dubhe. All rights reserved.
 //
 
-#import "NSString+MD5.h"
+#import "DTUtil.h"
 #import <CommonCrypto/CommonCrypto.h>
 
-@implementation NSString (MD5)
+@implementation DTUtil
 
 + (NSString *)MD5:(NSString *)str
 {

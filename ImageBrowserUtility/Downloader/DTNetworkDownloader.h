@@ -9,8 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "DTDownloadRequest.h"
 
-typedef void (^DTDownloadDataCompletion)(NSURL *URL, NSData *data, float progress, NSError *error);
-
+typedef void (^DTDownloadDataCompletion)(NSURL *fileURL, NSURL *videoURL, NSData *data, NSError *error);
+typedef void (^DTDownloadProgressCallBack)(NSURL *videoURL, float progress);
 
 
 
@@ -20,6 +20,8 @@ typedef void (^DTDownloadDataCompletion)(NSURL *URL, NSData *data, float progres
 
 @property (nonatomic) NSUInteger retryTimes;
 @property (nonatomic) NSTimeInterval timeoutInterval;
+
+- (void)dataWithURLString:(NSString *)URLString progress:(DTDownloadProgressCallBack)progressCallBack completion:(DTDownloadDataCompletion)completion;
 - (void)dataWithURLString:(NSString *)URLString completion:(DTDownloadDataCompletion)completion;
 + (NSString *)cacheDirectory;
 + (NSString *)cacheFilePathForURL:(NSString *)URL;

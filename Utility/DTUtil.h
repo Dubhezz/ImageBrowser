@@ -1,14 +1,14 @@
 //
-//  NSString+MD5.h
+//  DTUtil.h
 //  ImageBrowser
 //
-//  Created by dubhe on 2018/3/13.
+//  Created by dubhe on 2018/3/16.
 //  Copyright © 2018年 Dubhe. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
-@interface NSString (MD5)
+@interface DTUtil : NSObject
 
 + (NSString *)MD5:(NSString *)str;
 

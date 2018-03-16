@@ -7,12 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		460BC82B205BB60D00379BF7 /* DTUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 460BC82A205BB60D00379BF7 /* DTUtil.m */; };
+		460BC82E205BC04400379BF7 /* DTLivePhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 460BC82D205BC04400379BF7 /* DTLivePhotoView.m */; };
 		4625EC532056BA9D0090F9E4 /* SDWebImageCoderHelper+GIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 4625EC522056BA9D0090F9E4 /* SDWebImageCoderHelper+GIF.m */; };
 		4625EC592056C1BD0090F9E4 /* UIImage+KeyFrames.m in Sources */ = {isa = PBXBuildFile; fileRef = 4625EC582056C1BD0090F9E4 /* UIImage+KeyFrames.m */; };
 		4625EC5C2056D66E0090F9E4 /* DTImage1.m in Sources */ = {isa = PBXBuildFile; fileRef = 4625EC5B2056D66E0090F9E4 /* DTImage1.m */; };
 		4625EC61205818D00090F9E4 /* DTNetworkDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4625EC60205818D00090F9E4 /* DTNetworkDownloader.m */; };
 		4625EC6420581A0A0090F9E4 /* DTDownloadRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4625EC6320581A0A0090F9E4 /* DTDownloadRequest.m */; };
-		4625EC67205827940090F9E4 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 4625EC66205827940090F9E4 /* NSString+MD5.m */; };
 		4628C74F2057D29A005769DD /* DTLivePhotoDownLoadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4628C74E2057D29A005769DD /* DTLivePhotoDownLoadManager.m */; };
 		46B1B9072045609C0088B1A9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 46B1B9062045609C0088B1A9 /* AppDelegate.m */; };
 		46B1B90A2045609C0088B1A9 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46B1B9092045609C0088B1A9 /* ViewController.m */; };
@@ -67,6 +68,10 @@
 
 /* Begin PBXFileReference section */
 		128E3715FB89F1C268A53897 /* Pods-ImageBrowser.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImageBrowser.release.xcconfig"; path = "Pods/Target Support Files/Pods-ImageBrowser/Pods-ImageBrowser.release.xcconfig"; sourceTree = "<group>"; };
+		460BC829205BB60D00379BF7 /* DTUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DTUtil.h; sourceTree = "<group>"; };
+		460BC82A205BB60D00379BF7 /* DTUtil.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DTUtil.m; sourceTree = "<group>"; };
+		460BC82C205BC04400379BF7 /* DTLivePhotoView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DTLivePhotoView.h; sourceTree = "<group>"; };
+		460BC82D205BC04400379BF7 /* DTLivePhotoView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DTLivePhotoView.m; sourceTree = "<group>"; };
 		4625EC512056BA9D0090F9E4 /* SDWebImageCoderHelper+GIF.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SDWebImageCoderHelper+GIF.h"; sourceTree = "<group>"; };
 		4625EC522056BA9D0090F9E4 /* SDWebImageCoderHelper+GIF.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "SDWebImageCoderHelper+GIF.m"; sourceTree = "<group>"; };
 		4625EC572056C1BD0090F9E4 /* UIImage+KeyFrames.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+KeyFrames.h"; sourceTree = "<group>"; };
@@ -77,8 +82,6 @@
 		4625EC60205818D00090F9E4 /* DTNetworkDownloader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DTNetworkDownloader.m; sourceTree = "<group>"; };
 		4625EC6220581A0A0090F9E4 /* DTDownloadRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DTDownloadRequest.h; sourceTree = "<group>"; };
 		4625EC6320581A0A0090F9E4 /* DTDownloadRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DTDownloadRequest.m; sourceTree = "<group>"; };
-		4625EC65205827940090F9E4 /* NSString+MD5.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
-		4625EC66205827940090F9E4 /* NSString+MD5.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
 		4628C74D2057D29A005769DD /* DTLivePhotoDownLoadManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DTLivePhotoDownLoadManager.h; sourceTree = "<group>"; };
 		4628C74E2057D29A005769DD /* DTLivePhotoDownLoadManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DTLivePhotoDownLoadManager.m; sourceTree = "<group>"; };
 		46B1B9022045609C0088B1A9 /* ImageBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -164,6 +167,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		460BC824205BB3AE00379BF7 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				460BC829205BB60D00379BF7 /* DTUtil.h */,
+				460BC82A205BB60D00379BF7 /* DTUtil.m */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
 		4625EC4D2056B7200090F9E4 /* Cagetory */ = {
 			isa = PBXGroup;
 			children = (
@@ -171,8 +183,6 @@
 				4625EC522056BA9D0090F9E4 /* SDWebImageCoderHelper+GIF.m */,
 				4625EC572056C1BD0090F9E4 /* UIImage+KeyFrames.h */,
 				4625EC582056C1BD0090F9E4 /* UIImage+KeyFrames.m */,
-				4625EC65205827940090F9E4 /* NSString+MD5.h */,
-				4625EC66205827940090F9E4 /* NSString+MD5.m */,
 			);
 			path = Cagetory;
 			sourceTree = "<group>";
@@ -200,6 +210,7 @@
 		46B1B8F92045609C0088B1A9 = {
 			isa = PBXGroup;
 			children = (
+				460BC824205BB3AE00379BF7 /* Utility */,
 				4625EC4D2056B7200090F9E4 /* Cagetory */,
 				46B1B938204563DE0088B1A9 /* ImageBrowserUtility */,
 				46B1B9042045609C0088B1A9 /* ImageBrowser */,
@@ -309,6 +320,8 @@
 			children = (
 				46B1B975204D4E590088B1A9 /* DTImageView.h */,
 				46B1B976204D4E590088B1A9 /* DTImageView.m */,
+				460BC82C205BC04400379BF7 /* DTLivePhotoView.h */,
+				460BC82D205BC04400379BF7 /* DTLivePhotoView.m */,
 				46B1B993204FB1FF0088B1A9 /* DTImage.h */,
 				46B1B994204FB1FF0088B1A9 /* DTImage.m */,
 				4625EC5A2056D66E0090F9E4 /* DTImage1.h */,
@@ -557,12 +570,13 @@
 				46B1B950204564CF0088B1A9 /* DTImageBrowser.m in Sources */,
 				46B1B97A204EA3990088B1A9 /* DTOOMDetectorManager.m in Sources */,
 				4628C74F2057D29A005769DD /* DTLivePhotoDownLoadManager.m in Sources */,
+				460BC82E205BC04400379BF7 /* DTLivePhotoView.m in Sources */,
 				46B1B94A204564CF0088B1A9 /* DTImageBrowserLayout.m in Sources */,
-				4625EC67205827940090F9E4 /* NSString+MD5.m in Sources */,
 				46B1B949204564CF0088B1A9 /* DTImageBrowserProgressView.m in Sources */,
 				46B1B9542045651B0088B1A9 /* DTShadowLayer.m in Sources */,
 				46B1B90A2045609C0088B1A9 /* ViewController.m in Sources */,
 				46B1B995204FB1FF0088B1A9 /* DTImage.m in Sources */,
+				460BC82B205BB60D00379BF7 /* DTUtil.m in Sources */,
 				46B1B94C204564CF0088B1A9 /* DTImageBrowserAnimator.m in Sources */,
 				4625EC61205818D00090F9E4 /* DTNetworkDownloader.m in Sources */,
 				46B1B9152045609C0088B1A9 /* main.m in Sources */,

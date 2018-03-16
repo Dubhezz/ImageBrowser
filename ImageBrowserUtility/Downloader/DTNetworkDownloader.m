@@ -7,16 +7,17 @@
 //
 
 #import "DTNetworkDownloader.h"
-#import "NSString+MD5.h"
+#import "DTUtil.h"
 
 @interface DTNetworkDownloaderTask : NSObject
 
-@property (nonatomic, strong) NSURLSessionTask          *task;
-@property (nonatomic, strong) NSURLRequest             *request;
-@property (nonatomic, copy)   DTDownloadDataCompletion  completion;
-@property (nonatomic, strong) NSMutableData             *data;
-@property (nonatomic, assign) NSUInteger                totalLength;
-@property (nonatomic, assign) NSUInteger                retryTimes;
+@property (nonatomic, strong) NSURLSessionTask           *task;
+@property (nonatomic, strong) NSURLRequest               *request;
+@property (nonatomic, copy)   DTDownloadDataCompletion   completion;
+@property (nonatomic, copy)   DTDownloadProgressCallBack progressCallBack;
+@property (nonatomic, strong) NSMutableData              *data;
+@property (nonatomic, assign) NSUInteger                 totalLength;
+@property (nonatomic, assign) NSUInteger                 retryTimes;
 
 @end
 
@@ -70,27 +71,36 @@
     self.queue.maxConcurrentOperationCount = 20;
 }
 
-- (void)dataWithURLString:(NSString *)URLString completion:(DTDownloadDataCompletion)completion {
+- (void)dataWithURLString:(NSString *)URLString progress:(DTDownloadProgressCallBack)progressCallBack completion:(DTDownloadDataCompletion)completion {
+   
     if (!([URLString hasPrefix:@"http://"] || [URLString hasPrefix:@"https://"])) {
         NSError *error = [NSError errorWithDomain:@"DTDownloaderError" code:-3 userInfo:@{NSLocalizedDescriptionKey:@"InvalidRequest"}];
-        completion(URLString, nil, 0, error);
+        completion(nil ,[NSURL URLWithString:URLString], nil, error);
         return;
     }
 #warning 缓存中查询是否下载逻辑
     //缓存中查询
+    
+    
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:URLString] cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:self.timeoutInterval];
     NSURLSessionTask *task = [self.session dataTaskWithRequest:request];
     DTNetworkDownloaderTask *downloaderTask = [[DTNetworkDownloaderTask alloc] init];
     downloaderTask.task = task;
     downloaderTask.request = request;
     downloaderTask.completion = completion;
+    downloaderTask.progressCallBack = progressCallBack;
     downloaderTask.data = [NSMutableData data];
     [self.lock lock];
-//    [self.reqTable setObject:downloaderTask forKey:request.keyForLoader];
+    //    [self.reqTable setObject:downloaderTask forKey:request.keyForLoader];
     [self.taskTable setObject:downloaderTask forKey:@(task.taskIdentifier)];
     [self.lock unlock];
     
     [task resume];
+}
+
+
+- (void)dataWithURLString:(NSString *)URLString completion:(DTDownloadDataCompletion)completion {
+    [self dataWithURLString:URLString progress:nil completion:completion];
 }
 
 - (void)URLSession:(NSURLSession *)session didBecomeInvalidWithError:(NSError *)error {
@@ -119,11 +129,31 @@
     DTNetworkDownloaderTask *downloaderTask = [self.taskTable objectForKey:@(dataTask.taskIdentifier)];
     [self.lock unlock];
     DTDownloadDataCompletion completion      = downloaderTask.completion;
+    DTDownloadProgressCallBack progressCallBack = downloaderTask.progressCallBack;
     NSMutableData *recvdata                  = downloaderTask.data;
     NSURLRequest *request                    = downloaderTask.request;
     [recvdata appendData:data];
-    if (completion)
+    if (progressCallBack)
     {
+        float progress = recvdata.length / (float) downloaderTask.totalLength;
+        if (progress > 1)
+        {
+            progress = 1;
+            progressCallBack(request.URL,progress);
+            if (completion) {
+                completion(request.URL, request.URL, recvdata, nil);
+            }
+        }
+        if (isinf(progress))
+        {
+            progress = 0;
+            progressCallBack(request.URL,progress);
+        }
+        if (progress < 1)
+        {
+            progressCallBack(request.URL,progress);
+        }
+    } else if (completion) {
         float progress = recvdata.length / (float) downloaderTask.totalLength;
         if (progress > 1)
         {
@@ -135,7 +165,7 @@
         }
         if (progress < 1)
         {
-            completion(request.URL, recvdata, progress, nil);
+            completion(request.URL, request.URL, recvdata, nil);
         }
     }
 }
@@ -150,6 +180,7 @@
     }
     
     DTDownloadDataCompletion completion = downloaderTask.completion;
+    DTDownloadProgressCallBack progressCallBack = downloaderTask.progressCallBack;
     NSMutableData *data          = downloaderTask.data;
     NSURLRequest *request        = downloaderTask.request;
     [self.lock lock];
@@ -172,7 +203,7 @@
             {
                 if (completion)
                 {
-                    completion(request.URL, nil, 1, error);
+                    completion(fileURL, request.URL, nil, error);
                 }
             }
             
@@ -181,16 +212,19 @@
         {
             if (completion)
             {
-                completion(request.URL, nil, 1, error);
+                completion(fileURL, request.URL, nil, error);
             }
         }
     }
     else
     {
         [data writeToURL:fileURL atomically:YES];
+        if (progressCallBack) {
+            progressCallBack(fileURL, 1);
+        }
         if (completion)
         {
-            completion(fileURL, data, 1, error);
+            completion(fileURL, request.URL, data, error);
         }
     }
 }
@@ -210,7 +244,7 @@
                               withIntermediateDirectories:true
                                                attributes:nil
                                                     error:nil];
-    return [path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp4", [NSString MD5:URL]]];
+    return [path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp4", [DTUtil MD5:URL]]];
 }
 
 + (void)clearCache
