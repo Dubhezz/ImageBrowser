@@ -21,6 +21,8 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "DTNetworkDownloader.h"
 #import "DTUtil.h"
+#import <PhotosUI/PHLivePhotoView.h>
+
 
 NSString *const kKeyContentIdentifier =  @"com.apple.quicktime.content.identifier";
 NSString *const kKeySpaceQuickTimeMetadata = @"mdta";
@@ -58,32 +60,65 @@ NSString *const kFigAppleMakerNote_AssetIdentifier = @"17";
     
     NSString *imageTargetPath = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.jpg",[DTUtil MD5:identifier]]];
     
-    if (videoURLString.length == 0 || imageURLString == 0) {
-        return;
-    }
-    PMKPromise *promise1 = [self promiseForDownloadImageWithURLString:imageURLString].then(^(UIImage *image){
-        return [PMKPromise promiseWithValue:image];
-    });
-    PMKPromise *promise2 = [self promiseForDownloadVideoWithString:videoURLString progressCallBack:mergeProgress].then(^(NSString *videoOriginalPath) {
-        return [PMKPromise promiseWithValue:videoOriginalPath];
-    });
-    [PMKPromise when:@[promise1, promise2]].then(^(NSArray *sources) {
-        UIImage *image;
-        NSString *videoOriginalPath;
-        for (id obj in sources) {
-            if ([obj isKindOfClass:[UIImage class]]) {
-                image = (UIImage *)obj;
-            } else if ([obj isKindOfClass:[NSString class]] && [obj hasSuffix:@".mp4"]) {
-                videoOriginalPath = (NSString *)obj;
+//    if (videoURLString.length == 0 || imageURLString == 0) {
+//        return;
+//    }
+//    PMKPromise *promise1 = [self promiseForDownloadImageWithURLString:imageURLString].then(^(UIImage *image){
+//        return [PMKPromise promiseWithValue:image];
+//    });
+//    PMKPromise *promise2 = [self promiseForDownloadVideoWithString:videoURLString progressCallBack:mergeProgress].then(^(NSString *videoOriginalPath) {
+//        return [PMKPromise promiseWithValue:videoOriginalPath];
+//    });
+//    [PMKPromise when:@[promise1, promise2]].then(^(NSArray *sources) {
+//        UIImage *image;
+//        NSString *videoOriginalPath;
+//        for (id obj in sources) {
+//            if ([obj isKindOfClass:[UIImage class]]) {
+//                image = (UIImage *)obj;
+//            } else if ([obj isKindOfClass:[NSString class]] && [obj hasSuffix:@".mp4"]) {
+//                videoOriginalPath = (NSString *)obj;
+//            } else {
+//                break;
+//            }
+//        }
+//        [self fetchLivePhotoSourceWithOriginalImage:image targetPath:imageTargetPath originalVideoPath:videoOriginalPath targetVideoPath:videoTargetPath assetIdentifier:identifier livePhotoSourcesCallBack:callBack];
+//    }).catch(^(NSError *error) {
+//        if (callBack) {
+//            callBack(nil, nil, error);
+//        }
+//    });
+    __block UIImage *originalImage = nil;
+    __block NSString *videoOriginalPath = nil;
+    __block NSError *downloadError = nil;
+    dispatch_queue_t queue = dispatch_queue_create("111", DISPATCH_QUEUE_CONCURRENT);
+    dispatch_group_t group = dispatch_group_create();
+    
+    dispatch_group_enter(group);
+    dispatch_async(queue, ^{
+        [self downloadImageWithURLString:imageURLString originalImageCallBack:^(UIImage * _Nullable image, NSError * _Nullable error) {
+            if (error) {
+                downloadError = error;
             } else {
-                break;
+                originalImage = image;
             }
-        }
-        [self fetchLivePhotoSourceWithOriginalImage:image targetPath:imageTargetPath originalVideoPath:videoOriginalPath targetVideoPath:videoTargetPath assetIdentifier:identifier livePhotoSourcesCallBack:callBack];
-    }).catch(^(NSError *error) {
-        if (callBack) {
-            callBack(nil, nil, error);
-        }
+            NSLog(@"任务---- 1 ---- %@", [NSThread currentThread]);
+            dispatch_group_leave(group);
+        }];
+    });
+    dispatch_group_enter(group);
+    dispatch_async(queue, ^{
+        [self downloadeVideoWithVideoURLString:videoURLString progressCallBack:mergeProgress videoOriginalPathCallBack:^(NSString * _Nullable originalVideoPath, NSError * _Nullable error) {
+            if (error) {
+                downloadError = error;
+            } else {
+                videoOriginalPath = originalVideoPath;
+            }
+            NSLog(@"任务---- 2 ---- %@", [NSThread currentThread]);
+            dispatch_group_leave(group);
+        }];
+    });
+    dispatch_group_notify(group, queue, ^{
+        [self fetchLivePhotoSourceWithOriginalImage:originalImage targetPath:imageTargetPath originalVideoPath:videoOriginalPath targetVideoPath:videoTargetPath assetIdentifier:identifier livePhotoSourcesCallBack:callBack];
     });
     
     
@@ -148,33 +183,81 @@ NSString *const kFigAppleMakerNote_AssetIdentifier = @"17";
 }
 
 
-- (void)fetchLivePhotoSourceWithOriginalImage:(UIImage *)originalImage targetPath:(NSString *)targetPath originalVideoPath:(NSString *)originalVideoPath targetVideoPath:(NSString *)targetVideoPath assetIdentifier:(NSString *)assetIdentifier livePhotoSourcesCallBack:(DTLivePhotoSourcesCallBack)livePhotoSourcesCallBack {
-    PMKPromise *promise1 = [self promiseForFetchVideoMetadataWithOriginalPath:originalVideoPath targetPath:targetVideoPath assetIdentifier:assetIdentifier].then(^(NSString *videoFilePath) {
-         return [PMKPromise promiseWithValue:videoFilePath];
-    });
-    PMKPromise *promise2 = [self promiseForFetchImageMetadataWithOriginalImage:originalImage targetPath:targetPath assetIdentifier:assetIdentifier].then(^(NSString *imageFilePath) {
-        return [PMKPromise promiseWithValue:imageFilePath];
-    });
-    [PMKPromise when:@[promise1, promise2]].then(^(NSArray *sources){
-        NSString *livePhotoVideoFilePath;
-        NSString *livePhotoImageFilePath;
-        for (NSString *path in sources) {
-            if ([path hasSuffix:@".jpg"]) {
-                livePhotoImageFilePath = path;
-            } else if ([path hasSuffix:@".mov"]) {
-                livePhotoVideoFilePath = path;
+- (void)fetchLivePhotoSourceWithOriginalImage:(UIImage *)originalImage targetPath:(NSString *)imageTargetPath originalVideoPath:(NSString *)originalVideoPath targetVideoPath:(NSString *)targetVideoPath assetIdentifier:(NSString *)assetIdentifier livePhotoSourcesCallBack:(DTLivePhotoSourcesCallBack)livePhotoSourcesCallBack {
+//    PMKPromise *promise1 = [self promiseForFetchVideoMetadataWithOriginalPath:originalVideoPath targetPath:targetVideoPath assetIdentifier:assetIdentifier].then(^(NSString *videoFilePath) {
+//         return [PMKPromise promiseWithValue:videoFilePath];
+//    });
+//    PMKPromise *promise2 = [self promiseForFetchImageMetadataWithOriginalImage:originalImage targetPath:targetPath assetIdentifier:assetIdentifier].then(^(NSString *imageFilePath) {
+//        return [PMKPromise promiseWithValue:imageFilePath];
+//    });
+//    [PMKPromise when:@[promise1, promise2]].then(^(NSArray *sources){
+//        NSString *livePhotoVideoFilePath;
+//        NSString *livePhotoImageFilePath;
+//        for (NSString *path in sources) {
+//            if ([path hasSuffix:@".jpg"]) {
+//                livePhotoImageFilePath = path;
+//            } else if ([path hasSuffix:@".mov"]) {
+//                livePhotoVideoFilePath = path;
+//            } else {
+//                break;
+//            }
+//        }
+//        if (livePhotoSourcesCallBack) {
+//            livePhotoSourcesCallBack(livePhotoVideoFilePath,livePhotoImageFilePath, nil);
+//        }
+//    }).catch(^(NSError *error) {
+//        if (livePhotoSourcesCallBack) {
+//            livePhotoSourcesCallBack(nil,nil, error);
+//        }
+//    });
+   
+    __block NSString *imagePath = nil;
+    __block NSString *videoPath = nil;
+    __block NSError *writerError = nil;
+    dispatch_queue_t queue = dispatch_queue_create("222", DISPATCH_QUEUE_CONCURRENT);
+    dispatch_group_t group = dispatch_group_create();
+
+    dispatch_group_enter(group);
+    dispatch_async(queue, ^{
+        [self fetchImageMetadataWithOriginalImage:originalImage targetPath:imageTargetPath assetIdentifier:assetIdentifier callBack:^(NSString * _Nullable imageFilePath, NSError * _Nullable error) {
+            if (error) {
+                imagePath = nil;
+                writerError = error;
             } else {
-                break;
+                imagePath = imageFilePath;
             }
-        }
-        if (livePhotoSourcesCallBack) {
-            livePhotoSourcesCallBack(livePhotoVideoFilePath,livePhotoImageFilePath, nil);
-        }
-    }).catch(^(NSError *error) {
-        if (livePhotoSourcesCallBack) {
-            livePhotoSourcesCallBack(nil,nil, error);
-        }
+            NSLog(@"任务---- 4 ---- %@", [NSThread currentThread]);
+            dispatch_group_leave(group);
+        }];
     });
+    dispatch_group_enter(group);
+    dispatch_async(queue, ^{
+        [self fetchVideoMetadataWithOriginalPath:originalVideoPath targetPath:targetVideoPath assetIdentifier:assetIdentifier callBack:^(NSString * _Nullable videoFilePath, NSError * _Nullable error) {
+            if (error) {
+                videoPath = nil;
+                writerError = error;
+            } else {
+                videoPath = videoFilePath;
+            }
+            NSLog(@"任务---- 5 ---- %@", [NSThread currentThread]);
+            dispatch_group_leave(group);
+        }];
+    });
+    dispatch_group_notify(group, queue, ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (writerError) {
+                if (livePhotoSourcesCallBack) {
+                    livePhotoSourcesCallBack(nil,nil, writerError);
+                }
+            } else {
+                if (livePhotoSourcesCallBack) {
+                    livePhotoSourcesCallBack(videoPath,imagePath, nil);
+                }
+            }
+            NSLog(@"任务---- 6 ---- %@", [NSThread currentThread]);
+        });
+    });
+    
     
 }
 
