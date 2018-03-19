@@ -69,6 +69,12 @@
     }
 }
 
+- (void)layoutSubviews {
+    self.livePhotoView.frame = self.bounds;
+    self.thumbnailImageView.frame = self.bounds;
+    [super layoutSubviews];
+}
+
 - (void)setPlaceholderImage:(UIImage *)placeholderImage {
     _placeholderImage = placeholderImage;
     self.thumbnailImageView.image = placeholderImage;
@@ -79,24 +85,32 @@
     __weak typeof(self) weakSelf = self;
     [[[DTLivePhotoDownLoadManager alloc] init] downloadeVideoWithVideoURLString:videoURLString imageURLString:imageURLString mergeProgress:^(NSURL *videoURL, float progress) {
         NSLog(@"---- %@ -----", @(progress));
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if([self.delegate respondsToSelector:@selector(DTLivephotoViewImageLoading:targetVideoURL:progress:)]) {
+                [self.delegate DTLivephotoViewImageLoading:self targetVideoURL:videoURL progress:progress];
+            }
+        });
     } callBack:^(NSString * _Nullable videoFilePath, NSString * _Nullable imageFilePath, NSError * _Nullable error) {
         if (error) {
             NSLog(@"livePhoto 生成错误 ----- %@", error);
         } else {
-            NSArray *urlArray = @[
-                                  [NSURL fileURLWithPath:videoFilePath],
-                                  [NSURL fileURLWithPath:imageFilePath]
-                                  ];
-            [PHLivePhoto requestLivePhotoWithResourceFileURLs:urlArray placeholderImage:weakSelf.placeholderImage targetSize:size contentMode:PHImageContentModeAspectFit resultHandler:^(PHLivePhoto * _Nullable livePhoto, NSDictionary * _Nonnull info) {
-                weakSelf.livePhotoView.livePhoto = livePhoto;
-                if (info[PHLivePhotoInfoCancelledKey] != nil) {
-                    weakSelf.livephoto = livePhoto;
-                    [weakSelf layoutLivephotoView];
-                    if (completion) {
-                        completion(livePhoto);
-                    }
-                }
-            }];
+            if ([self.delegate respondsToSelector:@selector(DTLivephotoViewDidLoad:videoTargetPath:imageTargetPath:)]) {
+                [self.delegate DTLivephotoViewDidLoad:self videoTargetPath:videoFilePath imageTargetPath:imageFilePath];
+            }
+//            NSArray *urlArray = @[
+//                                  [NSURL fileURLWithPath:videoFilePath],
+//                                  [NSURL fileURLWithPath:imageFilePath]
+//                                  ];
+//            [PHLivePhoto requestLivePhotoWithResourceFileURLs:urlArray placeholderImage:weakSelf.placeholderImage targetSize:size contentMode:PHImageContentModeAspectFit resultHandler:^(PHLivePhoto * _Nullable livePhoto, NSDictionary * _Nonnull info) {
+//                weakSelf.livePhotoView.livePhoto = livePhoto;
+//                if (info[PHLivePhotoInfoCancelledKey] != nil) {
+//                    weakSelf.livephoto = livePhoto;
+//                    [weakSelf layoutLivephotoView];
+//                    if (completion) {
+//                        completion(livePhoto);
+//                    }
+//                }
+//            }];
         }
     }];
 }

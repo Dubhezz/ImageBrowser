@@ -21,7 +21,7 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "DTNetworkDownloader.h"
 #import "DTUtil.h"
-#import <PhotosUI/PHLivePhotoView.h>
+#import "DTLivePhotoSmartCache.h"
 
 
 NSString *const kKeyContentIdentifier =  @"com.apple.quicktime.content.identifier";
@@ -49,17 +49,38 @@ NSString *const kFigAppleMakerNote_AssetIdentifier = @"17";
 
 - (void)downloadeVideoWithVideoURLString:(NSString *)videoURLString imageURLString:(NSString *)imageURLString mergeProgress:(DTDownloadProgressCallBack)mergeProgress callBack:(DTLivePhotoSourcesCallBack)callBack {
    
+    if (videoURLString.length == 0 || imageURLString.length == 0) {
+        return;
+    }
+    
     NSString *path = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject
                       stringByAppendingPathComponent:@"movs/"];
-    [[NSFileManager defaultManager] createDirectoryAtPath:path
-                              withIntermediateDirectories:true
-                                               attributes:nil
-                                                    error:nil];
+    NSString *videoTargetPath = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mov",[DTUtil MD5:videoURLString]]];
+    NSString *imageTargetPath = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.jpg",[DTUtil MD5:videoURLString]]];
     NSString *identifier = [[NSUUID UUID] UUIDString];
-    NSString *videoTargetPath = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mov",[DTUtil MD5:identifier]]];
+    BOOL folderExists = [[NSFileManager defaultManager] fileExistsAtPath:path];
+    if (folderExists) {
+//        videoTargetPath = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mov",[DTUtil MD5:videoURLString]]];
+//        imageTargetPath = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.jpg",[DTUtil MD5:videoURLString]]];
+        BOOL videoPathExists = [[NSFileManager defaultManager] fileExistsAtPath:videoTargetPath];
+        BOOL imagePathExists = [[NSFileManager defaultManager] fileExistsAtPath:imageTargetPath];
+        if (videoPathExists && imagePathExists) {
+            if (callBack) {
+                callBack(videoTargetPath, imageTargetPath, nil);
+                return;
+            }
+        }
+    } else {
+        [[NSFileManager defaultManager] createDirectoryAtPath:path
+                                  withIntermediateDirectories:true
+                                                   attributes:nil
+                                                        error:nil];
+//        videoTargetPath = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mov",[DTUtil MD5:videoURLString]]];
+//        imageTargetPath = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.jpg",[DTUtil MD5:videoURLString]]];
+    }
     
-    NSString *imageTargetPath = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.jpg",[DTUtil MD5:identifier]]];
     
+        
 //    if (videoURLString.length == 0 || imageURLString == 0) {
 //        return;
 //    }
@@ -118,7 +139,7 @@ NSString *const kFigAppleMakerNote_AssetIdentifier = @"17";
         }];
     });
     dispatch_group_notify(group, queue, ^{
-        [self fetchLivePhotoSourceWithOriginalImage:originalImage targetPath:imageTargetPath originalVideoPath:videoOriginalPath targetVideoPath:videoTargetPath assetIdentifier:identifier livePhotoSourcesCallBack:callBack];
+        [self fetchLivePhotoSourceWithOriginalImage:originalImage targetPath:imageTargetPath videoURLString:videoURLString originalVideoPath:videoOriginalPath targetVideoPath:videoTargetPath assetIdentifier:identifier livePhotoSourcesCallBack:callBack];
     });
     
     
@@ -183,7 +204,7 @@ NSString *const kFigAppleMakerNote_AssetIdentifier = @"17";
 }
 
 
-- (void)fetchLivePhotoSourceWithOriginalImage:(UIImage *)originalImage targetPath:(NSString *)imageTargetPath originalVideoPath:(NSString *)originalVideoPath targetVideoPath:(NSString *)targetVideoPath assetIdentifier:(NSString *)assetIdentifier livePhotoSourcesCallBack:(DTLivePhotoSourcesCallBack)livePhotoSourcesCallBack {
+- (void)fetchLivePhotoSourceWithOriginalImage:(UIImage *)originalImage targetPath:(NSString *)imageTargetPath videoURLString:(NSString *)videoURLString originalVideoPath:(NSString *)originalVideoPath targetVideoPath:(NSString *)targetVideoPath assetIdentifier:(NSString *)assetIdentifier livePhotoSourcesCallBack:(DTLivePhotoSourcesCallBack)livePhotoSourcesCallBack {
 //    PMKPromise *promise1 = [self promiseForFetchVideoMetadataWithOriginalPath:originalVideoPath targetPath:targetVideoPath assetIdentifier:assetIdentifier].then(^(NSString *videoFilePath) {
 //         return [PMKPromise promiseWithValue:videoFilePath];
 //    });
@@ -251,6 +272,9 @@ NSString *const kFigAppleMakerNote_AssetIdentifier = @"17";
                 }
             } else {
                 if (livePhotoSourcesCallBack) {
+//                    DTLivePhotoSmartCache *cache = [DTLivePhotoSmartCache defaultCache];
+//                    NSString *key = [[DTLivePhotoSmartCache defaultCache] cacheKeyForVideoURLString:videoURLString];
+//                    [cache addLivePhotoSource:@[videoPath,imagePath] forKey:key];
                     livePhotoSourcesCallBack(videoPath,imagePath, nil);
                 }
             }
@@ -301,13 +325,18 @@ NSString *const kFigAppleMakerNote_AssetIdentifier = @"17";
     
     AVAssetReaderOutput *videoOutput = [AVAssetReaderTrackOutput assetReaderTrackOutputWithTrack:videoTrack outputSettings:@{(__bridge_transfer  NSString*)kCVPixelBufferPixelFormatTypeKey : [NSNumber numberWithUnsignedInt:kCVPixelFormatType_32BGRA]}];
     
+    
+    AVAssetReaderTrackOutput *audioOutput = nil;
+    
     NSDictionary *audioDic = @{AVFormatIDKey :@(kAudioFormatLinearPCM),
                                AVLinearPCMIsBigEndianKey:@NO,
                                AVLinearPCMIsFloatKey:@NO,
                                AVLinearPCMBitDepthKey :@(16)
                                };
+    if (audioTrack) {
+        audioOutput = [AVAssetReaderTrackOutput assetReaderTrackOutputWithTrack:audioTrack outputSettings:audioDic];
+    }
     
-    AVAssetReaderTrackOutput *audioOutput = [AVAssetReaderTrackOutput assetReaderTrackOutputWithTrack:audioTrack outputSettings:audioDic];
     NSError *error;
     
     
@@ -318,7 +347,7 @@ NSString *const kFigAppleMakerNote_AssetIdentifier = @"17";
         NSLog(@"Add video output errorn");
     }
     
-    if([reader canAddOutput:audioOutput]) {
+    if(audioOutput && [reader canAddOutput:audioOutput]) {
         [reader addOutput:audioOutput];
     } else {
         NSLog(@"Add audio output errorn");
@@ -340,10 +369,13 @@ NSString *const kFigAppleMakerNote_AssetIdentifier = @"17";
                                    [ NSNumber numberWithFloat: 44100], AVSampleRateKey,
                                    [ NSNumber numberWithInt: 128000], AVEncoderBitRateKey,
                                    nil];
+    AVAssetWriterInput *audioInput = nil;
+    if (audioTrack) {
+        audioInput = [AVAssetWriterInput assetWriterInputWithMediaType:[audioTrack mediaType] outputSettings:audioSettings];
+        audioInput.expectsMediaDataInRealTime = true;
+        audioInput.transform = audioTrack.preferredTransform;
+    }
     
-    AVAssetWriterInput *audioInput = [AVAssetWriterInput assetWriterInputWithMediaType:[audioTrack mediaType] outputSettings:audioSettings];
-    audioInput.expectsMediaDataInRealTime = true;
-    audioInput.transform = audioTrack.preferredTransform;
     
     NSError *error_two;
     
@@ -353,7 +385,7 @@ NSString *const kFigAppleMakerNote_AssetIdentifier = @"17";
     }
     writer.metadata = @[ [self medatataForAssetIdentifier:assetIdentifier]];
     [writer addInput:videoInput];
-    [writer addInput:audioInput];
+    if (audioInput) [writer addInput:audioInput];
     
     NSDictionary *sourcePixelBufferAttributesDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
                                                            [NSNumber numberWithInt:kCVPixelFormatType_32BGRA],
@@ -384,7 +416,7 @@ NSString *const kFigAppleMakerNote_AssetIdentifier = @"17";
             CMSampleBufferRef videoBuffer = [videoOutput copyNextSampleBuffer];
             CMSampleBufferRef audioBuffer = [audioOutput copyNextSampleBuffer];
             if (videoBuffer) {
-                while (!videoInput.isReadyForMoreMediaData || !audioInput.isReadyForMoreMediaData) {
+                while (audioInput ? (!videoInput.isReadyForMoreMediaData || !audioInput.isReadyForMoreMediaData) : !videoInput.isReadyForMoreMediaData) {
                     usleep(1/ 30.0);
                 }
                 if (audioBuffer) {

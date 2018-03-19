@@ -21,7 +21,6 @@ typedef void(^DTLivePhotoSourcesCallBack)(NSString * _Nullable videoFilePath, NS
 
 - (void)downloadeVideoWithVideoURLString:(NSString *_Nullable)videoURLString imageURLString:(NSString *_Nullable)imageURLString mergeProgress:(DTDownloadProgressCallBack _Nullable )mergeProgress callBack:(DTLivePhotoSourcesCallBack _Nullable )callBack;
 - (void)downloadeVideoWithVideoURLString:(NSString *_Nullable)videoURLString imageURLString:(NSString *_Nullable)imageURLString;
-- (void)fetchLivePhotoSourceWithOriginalImage:(UIImage *_Nullable)originalImage targetPath:(NSString *_Nullable)targetPath originalVideoPath:(NSString *_Nullable)originalVideoPath targetVideoPath:(NSString *_Nullable)targetVideoPath assetIdentifier:(NSString *_Nullable)assetIdentifier livePhotoSourcesCallBack:(DTLivePhotoSourcesCallBack _Nullable )livePhotoSourcesCallBack;
 - (void)fetchVideoMetadataWithOriginalPath:(NSString *_Nullable)originalPath targetPath:(NSString *_Nullable)targetPath assetIdentifier:(NSString *_Nullable)assetIdentifier callBack:(DTLivePhotoOfVideoTargetPathCallBack _Nullable )callBack;
 - (void)fetchImageMetadataWithOriginalImage:(UIImage *_Nullable)originalImage targetPath:(NSString *_Nullable)targetPath assetIdentifier:(NSString *_Nullable)assetIdentifier callBack:(DTLivePhotoOfImageTargetPathCallBack _Nullable )callBack;
 

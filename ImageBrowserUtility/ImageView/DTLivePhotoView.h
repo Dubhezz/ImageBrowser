@@ -11,8 +11,18 @@
 
 typedef void (^DTLivephotoViewDidLoadImageCompletion)(PHLivePhoto *livephoto);
 
+@class DTLivePhotoView;
+@protocol DTLivephotoViewDelegate <NSObject>
+
+- (void)DTLivephotoViewImageLoading:(DTLivePhotoView *)livephotoView targetVideoURL:(NSURL*)videoURL progress:(CGFloat)progress;
+- (void)DTLivephotoViewDidLoad:(DTLivePhotoView *)livephotoView videoTargetPath:(NSString *)videoTargetPath imageTargetPath:(NSString *)imageTargetPath;
+
+@end
+
+
 @interface DTLivePhotoView : UIView
 
+@property (nonatomic, weak) id<DTLivephotoViewDelegate> delegate;
 @property (nonatomic, strong) PHLivePhotoView *livePhotoView;
 @property (nonatomic, strong) UIImageView     *thumbnailImageView;
 @property (nonatomic, strong) UIImage         *placeholderImage;

@@ -17,7 +17,7 @@
 #define SLIDE_DOWN_COLSE_IMAGEBROWSER 0
 #endif
 
-@interface DTLivePhotoCell () <UIScrollViewDelegate, UIGestureRecognizerDelegate>
+@interface DTLivePhotoCell () <UIScrollViewDelegate, UIGestureRecognizerDelegate, DTLivephotoViewDelegate>
 
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) DTImageBrowserProgressView *progressView;
@@ -30,6 +30,7 @@
 
 @property (nonatomic) PHLivePhotoRequestID requsetID;
 @property (nonatomic, strong) PHLivePhoto *livephoto;
+@property (nonatomic, strong) NSString *currentVideoURLString;
 
 @end
 
@@ -45,6 +46,7 @@
         //        _scrollView.showsHorizontalScrollIndicator =NO;
         
         _livePhotoView = [[DTLivePhotoView alloc] initWithFrame:self.bounds];
+        _livePhotoView.delegate = self;
         [_scrollView addSubview:_livePhotoView];
         _livePhotoView.clipsToBounds = YES;
         
@@ -70,6 +72,7 @@
 
 - (void)setLivePhotoWithImage:(UIImage *)image livePhotoVideoURL:(NSURL *)videoURL coverImageURL:(NSURL *)imageURL livePhotoVideoFilePath:(NSString *)videoFilePath coverImageFilePath:(NSString *)imagePath finishSend:(BOOL)isSend {
     __weak typeof(self) weakSelf = self;
+    self.currentVideoURLString = videoFilePath;
     self.image = image;
     self.livePhotoView.placeholderImage = image;
     [self cellLayout];
@@ -89,17 +92,14 @@
 }
 
 - (CGSize)fetchFitSizeInScreen {
-    if (self.image) {
-        UIImage *image = self.image;//_livePhotoView.image;
-        if (!image) {
-            return CGSizeZero;
-        }
-        CGFloat scale = image.size.height / image.size.width;
+    if (self.livephoto) {
+        CGFloat scale = self.livephoto.size.height / self.livephoto.size.width;
         CGFloat width = _scrollView.bounds.size.width;
         CGFloat height = scale * width;
         return CGSizeMake(width, height);
-    } else if (self.livephoto) {
-        CGFloat scale = self.livephoto.size.height / self.livephoto.size.width;
+    } else if (self.image) {
+        UIImage *image = self.image;//_livePhotoView.image;
+        CGFloat scale = image.size.height / image.size.width;
         CGFloat width = _scrollView.bounds.size.width;
         CGFloat height = scale * width;
         return CGSizeMake(width, height);
@@ -310,6 +310,36 @@
 - (void)loadLivePhotoWithVideoFilePath:(NSString *)videoPath withImage:(UIImage *)image videoURLString:(NSString *)videoURLString {
     
 
+}
+
+#pragma -mark DTLivephotoViewDelegate
+
+-(void)DTLivephotoViewImageLoading:(DTLivePhotoView *)imageView targetVideoURL:(NSURL *)videoURL progress:(CGFloat)progress {
+    BOOL isCurrentProgress = [self.currentVideoURLString isEqualToString:videoURL.absoluteString];
+    if (isCurrentProgress) {
+        self.progressView.hidden = NO;
+        [self.progressView setProgress:fabs(progress)];
+        NSLog(@"下载进度---- %f",progress);
+    }
+}
+
+- (void)DTLivephotoViewDidLoad:(DTLivePhotoView *)livephotoView videoTargetPath:(NSString *)videoTargetPath imageTargetPath:(NSString *)imageTargetPath {
+    __weak typeof(self) weakSelf = self;
+    NSArray *urlArray = @[
+                          [NSURL fileURLWithPath:videoTargetPath],
+                          [NSURL fileURLWithPath:imageTargetPath]
+                          ];
+    self.progressView.hidden = YES;
+    [PHLivePhoto requestLivePhotoWithResourceFileURLs:urlArray placeholderImage:self.image targetSize:self.image.size contentMode:PHImageContentModeAspectFit resultHandler:^(PHLivePhoto * _Nullable livePhoto, NSDictionary * _Nonnull info) {
+//        weakSelf.livePhotoView.livePhoto = livePhoto;
+        if (info[PHLivePhotoInfoCancelledKey] != nil) {
+            weakSelf.livephoto = livePhoto;
+            weakSelf.livePhotoView.livePhotoView.livePhoto = livePhoto;
+            [weakSelf cellLayout];
+            weakSelf.livePhotoView.thumbnailImageView.hidden = YES;
+            [weakSelf.livePhotoView.livePhotoView startPlaybackWithStyle:PHLivePhotoViewPlaybackStyleFull];
+        }
+    }];
 }
 
 @end
