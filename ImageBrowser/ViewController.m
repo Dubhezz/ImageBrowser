@@ -17,6 +17,7 @@
 #import <CoreMedia/CoreMedia.h>
 #import <PhotosUI/PHLivePhotoView.h>
 #import "DTLivePhotoDownLoadManager.h"
+#import "DTLivePhotoCacheManager.h"
 
 @interface DTSmallImageView : UIImageView
 
@@ -100,6 +101,18 @@
         make.left.equalTo(self.view).offset(30);
         make.top.equalTo(self.view).offset(50);
         make.width.mas_equalTo(80);
+        make.height.mas_equalTo(30);
+    }];
+    
+    UIButton *clearLiveCacheButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [clearLiveCacheButton setTitle:@"清除Live缓存" forState:UIControlStateNormal];
+    [clearLiveCacheButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [clearLiveCacheButton addTarget:self action:@selector(clearLiveCacheButtonDidTap:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:clearLiveCacheButton];
+    [clearLiveCacheButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(clearCacheButton.mas_right).offset(30);
+        make.top.equalTo(self.view).offset(50);
+        make.width.mas_equalTo(100);
         make.height.mas_equalTo(30);
     }];
     
@@ -319,6 +332,10 @@
     [[SDImageCache sharedImageCache] clearDiskOnCompletion:^{
         NSLog(@"缓存已清除");
     }];
+}
+
+- (void)clearLiveCacheButtonDidTap:(UIButton *)sender {
+    [[DTLivePhotoCacheManager shareManager] clearDiskCache];
 }
 
 

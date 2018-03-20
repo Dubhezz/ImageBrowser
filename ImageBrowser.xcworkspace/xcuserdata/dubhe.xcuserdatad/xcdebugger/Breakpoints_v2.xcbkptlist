@@ -20,7 +20,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ImageBrowserUtility/ImageView/DTLivePhotoView.m"
-            timestampString = "543149420.854302"
+            timestampString = "543230204.275877"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "97"
@@ -36,7 +36,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ImageBrowserUtility/Cache/DTLivePhotoSmartCache.m"
-            timestampString = "543149420.854709"
+            timestampString = "543230204.276193"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "51"
@@ -52,7 +52,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ImageBrowserUtility/Cache/DTLivePhotoSmartCache.m"
-            timestampString = "543149420.854921"
+            timestampString = "543230204.276475"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "33"
@@ -68,28 +68,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ImageBrowserUtility/Cache/DTLivePhotoSmartCache.m"
-            timestampString = "543149420.8549809"
+            timestampString = "543230204.276543"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "47"
             endingLineNumber = "47"
             landmarkName = "-addLivePhotoSource:forKey:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ImageBrowserUtility/Manager/DTLivePhotoDownLoadManager.m"
-            timestampString = "543149495.85242"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "70"
-            endingLineNumber = "70"
-            landmarkName = "-downloadeVideoWithVideoURLString:imageURLString:mergeProgress:callBack:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

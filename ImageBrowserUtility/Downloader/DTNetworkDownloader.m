@@ -41,6 +41,15 @@
 
 @implementation DTNetworkDownloader
 
++ (instancetype)defaultDownloader {
+    static DTNetworkDownloader *instance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        instance = [[self alloc] init];
+    });
+    return instance;
+}
+
 - (instancetype)init
 {
     if (self = [super init])
@@ -79,8 +88,17 @@
         return;
     }
 #warning 缓存中查询是否下载逻辑
-    //缓存中查询
-    
+    if ([self.reqTable objectForKey:URLString]) {
+        DTNetworkDownloaderTask *downloaderTask = [self.reqTable objectForKey:URLString];
+        float progress = downloaderTask.data.length / (float) downloaderTask.totalLength;
+        if (progress < 1) {
+             progressCallBack(downloaderTask.request.URL,progress);
+        } else {
+            progressCallBack(downloaderTask.request.URL,1);
+            completion(downloaderTask.request.URL, downloaderTask.request.URL, downloaderTask.data, nil);
+        }
+        return;
+    }
     
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:URLString] cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:self.timeoutInterval];
     NSURLSessionTask *task = [self.session dataTaskWithRequest:request];
@@ -91,7 +109,7 @@
     downloaderTask.progressCallBack = progressCallBack;
     downloaderTask.data = [NSMutableData data];
     [self.lock lock];
-    //    [self.reqTable setObject:downloaderTask forKey:request.keyForLoader];
+    [self.reqTable setObject:downloaderTask forKey:URLString];
     [self.taskTable setObject:downloaderTask forKey:@(task.taskIdentifier)];
     [self.lock unlock];
     
@@ -101,6 +119,19 @@
 
 - (void)dataWithURLString:(NSString *)URLString completion:(DTDownloadDataCompletion)completion {
     [self dataWithURLString:URLString progress:nil completion:completion];
+}
+
+- (void)cancelRequestWithURLString:(NSString *)urlString {
+    DTNetworkDownloaderTask *loaderTask = [self.reqTable objectForKey:urlString];
+    NSURLSessionTask *task                   = loaderTask.task;
+    if (task)
+    {
+        [task cancel];
+    }
+}
+
+- (void)cancelAllTask {
+    
 }
 
 - (void)URLSession:(NSURLSession *)session didBecomeInvalidWithError:(NSError *)error {
@@ -184,7 +215,7 @@
     NSMutableData *data          = downloaderTask.data;
     NSURLRequest *request        = downloaderTask.request;
     [self.lock lock];
-//    [self.reqTable removeObjectForKey:request.keyForLoader];
+    [self.reqTable removeObjectForKey:request.URL.absoluteString];
     [self.taskTable removeObjectForKey:@(task.taskIdentifier)];
     [self.lock unlock];
     NSURL *fileURL = [NSURL fileURLWithPath:[DTNetworkDownloader cacheFilePathForURL:request.URL.absoluteString]];

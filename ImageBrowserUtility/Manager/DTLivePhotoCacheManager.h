@@ -20,4 +20,8 @@
 
 @interface DTLivePhotoCacheManager : NSObject
 
++ (instancetype)shareManager;
+- (NSString *)cachePath;
+- (void)clearDiskCache;
+
 @end

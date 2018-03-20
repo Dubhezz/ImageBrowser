@@ -17,7 +17,7 @@ typedef void (^DTDownloadProgressCallBack)(NSURL *videoURL, float progress);
 
 @interface DTNetworkDownloader : NSObject
 
-
++ (instancetype)defaultDownloader;
 @property (nonatomic) NSUInteger retryTimes;
 @property (nonatomic) NSTimeInterval timeoutInterval;
 

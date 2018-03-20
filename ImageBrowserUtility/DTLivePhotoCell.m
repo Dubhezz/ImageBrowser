@@ -36,6 +36,18 @@
 
 @implementation DTLivePhotoCell
 
+- (void)dealloc {
+    NSLog(@" cell 释放");
+}
+
+- (void)prepareForReuse {
+    self.livePhotoView.thumbnailImageView.image = nil;
+    self.livePhotoView.livePhotoView.livePhoto = nil;
+    self.progressView.hidden = YES;
+    self.progressView.progress = 0;
+    self.currentVideoURLString = nil;
+}
+
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         _scrollView = [[UIScrollView alloc] init];
@@ -72,6 +84,7 @@
 
 - (void)setLivePhotoWithImage:(UIImage *)image livePhotoVideoURL:(NSURL *)videoURL coverImageURL:(NSURL *)imageURL livePhotoVideoFilePath:(NSString *)videoFilePath coverImageFilePath:(NSString *)imagePath finishSend:(BOOL)isSend {
     __weak typeof(self) weakSelf = self;
+    self.progressView.hidden = NO;
     self.currentVideoURLString = videoFilePath;
     self.image = image;
     self.livePhotoView.placeholderImage = image;
@@ -336,7 +349,11 @@
             weakSelf.livephoto = livePhoto;
             weakSelf.livePhotoView.livePhotoView.livePhoto = livePhoto;
             [weakSelf cellLayout];
-            weakSelf.livePhotoView.thumbnailImageView.hidden = YES;
+            if (livePhoto) {
+                weakSelf.livePhotoView.thumbnailImageView.hidden = YES;
+            } else {
+                weakSelf.livePhotoView.livePhotoView.hidden = YES;
+            }
             [weakSelf.livePhotoView.livePhotoView startPlaybackWithStyle:PHLivePhotoViewPlaybackStyleFull];
         }
     }];

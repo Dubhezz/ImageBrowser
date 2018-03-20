@@ -22,7 +22,7 @@
 #import "DTNetworkDownloader.h"
 #import "DTUtil.h"
 #import "DTLivePhotoSmartCache.h"
-
+#import "DTLivePhotoCacheManager.h"
 
 NSString *const kKeyContentIdentifier =  @"com.apple.quicktime.content.identifier";
 NSString *const kKeySpaceQuickTimeMetadata = @"mdta";
@@ -53,8 +53,9 @@ NSString *const kFigAppleMakerNote_AssetIdentifier = @"17";
         return;
     }
     
-    NSString *path = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject
-                      stringByAppendingPathComponent:@"movs/"];
+//    NSString *path = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject
+//                      stringByAppendingPathComponent:@"movs/"];
+    NSString *path = [[DTLivePhotoCacheManager shareManager] cachePath];
     NSString *videoTargetPath = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mov",[DTUtil MD5:videoURLString]]];
     NSString *imageTargetPath = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.jpg",[DTUtil MD5:videoURLString]]];
     NSString *identifier = [[NSUUID UUID] UUIDString];
@@ -192,7 +193,7 @@ NSString *const kFigAppleMakerNote_AssetIdentifier = @"17";
 }
 
 - (void)downloadeVideoWithVideoURLString:(NSString *)videoURLString  progressCallBack:(DTDownloadProgressCallBack)progressCallBack videoOriginalPathCallBack:(DTLivePhotoOfVideoOriginalPathPathCallBack)videoPathCallBack {
-    [[[DTNetworkDownloader alloc] init] dataWithURLString:videoURLString progress:progressCallBack completion:^(NSURL *fileURL, NSURL *videoURL, NSData *data, NSError *error) {
+    [[DTNetworkDownloader defaultDownloader] dataWithURLString:videoURLString progress:progressCallBack completion:^(NSURL *fileURL, NSURL *videoURL, NSData *data, NSError *error) {
         if (!error && fileURL) {
             if (videoPathCallBack) {
                 videoPathCallBack(fileURL.path, error);
@@ -276,6 +277,8 @@ NSString *const kFigAppleMakerNote_AssetIdentifier = @"17";
 //                    NSString *key = [[DTLivePhotoSmartCache defaultCache] cacheKeyForVideoURLString:videoURLString];
 //                    [cache addLivePhotoSource:@[videoPath,imagePath] forKey:key];
                     livePhotoSourcesCallBack(videoPath,imagePath, nil);
+                    //删除原视频
+                     [[NSFileManager defaultManager] removeItemAtPath:originalVideoPath error:nil];
                 }
             }
             NSLog(@"任务---- 6 ---- %@", [NSThread currentThread]);
